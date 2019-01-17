@@ -118,6 +118,11 @@ public class FinOpbFeeDetail implements Serializable {
      */
     private String presDosages;
 
+    /**
+     * 诊断
+     */
+    private String diagnose;
+
     private static final long serialVersionUID = 1L;
 
 }
