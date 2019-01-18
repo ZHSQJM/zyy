@@ -1,7 +1,9 @@
 package com.kinglian.screeninquiry.service.impl;
 
 import com.kinglian.screeninquiry.dao.DoctorOperationMapper;
+import com.kinglian.screeninquiry.dao.MedOfficeVisitMapper;
 import com.kinglian.screeninquiry.model.dto.DoctorPendingOrderRep;
+import com.kinglian.screeninquiry.model.entity.MedOfficeVisit;
 import com.kinglian.screeninquiry.service.DoctorOperationService;
 import com.kinglian.screeninquiry.utils.GetAge;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
 
     @Autowired
     private DoctorOperationMapper doctorOperationMapper;
+
+
 
     /**
      * 获取医生端待处理列表
@@ -54,4 +58,5 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
         result.addAll(failOrder);
         return result;
     }
+
 }
