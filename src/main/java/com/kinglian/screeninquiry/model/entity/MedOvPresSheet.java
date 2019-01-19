@@ -1,15 +1,17 @@
 package com.kinglian.screeninquiry.model.entity;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * med_ov_pres_sheet
- * @author
+ * @author 
  */
 @Data
+@ToString
 public class MedOvPresSheet implements Serializable {
     /**
      * 处方id
@@ -135,6 +137,8 @@ public class MedOvPresSheet implements Serializable {
     private Integer signAuthStatus;
 
     private Boolean isTest;
+
+    private String test;
 
     private static final long serialVersionUID = 1L;
 }

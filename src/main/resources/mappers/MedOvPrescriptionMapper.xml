@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kinglian.screeninquiry.dao.MedOvPrescriptionMapper">
+  <resultMap id="BaseResultMap" type="com.kinglian.screeninquiry.model.entity.MedOvPrescription">
+    <id column="presid" jdbcType="VARCHAR" property="presid" />
+    <result column="clinicid" jdbcType="INTEGER" property="clinicid" />
+    <result column="patientid" jdbcType="VARCHAR" property="patientid" />
+    <result column="visitid" jdbcType="VARCHAR" property="visitid" />
+    <result column="stuffid" jdbcType="VARCHAR" property="stuffid" />
+    <result column="stuff_name" jdbcType="VARCHAR" property="stuffName" />
+    <result column="stuff_code" jdbcType="VARCHAR" property="stuffCode" />
+    <result column="sheet_type" jdbcType="VARCHAR" property="sheetType" />
+    <result column="is_injection" jdbcType="VARCHAR" property="isInjection" />
+    <result column="specs" jdbcType="VARCHAR" property="specs" />
+    <result column="retail_price" jdbcType="DECIMAL" property="retailPrice" />
+    <result column="pres_dosage" jdbcType="DECIMAL" property="presDosage" />
+    <result column="pres_dosage_unit" jdbcType="VARCHAR" property="presDosageUnit" />
+    <result column="pres_qty" jdbcType="INTEGER" property="presQty" />
+    <result column="pres_package_unit" jdbcType="VARCHAR" property="presPackageUnit" />
+    <result column="pres_usage" jdbcType="VARCHAR" property="presUsage" />
+    <result column="pres_usage_name" jdbcType="VARCHAR" property="presUsageName" />
+    <result column="pres_freq" jdbcType="VARCHAR" property="presFreq" />
+    <result column="pres_freq_name" jdbcType="VARCHAR" property="presFreqName" />
+    <result column="pres_group" jdbcType="INTEGER" property="presGroup" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
+    <result column="sheet_num" jdbcType="INTEGER" property="sheetNum" />
+    <result column="pre_sheet_id" jdbcType="VARCHAR" property="preSheetId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    presid, clinicid, patientid, visitid, stuffid, stuff_name, stuff_code, sheet_type,
+    is_injection, specs, retail_price, pres_dosage, pres_dosage_unit, pres_qty, pres_package_unit,
+    pres_usage, pres_usage_name, pres_freq, pres_freq_name, pres_group, created_by, created_date,
+    updated_by, updated_date, sheet_num, pre_sheet_id
+  </sql>
+
+  <!--<resultMap id="withMedPrescription" type="com.kinglian.screeninquiry.model.dto.Recipe">-->
+    <!--<id property="sheetid" column="sheetid"/>-->
+    <!--<result property="userName" column="user_name"/>-->
+    <!--<result property="auditNote" column="audit_note"/>-->
+    <!--<result property="auditStatus" column="audit_status" />-->
+    <!--<result property="auditDate" column="audit_date"/>-->
+  <!--</resultMap>-->
+  <!--<select id="getPresOrder" resultType="java.util.HashMap" resultMap="withMedPrescription">-->
+        <!--SELECT-->
+        <!--u.user_name,-->
+        <!--mops.sheetid,-->
+        <!--mops.audit_note,-->
+        <!--mops.audit_status,-->
+        <!--mops.audit_date-->
+    <!--FROM-->
+        <!--med_patient_info mpi-->
+    <!--INNER JOIN med_ov_prescription mop ON mpi.id = mop.patientid-->
+    <!--INNER JOIN med_ov_pres_sheet mops ON mops.sheetid = mop.pre_sheet_id-->
+    <!--INNER JOIN USER u ON u.user_id = mpi.portal_id-->
+    <!--WHERE-->
+        <!--mops.audit_status = #{auditStatus,jdbcType=INTEGER}-->
+  <!--</select>-->
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from med_ov_prescription
+    where presid = #{presid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from med_ov_prescription
+    where presid = #{presid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="presid" keyProperty="presid" parameterType="com.kinglian.screeninquiry.model.entity.MedOvPrescription" useGeneratedKeys="true">
+    insert into med_ov_prescription (clinicid, patientid, visitid,
+      stuffid, stuff_name, stuff_code,
+      sheet_type, is_injection, specs,
+      retail_price, pres_dosage, pres_dosage_unit,
+      pres_qty, pres_package_unit, pres_usage,
+      pres_usage_name, pres_freq, pres_freq_name,
+      pres_group, created_by, created_date,
+      updated_by, updated_date, sheet_num,
+      pre_sheet_id)
+    values (#{clinicid,jdbcType=INTEGER}, #{patientid,jdbcType=VARCHAR}, #{visitid,jdbcType=VARCHAR},
+      #{stuffid,jdbcType=VARCHAR}, #{stuffName,jdbcType=VARCHAR}, #{stuffCode,jdbcType=VARCHAR},
+      #{sheetType,jdbcType=VARCHAR}, #{isInjection,jdbcType=VARCHAR}, #{specs,jdbcType=VARCHAR},
+      #{retailPrice,jdbcType=DECIMAL}, #{presDosage,jdbcType=DECIMAL}, #{presDosageUnit,jdbcType=VARCHAR},
+      #{presQty,jdbcType=INTEGER}, #{presPackageUnit,jdbcType=VARCHAR}, #{presUsage,jdbcType=VARCHAR},
+      #{presUsageName,jdbcType=VARCHAR}, #{presFreq,jdbcType=VARCHAR}, #{presFreqName,jdbcType=VARCHAR},
+      #{presGroup,jdbcType=INTEGER}, #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP},
+      #{updatedBy,jdbcType=VARCHAR}, #{updatedDate,jdbcType=TIMESTAMP}, #{sheetNum,jdbcType=INTEGER},
+      #{preSheetId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="presid" keyProperty="presid" parameterType="com.kinglian.screeninquiry.model.entity.MedOvPrescription" useGeneratedKeys="true">
+    insert into med_ov_prescription
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="clinicid != null">
+        clinicid,
+      </if>
+      <if test="patientid != null">
+        patientid,
+      </if>
+      <if test="visitid != null">
+        visitid,
+      </if>
+      <if test="stuffid != null">
+        stuffid,
+      </if>
+      <if test="stuffName != null">
+        stuff_name,
+      </if>
+      <if test="stuffCode != null">
+        stuff_code,
+      </if>
+      <if test="sheetType != null">
+        sheet_type,
+      </if>
+      <if test="isInjection != null">
+        is_injection,
+      </if>
+      <if test="specs != null">
+        specs,
+      </if>
+      <if test="retailPrice != null">
+        retail_price,
+      </if>
+      <if test="presDosage != null">
+        pres_dosage,
+      </if>
+      <if test="presDosageUnit != null">
+        pres_dosage_unit,
+      </if>
+      <if test="presQty != null">
+        pres_qty,
+      </if>
+      <if test="presPackageUnit != null">
+        pres_package_unit,
+      </if>
+      <if test="presUsage != null">
+        pres_usage,
+      </if>
+      <if test="presUsageName != null">
+        pres_usage_name,
+      </if>
+      <if test="presFreq != null">
+        pres_freq,
+      </if>
+      <if test="presFreqName != null">
+        pres_freq_name,
+      </if>
+      <if test="presGroup != null">
+        pres_group,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="createdDate != null">
+        created_date,
+      </if>
+      <if test="updatedBy != null">
+        updated_by,
+      </if>
+      <if test="updatedDate != null">
+        updated_date,
+      </if>
+      <if test="sheetNum != null">
+        sheet_num,
+      </if>
+      <if test="preSheetId != null">
+        pre_sheet_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="clinicid != null">
+        #{clinicid,jdbcType=INTEGER},
+      </if>
+      <if test="patientid != null">
+        #{patientid,jdbcType=VARCHAR},
+      </if>
+      <if test="visitid != null">
+        #{visitid,jdbcType=VARCHAR},
+      </if>
+      <if test="stuffid != null">
+        #{stuffid,jdbcType=VARCHAR},
+      </if>
+      <if test="stuffName != null">
+        #{stuffName,jdbcType=VARCHAR},
+      </if>
+      <if test="stuffCode != null">
+        #{stuffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sheetType != null">
+        #{sheetType,jdbcType=VARCHAR},
+      </if>
+      <if test="isInjection != null">
+        #{isInjection,jdbcType=VARCHAR},
+      </if>
+      <if test="specs != null">
+        #{specs,jdbcType=VARCHAR},
+      </if>
+      <if test="retailPrice != null">
+        #{retailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="presDosage != null">
+        #{presDosage,jdbcType=DECIMAL},
+      </if>
+      <if test="presDosageUnit != null">
+        #{presDosageUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="presQty != null">
+        #{presQty,jdbcType=INTEGER},
+      </if>
+      <if test="presPackageUnit != null">
+        #{presPackageUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="presUsage != null">
+        #{presUsage,jdbcType=VARCHAR},
+      </if>
+      <if test="presUsageName != null">
+        #{presUsageName,jdbcType=VARCHAR},
+      </if>
+      <if test="presFreq != null">
+        #{presFreq,jdbcType=VARCHAR},
+      </if>
+      <if test="presFreqName != null">
+        #{presFreqName,jdbcType=VARCHAR},
+      </if>
+      <if test="presGroup != null">
+        #{presGroup,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDate != null">
+        #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sheetNum != null">
+        #{sheetNum,jdbcType=INTEGER},
+      </if>
+      <if test="preSheetId != null">
+        #{preSheetId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kinglian.screeninquiry.model.entity.MedOvPrescription">
+    update med_ov_prescription
+    <set>
+      <if test="clinicid != null">
+        clinicid = #{clinicid,jdbcType=INTEGER},
+      </if>
+      <if test="patientid != null">
+        patientid = #{patientid,jdbcType=VARCHAR},
+      </if>
+      <if test="visitid != null">
+        visitid = #{visitid,jdbcType=VARCHAR},
+      </if>
+      <if test="stuffid != null">
+        stuffid = #{stuffid,jdbcType=VARCHAR},
+      </if>
+      <if test="stuffName != null">
+        stuff_name = #{stuffName,jdbcType=VARCHAR},
+      </if>
+      <if test="stuffCode != null">
+        stuff_code = #{stuffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sheetType != null">
+        sheet_type = #{sheetType,jdbcType=VARCHAR},
+      </if>
+      <if test="isInjection != null">
+        is_injection = #{isInjection,jdbcType=VARCHAR},
+      </if>
+      <if test="specs != null">
+        specs = #{specs,jdbcType=VARCHAR},
+      </if>
+      <if test="retailPrice != null">
+        retail_price = #{retailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="presDosage != null">
+        pres_dosage = #{presDosage,jdbcType=DECIMAL},
+      </if>
+      <if test="presDosageUnit != null">
+        pres_dosage_unit = #{presDosageUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="presQty != null">
+        pres_qty = #{presQty,jdbcType=INTEGER},
+      </if>
+      <if test="presPackageUnit != null">
+        pres_package_unit = #{presPackageUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="presUsage != null">
+        pres_usage = #{presUsage,jdbcType=VARCHAR},
+      </if>
+      <if test="presUsageName != null">
+        pres_usage_name = #{presUsageName,jdbcType=VARCHAR},
+      </if>
+      <if test="presFreq != null">
+        pres_freq = #{presFreq,jdbcType=VARCHAR},
+      </if>
+      <if test="presFreqName != null">
+        pres_freq_name = #{presFreqName,jdbcType=VARCHAR},
+      </if>
+      <if test="presGroup != null">
+        pres_group = #{presGroup,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null">
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDate != null">
+        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sheetNum != null">
+        sheet_num = #{sheetNum,jdbcType=INTEGER},
+      </if>
+      <if test="preSheetId != null">
+        pre_sheet_id = #{preSheetId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where presid = #{presid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kinglian.screeninquiry.model.entity.MedOvPrescription">
+    update med_ov_prescription
+    set clinicid = #{clinicid,jdbcType=INTEGER},
+      patientid = #{patientid,jdbcType=VARCHAR},
+      visitid = #{visitid,jdbcType=VARCHAR},
+      stuffid = #{stuffid,jdbcType=VARCHAR},
+      stuff_name = #{stuffName,jdbcType=VARCHAR},
+      stuff_code = #{stuffCode,jdbcType=VARCHAR},
+      sheet_type = #{sheetType,jdbcType=VARCHAR},
+      is_injection = #{isInjection,jdbcType=VARCHAR},
+      specs = #{specs,jdbcType=VARCHAR},
+      retail_price = #{retailPrice,jdbcType=DECIMAL},
+      pres_dosage = #{presDosage,jdbcType=DECIMAL},
+      pres_dosage_unit = #{presDosageUnit,jdbcType=VARCHAR},
+      pres_qty = #{presQty,jdbcType=INTEGER},
+      pres_package_unit = #{presPackageUnit,jdbcType=VARCHAR},
+      pres_usage = #{presUsage,jdbcType=VARCHAR},
+      pres_usage_name = #{presUsageName,jdbcType=VARCHAR},
+      pres_freq = #{presFreq,jdbcType=VARCHAR},
+      pres_freq_name = #{presFreqName,jdbcType=VARCHAR},
+      pres_group = #{presGroup,jdbcType=INTEGER},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=VARCHAR},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      sheet_num = #{sheetNum,jdbcType=INTEGER},
+      pre_sheet_id = #{preSheetId,jdbcType=VARCHAR}
+    where presid = #{presid,jdbcType=VARCHAR}
+  </update>
+</mapper>

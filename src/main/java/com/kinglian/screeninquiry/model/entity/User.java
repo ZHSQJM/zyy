@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * user
- * @author
+ * @author 
  */
 @Data
 public class User implements Serializable {
@@ -75,7 +75,7 @@ public class User implements Serializable {
      * 帐号的状态
  0 表示帐号失效
  1 表示帐号可用
-
+            
      */
     private String accountStatus;
 
@@ -254,4 +254,5 @@ public class User implements Serializable {
     private Integer source;
 
     private static final long serialVersionUID = 1L;
+
 }

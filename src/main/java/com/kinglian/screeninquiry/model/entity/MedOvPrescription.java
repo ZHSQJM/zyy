@@ -1,6 +1,7 @@
 package com.kinglian.screeninquiry.model.entity;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -8,9 +9,10 @@ import java.util.Date;
 
 /**
  * med_ov_prescription
- * @author
+ * @author 
  */
 @Data
+@ToString
 public class MedOvPrescription implements Serializable {
     /**
      * 明细id
@@ -127,5 +129,4 @@ public class MedOvPrescription implements Serializable {
      */
     private String preSheetId;
 
-    private static final long serialVersionUID = 1L;
 }
