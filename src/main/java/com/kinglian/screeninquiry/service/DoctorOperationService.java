@@ -15,4 +15,10 @@ public interface DoctorOperationService {
      */
     List pendingOrder(String time, String doctorId);
 
+    /**
+     * 根据关键字获取药品信息
+     * @param searchKey
+     * @return
+     */
+    List searchDrugInfo(String searchKey);
 }

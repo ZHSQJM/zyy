@@ -63,4 +63,14 @@ public class DoctorOperationController {
     public R<Boolean> clinicalReception(@RequestParam String orderId) {
         return new R<>(medOfficeVisitService.clinicalReception(orderId));
     }
+
+    /**
+     * 医生端药品查询接口
+     * @param searchKey
+     * @return
+     */
+    @GetMapping("/searchKey")
+    public R<List> searchDrugInfo(String searchKey) {
+        return new R<>(doctorOperationService.searchDrugInfo(searchKey));
+    }
 }
