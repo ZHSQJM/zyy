@@ -14,12 +14,16 @@ import com.baomidou.mybatisplus.service.IService;
 import com.kinglian.screeninquiry.model.entity.User;
 
 /**
- * 〈User业务接口〉
- *
- * @author weiyz
- * @create 2019/1/16
- * @since 1.0.0
+ * @author HXC
+ * @date 2019-1-17
  */
 public interface UserService extends IService<User> {
-
+    /**
+     * 判断该账号密码是否存在
+     * @param user
+     * @param password
+     * @return
+     */
+    boolean login(String user, String password);
 }
+
