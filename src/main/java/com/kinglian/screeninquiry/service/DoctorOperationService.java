@@ -21,4 +21,11 @@ public interface DoctorOperationService {
      * @return
      */
     List searchDrugInfo(String searchKey);
+
+    /**
+     * 获取医生端已完成问诊订单
+     * @param doctorId
+     * @return
+     */
+    List completeProfile(String doctorId);
 }

@@ -1,5 +1,6 @@
 package com.kinglian.screeninquiry.dao;
 
+import com.kinglian.screeninquiry.model.dto.CompleteOrderRep;
 import com.kinglian.screeninquiry.model.dto.DoctorPendingOrderRep;
 import org.apache.ibatis.annotations.*;
 
@@ -34,6 +35,40 @@ public interface DoctorOperationMapper {
             "\tAND mov.deleted = '0' \n" +
             "\tAND mov.patientid = mpi.id")
     List<DoctorPendingOrderRep> selectPengdingOrder(@Param("doctorId") String doctorId);
+
+    /**
+     * 查询已完成订单
+     * @param doctorId
+     * @return
+     */
+    @Select("SELECT\n" +
+            "\tmpi.birthday,\n" +
+            "\tmpi.member_name,\n" +
+            "\tmpi.sex,\n" +
+            "\to.patientid,\n" +
+            "\to.visit_date,\n" +
+            "\to.visitid \n" +
+            "FROM\n" +
+            "\tmed_patient_info mpi,\n" +
+            "\t(\n" +
+            "\tSELECT\n" +
+            "\t\tmov.visitid,\n" +
+            "\t\tmov.patientid,\n" +
+            "\t\tmov.visit_date \n" +
+            "\tFROM\n" +
+            "\t\tmed_ov_pres_sheet mops,\n" +
+            "\t\t( SELECT visitid, patientid, visit_date FROM med_office_visit WHERE cdid = #{doctorId} AND visit_status = '1' ) mov \n" +
+            "\tWHERE\n" +
+            "\t\tmops.visitid = mov.visitid \n" +
+            "\t\tAND mops.audit_status = 1 \n" +
+            "\t) o \n" +
+            "WHERE\n" +
+            "\tmpi.id = o.patientid")
+    @Results({@Result(property = "patientName",column = "member_name"),@Result(property = "patinetId",column = "patinetid"),
+            @Result(property = "sex",column = "sex"), @Result(property = "birthDay",column = "birthday"),
+            @Result(property = "orderId",column = "visitid"), @Result(property = "creatDay",column = "visit_date")})
+    @ResultType(CompleteOrderRep.class)
+    List<CompleteOrderRep> selectCompleteOrder(@Param("doctorId") String doctorId);
 
     /**
      * 查询审核失败订单

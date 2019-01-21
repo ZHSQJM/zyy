@@ -2,24 +2,17 @@ package com.kinglian.screeninquiry.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
 import com.kinglian.screeninquiry.dao.DoctorOperationMapper;
-import com.kinglian.screeninquiry.model.dto.DoctorPendingOrderRep;
-import com.kinglian.screeninquiry.model.dto.DrugInfoRep;
-import com.kinglian.screeninquiry.model.dto.SearchDurgBody;
-import com.kinglian.screeninquiry.model.dto.SearchDurgInfoRep;
+import com.kinglian.screeninquiry.model.dto.*;
 import com.kinglian.screeninquiry.service.DoctorOperationService;
 import com.kinglian.screeninquiry.utils.GetAge;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author HXC
@@ -90,6 +83,25 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
         JSONObject strBody = JSON.parseObject(entity.getBody());
         SearchDurgInfoRep searchDurgInfoRep = JSON.toJavaObject(strBody, SearchDurgInfoRep.class);
         List<DrugInfoRep> result = searchDurgInfoRep.getBody().getList();
+        return result;
+    }
+
+    /**
+     * 获取医生端已完成问诊订单
+     *
+     * @param doctorId
+     * @return
+     */
+    @Override
+    public List<CompleteOrderRep> completeProfile(String doctorId) {
+        List<CompleteOrderRep> result = doctorOperationMapper.selectCompleteOrder(doctorId);
+        result.stream().forEach(x->{
+            try {
+                x.setAge(GetAge.getAge(x.getBirthDay()));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
         return result;
     }
 

@@ -65,6 +65,15 @@ public class DoctorOperationController {
     }
 
     /**
+     * 医生端已完成问诊接口
+     * @return
+     */
+    @GetMapping("/completeProfile")
+    public R<List> completeProfile(String doctorId) {
+        return new R<>(doctorOperationService.completeProfile(doctorId));
+    }
+
+    /**
      * 医生端药品查询接口
      * @param searchKey
      * @return
