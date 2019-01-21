@@ -25,8 +25,8 @@ public interface MedOvPrescriptionMapper extends BaseMapper<MedOvPrescription> {
             " u.birthday," +
             " mops.audit_note," +
             " mops.department," +
-            "mops.judgeMent," +
-            "mops.audit_doctor_name," +
+            " mops.judgeMent," +
+            " mops.audit_doctor_name," +
             " mop.stuff_name," +
             " mop.specs," +
             " mop.pres_usage," +

@@ -17,11 +17,13 @@ import com.kinglian.screeninquiry.dao.MedOvPrescriptionMapper;
 import com.kinglian.screeninquiry.model.dto.Prescription;
 import com.kinglian.screeninquiry.model.entity.MedOvPrescription;
 import com.kinglian.screeninquiry.service.MedOvPrescriptionService;
+import com.kinglian.screeninquiry.utils.GetAge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,7 +42,16 @@ public class MedOvPrescriptionServiceImpl extends ServiceImpl<MedOvPrescriptionM
 
     @Override
     public Page getPreByPreId(Query<Map> query) {
-        return  query.setRecords(medOvPrescriptionMapper.getPreByPreId(query,query.getCondition()));
+        List<Map> maps = medOvPrescriptionMapper.getPreByPreId(query, query.getCondition());
+        Map map = maps.get(0);
+        java.util.Date birthday = (java.util.Date)map.get("birthday");
+        try {
+            map.put("birthday", GetAge.getAge(birthday));
+            maps.add(map);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return  query.setRecords(maps);
     }
 
     @Override
