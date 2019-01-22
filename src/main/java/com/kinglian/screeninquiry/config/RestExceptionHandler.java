@@ -4,6 +4,7 @@ import cn.kinglian.spring.config.NullTokenException;
 import cn.kinglian.spring.config.RBuilder;
 import cn.kinglian.spring.util.R;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.ReflectionException;
 import org.springframework.dao.DuplicateKeyException;

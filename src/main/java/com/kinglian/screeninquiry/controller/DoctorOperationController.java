@@ -1,15 +1,19 @@
 package com.kinglian.screeninquiry.controller;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import cn.kinglian.spring.config.LoginException;
+import cn.kinglian.spring.util.R;
+import com.kinglian.screeninquiry.model.dto.SaveCase;
 import com.kinglian.screeninquiry.service.DoctorOperationService;
 import com.kinglian.screeninquiry.service.MedOfficeVisitService;
+import com.kinglian.screeninquiry.service.MedOvMedicalRecordService;
 import com.kinglian.screeninquiry.service.UserService;
-import com.kinglian.screeninquiry.utils.R;
+import com.kinglian.screeninquiry.utils.JsonEntity;
+import com.xiaoleilu.hutool.bean.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
+import java.util.Date;
 import java.util.List;
 
 
@@ -30,15 +34,20 @@ public class DoctorOperationController {
     @Autowired
     private MedOfficeVisitService medOfficeVisitService;
 
+    @Autowired
+    private MedOvMedicalRecordService medOvMedicalRecordService;
+
     /**
      * 医生端登录接口
-     * @param user
-     * @param password
      * @return
      */
     @PostMapping("/login")
-    public R<Boolean> login(String user, String password) {
-        return new R<>(userService.login(user, password));
+    public R<String> login(@RequestBody JsonEntity jsonEntity) throws Exception {
+        if (!userService.login(jsonEntity.getBody().get("user"), jsonEntity.getBody().get("password"))) {
+            throw new LoginException("帐号密码错误");
+        } else {
+            return new R<>(jsonEntity.getBody().get("user"));
+        }
     }
 
 
@@ -81,5 +90,25 @@ public class DoctorOperationController {
     @GetMapping("/searchKey")
     public R<List> searchDrugInfo(String searchKey) {
         return new R<>(doctorOperationService.searchDrugInfo(searchKey));
+    }
+
+    /**
+     * 医生端查询历史订单
+     * @return
+     */
+    @GetMapping("/historyOrder")
+    public R<List> historyOrder(String doctorId, Date beginTime, Date endTime, String patientName, boolean patientType, int type) {
+        return new R<>(doctorOperationService.historyOrder(doctorId,beginTime,endTime,patientName,patientType,type));
+    }
+
+    /**
+     * 医生端病例填写接口
+     * @return
+     */
+    @PostMapping("/saveCaseHistory")
+    public R<Boolean> saveCaseHistory(@RequestBody JsonEntity jsonEntity) {
+        jsonEntity.getBody();
+        SaveCase saveCase = BeanUtil.mapToBean(jsonEntity.getBody(), SaveCase.class, false);
+        return new R<>(medOvMedicalRecordService.saveCaseHistory(saveCase));
     }
 }
