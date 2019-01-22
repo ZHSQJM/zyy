@@ -7,7 +7,6 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
-import java.lang.reflect.Type;
 
 /**
  * doc_evaluation
