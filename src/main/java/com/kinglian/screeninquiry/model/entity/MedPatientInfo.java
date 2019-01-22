@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * med_patient_info
- * @author 
+ * @author
  */
 public class MedPatientInfo implements Serializable {
     /**
@@ -59,7 +59,17 @@ public class MedPatientInfo implements Serializable {
 
     private Boolean deleted;
 
+    private int newUser;
+
     private static final long serialVersionUID = 1L;
+
+    public int getNewUser() {
+        return newUser;
+    }
+
+    public void setNewUser(int newUser) {
+        this.newUser = newUser;
+    }
 
     public String getId() {
         return id;

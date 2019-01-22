@@ -9,9 +9,11 @@ import com.kinglian.screeninquiry.utils.GetAge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,6 +21,7 @@ import java.util.List;
  * @date 2019-1-17
  */
 @Service
+@Transactional
 public class DoctorOperationServiceImpl implements DoctorOperationService {
 
     @Autowired
@@ -103,6 +106,23 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
             }
         });
         return result;
+    }
+
+    /**
+     * 获取医生端历史订单
+     *
+     * @param doctorId    医生id
+     * @param beginTime   开始时间
+     * @param endTime     结束时间
+     * @param patientName 患者姓名
+     * @param patientType 患者类别
+     * @param type        订单状态
+     * @return
+     */
+    @Override
+    public List historyOrder(String doctorId, Date beginTime, Date endTime, String patientName, boolean patientType, int type) {
+        
+        return null;
     }
 
 }

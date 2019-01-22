@@ -15,7 +15,7 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.kinglian.screeninquiry.utils;
+package com.github.pig.common.util;
 
 import java.io.Serializable;
 
@@ -43,6 +43,8 @@ public class R<T> implements Serializable {
 
     private T data;
 
+    private String result="0";
+
     public R() {
         super();
     }
@@ -55,6 +57,13 @@ public class R<T> implements Serializable {
     public R(T data, String msg) {
         super();
         this.data = data;
+        this.msg = msg;
+    }
+
+    public R(T data,String result, String msg) {
+        super();
+        this.data = data;
+        this.result = result;
         this.msg = msg;
     }
 
@@ -74,6 +83,11 @@ public class R<T> implements Serializable {
 
     public int getCode() {
         return code;
+    }
+
+
+    public String getResult() {
+        return result;
     }
 
     public void setCode(int code) {
