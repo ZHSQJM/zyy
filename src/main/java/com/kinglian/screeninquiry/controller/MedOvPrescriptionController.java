@@ -11,7 +11,6 @@
 package com.kinglian.screeninquiry.controller;
 
 import cn.kinglian.spring.util.Query;
-import cn.kinglian.spring.util.R;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.kinglian.screeninquiry.model.entity.DocEvaluation;
@@ -20,6 +19,7 @@ import com.kinglian.screeninquiry.model.entity.MedOvPrescription;
 import com.kinglian.screeninquiry.service.DocEvaluationService;
 import com.kinglian.screeninquiry.service.MedOvPresSheetService;
 import com.kinglian.screeninquiry.service.MedOvPrescriptionService;
+import com.kinglian.screeninquiry.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
