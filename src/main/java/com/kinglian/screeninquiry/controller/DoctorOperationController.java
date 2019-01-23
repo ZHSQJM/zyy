@@ -2,19 +2,24 @@ package com.kinglian.screeninquiry.controller;
 
 import cn.kinglian.spring.config.LoginException;
 import cn.kinglian.spring.util.R;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.kinglian.screeninquiry.model.dto.DrugList;
 import com.kinglian.screeninquiry.model.dto.SaveCase;
-import com.kinglian.screeninquiry.service.DoctorOperationService;
-import com.kinglian.screeninquiry.service.MedOfficeVisitService;
-import com.kinglian.screeninquiry.service.MedOvMedicalRecordService;
-import com.kinglian.screeninquiry.service.UserService;
+import com.kinglian.screeninquiry.model.dto.SaveDrugInfoReq;
+import com.kinglian.screeninquiry.model.entity.MedOvPrescription;
+import com.kinglian.screeninquiry.service.*;
 import com.kinglian.screeninquiry.utils.JsonEntity;
+import com.kinglian.screeninquiry.utils.JsonEntityOfObject;
 import com.xiaoleilu.hutool.bean.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -37,6 +42,9 @@ public class DoctorOperationController {
     @Autowired
     private MedOvMedicalRecordService medOvMedicalRecordService;
 
+    @Autowired
+    private MedOvPrescriptionService medOvPrescriptionService;
+
     /**
      * 医生端登录接口
      * @return
@@ -53,14 +61,11 @@ public class DoctorOperationController {
 
     /**
      * 医生端待处理端口
-     * @param request
-     * @param doctorId
      * @return
      */
-    @GetMapping("/pendingOrder")
-    public R<List> pendingOrder(HttpServletRequest request, String doctorId) {
-        String time = request.getHeader("timeStamp");
-        return new R<>(doctorOperationService.pendingOrder(time, doctorId));
+    @RequestMapping("/pendingOrder")
+    public R<List> pendingOrder(@RequestBody JsonEntity jsonEntity) {
+        return new R<>(doctorOperationService.pendingOrder(jsonEntity.getHeader().get("timestamp"), jsonEntity.getBody().get("doctorId")));
     }
 
     /**
@@ -68,7 +73,7 @@ public class DoctorOperationController {
      * @param orderId
      * @return
      */
-    @GetMapping("/clinicalReception")
+    @RequestMapping("/clinicalReception")
     public R<Boolean> clinicalReception(@RequestParam String orderId) {
         return new R<>(medOfficeVisitService.clinicalReception(orderId));
     }
@@ -77,38 +82,77 @@ public class DoctorOperationController {
      * 医生端已完成问诊接口
      * @return
      */
-    @GetMapping("/completeProfile")
-    public R<List> completeProfile(String doctorId) {
-        return new R<>(doctorOperationService.completeProfile(doctorId));
+    @RequestMapping("/completeProfile")
+    public R<List> completeProfile(@RequestBody JsonEntity jsonEntity) {
+        return new R<>(doctorOperationService.completeProfile(jsonEntity.getBody().get("doctorId")));
     }
 
     /**
      * 医生端药品查询接口
-     * @param searchKey
      * @return
      */
-    @GetMapping("/searchKey")
-    public R<List> searchDrugInfo(String searchKey) {
-        return new R<>(doctorOperationService.searchDrugInfo(searchKey));
+    @RequestMapping("/searchKey")
+    public R<List> searchDrugInfo(@RequestBody JsonEntity jsonEntity) {
+        return new R<>(doctorOperationService.searchDrugInfo(jsonEntity.getBody().get("searchKey")));
     }
 
     /**
      * 医生端查询历史订单
      * @return
      */
-    @GetMapping("/historyOrder")
-    public R<List> historyOrder(String doctorId, Date beginTime, Date endTime, String patientName, boolean patientType, int type) {
-        return new R<>(doctorOperationService.historyOrder(doctorId,beginTime,endTime,patientName,patientType,type));
+    @RequestMapping("/historyOrder")
+    public R<List> historyOrder(@RequestBody JsonEntity jsonEntity) throws ParseException {
+        return new R<>(doctorOperationService.historyOrder(jsonEntity));
     }
 
     /**
      * 医生端病例填写接口
      * @return
      */
-    @PostMapping("/saveCaseHistory")
+    @RequestMapping("/saveCaseHistory")
     public R<Boolean> saveCaseHistory(@RequestBody JsonEntity jsonEntity) {
-        jsonEntity.getBody();
         SaveCase saveCase = BeanUtil.mapToBean(jsonEntity.getBody(), SaveCase.class, false);
         return new R<>(medOvMedicalRecordService.saveCaseHistory(saveCase));
+    }
+
+    /**
+     * 医生端处方保存接口
+     * @param jsonEntity
+     * @return
+     */
+    @RequestMapping("/saveDrugInfo")
+    public R<Boolean> saveDrugInfo(@RequestBody JsonEntityOfObject jsonEntity) throws IOException {
+        SaveDrugInfoReq saveDrugInfoReq = BeanUtil.mapToBean(jsonEntity.getBody(), SaveDrugInfoReq.class, false);
+        List<MedOvPrescription> medOvPrescriptionList = new ArrayList<>();
+        BigDecimal totalCost = new BigDecimal(0);
+        List<BigDecimal> totalPrice = new ArrayList();
+        saveDrugInfoReq.getDrugList().stream().forEach(x->{
+            DrugList drugList = BeanUtil.mapToBean((Map<?, ?>) x, DrugList.class, false);
+            System.out.println(drugList);
+            MedOvPrescription medOvPrescription = new MedOvPrescription();
+            medOvPrescription.setVisitid(saveDrugInfoReq.getOrderId());
+            medOvPrescription.setStuffid(drugList.getDrugId());
+            medOvPrescription.setStuffName(drugList.getDrugName());
+            medOvPrescription.setDosage(drugList.getDosage());
+            medOvPrescription.setPresFreq(drugList.getFreq());
+            medOvPrescription.setPresUsage(drugList.getUseage());
+            medOvPrescription.setSpecs(drugList.getNorms());
+            medOvPrescription.setPresQty(drugList.getCount());
+            medOvPrescription.setRetailPrice(drugList.getPrice());
+            medOvPrescriptionList.add(medOvPrescription);
+            totalPrice.add(drugList.getPrice().multiply(new BigDecimal(drugList.getCount())));
+        });
+        for (int i = 0; i < totalPrice.size(); i++) {
+            totalCost = totalPrice.get(i).add(totalCost);
+        }
+        //判断删除时先删除处方
+        if (saveDrugInfoReq.getIsSave() == 1) {
+            medOvPrescriptionService.delete(new EntityWrapper<MedOvPrescription>().eq("visitid", saveDrugInfoReq.getOrderId()));
+        }
+        if (doctorOperationService.saveDrugInfo(saveDrugInfoReq, totalCost) &&
+                medOvPrescriptionService.insertBatch(medOvPrescriptionList,medOvPrescriptionList.size())) {
+            return new R<>(true);
+        }
+        return new R<>(false);
     }
 }

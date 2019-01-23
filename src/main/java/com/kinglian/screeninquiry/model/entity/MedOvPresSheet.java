@@ -1,14 +1,17 @@
 package com.kinglian.screeninquiry.model.entity;
 
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * med_ov_pres_sheet
- * @author 
+ * @author
  */
 @Data
 @ToString
@@ -16,6 +19,7 @@ public class MedOvPresSheet implements Serializable {
     /**
      * 处方id
      */
+    @TableId(value = "sheetid",type = IdType.UUID)
     private String sheetid;
 
     /**
@@ -64,7 +68,7 @@ public class MedOvPresSheet implements Serializable {
     /**
      * 总价格
      */
-    private Short totalPrice;
+    private BigDecimal totalPrice;
 
     /**
      * 处方审核状态 0:未审核；1：审核通过；-1审核未通过
@@ -139,6 +143,16 @@ public class MedOvPresSheet implements Serializable {
     private Boolean isTest;
 
     private String test;
+
+    /**
+     * 注意事项
+     */
+    private String attention;
+
+    /**
+     * 医嘱
+     */
+    private String advice;
 
     private static final long serialVersionUID = 1L;
 }

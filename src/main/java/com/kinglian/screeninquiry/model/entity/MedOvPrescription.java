@@ -1,5 +1,7 @@
 package com.kinglian.screeninquiry.model.entity;
 
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 import lombok.ToString;
 
@@ -9,7 +11,7 @@ import java.util.Date;
 
 /**
  * med_ov_prescription
- * @author 
+ * @author
  */
 @Data
 @ToString
@@ -17,6 +19,7 @@ public class MedOvPrescription implements Serializable {
     /**
      * 明细id
      */
+    @TableId(value = "presid",type = IdType.UUID)
     private String presid;
 
     /**
@@ -128,5 +131,10 @@ public class MedOvPrescription implements Serializable {
      * 处方主表id
      */
     private String preSheetId;
+
+    /**
+     * 用量
+     */
+    private String dosage;
 
 }
