@@ -14,11 +14,9 @@ import cn.kinglian.spring.util.Query;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.kinglian.screeninquiry.dao.MedOvPrescriptionMapper;
-import com.kinglian.screeninquiry.model.dto.Prescription;
 import com.kinglian.screeninquiry.model.entity.MedOvPrescription;
 import com.kinglian.screeninquiry.service.MedOvPrescriptionService;
 import com.kinglian.screeninquiry.utils.GetAge;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +50,11 @@ public class MedOvPrescriptionServiceImpl extends ServiceImpl<MedOvPrescriptionM
             e.printStackTrace();
         }
         return  query.setRecords(maps);
+    }
+
+    @Override
+    public List<MedOvPrescription> findByVisitId(String visitid) {
+        return medOvPrescriptionMapper.findByVisitId(visitid);
     }
 
     @Override

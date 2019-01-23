@@ -69,4 +69,21 @@ public interface MedOvPrescriptionMapper extends BaseMapper<MedOvPrescription> {
             @Result(property = "auditStatus", column = "audit_status"),
             @Result(property = "auditDate", column = "audit_date")})
     List<Map> getPresOrder(Query<Map> query, Map<String,Object> condition);
+
+    @Select("SELECT " +
+            " stuff_name," +
+            " specs," +
+            " pres_usage," +
+            " dosage," +
+            " pres_freq" +
+            " FROM" +
+            " med_ov_prescription" +
+            " WHERE" +
+            " med_ov_prescription.visitid = #{visitid}")
+    @Results({@Result(property = "stuffName", column = "stuff_name"),
+              @Result(property = "specs", column = "specs"),
+              @Result(property = "presUsage", column = "pres_usage"),
+              @Result(property = "dosage", column = "dosage"),
+              @Result(property = "presFreq", column = "pres_freq")})
+    List<MedOvPrescription> findByVisitId(String visitid);
 }
