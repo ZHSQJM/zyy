@@ -13,6 +13,12 @@ public class SaveCase {
 
     private String patientId;
 
+    private String opId;
+
+    private String sex;
+
+    private int age;
+
     private String orderId;
 
     private String doctorId;

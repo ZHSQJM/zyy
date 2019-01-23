@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.kinglian.screeninquiry.model.dto.DrugList;
 import com.kinglian.screeninquiry.model.dto.SaveCase;
 import com.kinglian.screeninquiry.model.dto.SaveDrugInfoReq;
+import com.kinglian.screeninquiry.model.entity.MedOfficeVisit;
 import com.kinglian.screeninquiry.model.entity.MedOvPrescription;
 import com.kinglian.screeninquiry.service.*;
 import com.kinglian.screeninquiry.utils.JsonEntity;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -113,6 +115,20 @@ public class DoctorOperationController {
     public R<Boolean> saveCaseHistory(@RequestBody JsonEntity jsonEntity) {
         SaveCase saveCase = BeanUtil.mapToBean(jsonEntity.getBody(), SaveCase.class, false);
         return new R<>(medOvMedicalRecordService.saveCaseHistory(saveCase));
+    }
+
+    /**
+     * 医生端关闭问诊接口
+     * @return
+     */
+    @RequestMapping("/closeInquiry")
+    public R<Boolean> closeInquiry(@RequestBody JsonEntity jsonEntity) {
+        MedOfficeVisit medOfficeVisit = new MedOfficeVisit();
+        medOfficeVisit.setVisitid(jsonEntity.getBody().get("orderId"));
+        medOfficeVisit.setVisitStatus("2");
+        medOfficeVisit.setUpdatedBy(jsonEntity.getBody().get("doctorId"));
+        medOfficeVisit.setUpdatedDate(new Date());
+        return new R<>(medOfficeVisitService.update(medOfficeVisit,new EntityWrapper<MedOfficeVisit>().eq("visitid",jsonEntity.getBody().get("orderId"))));
     }
 
     /**
