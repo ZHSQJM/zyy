@@ -19,6 +19,9 @@ import com.kinglian.screeninquiry.model.entity.MedOvPresSheet;
 import com.kinglian.screeninquiry.model.entity.MedOvPrescription;
 import com.kinglian.screeninquiry.service.*;
 import com.kinglian.screeninquiry.utils.Constant;
+import com.kinglian.screeninquiry.service.DocEvaluationService;
+import com.kinglian.screeninquiry.service.MedOvPresSheetService;
+import com.kinglian.screeninquiry.service.MedOvPrescriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

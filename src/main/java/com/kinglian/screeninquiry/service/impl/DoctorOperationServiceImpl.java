@@ -2,16 +2,21 @@ package com.kinglian.screeninquiry.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.kinglian.screeninquiry.dao.DoctorOperationMapper;
+import com.kinglian.screeninquiry.dao.MedOvPresSheetMapper;
 import com.kinglian.screeninquiry.model.dto.*;
+import com.kinglian.screeninquiry.model.entity.MedOvPresSheet;
 import com.kinglian.screeninquiry.service.DoctorOperationService;
 import com.kinglian.screeninquiry.utils.GetAge;
+import com.kinglian.screeninquiry.utils.JsonEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +32,8 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
     @Autowired
     private DoctorOperationMapper doctorOperationMapper;
 
-
+    @Autowired
+    private MedOvPresSheetMapper medOvPresSheetMapper;
 
     /**
      * 获取医生端待处理列表
@@ -110,19 +116,85 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
 
     /**
      * 获取医生端历史订单
-     *
-     * @param doctorId    医生id
-     * @param beginTime   开始时间
-     * @param endTime     结束时间
-     * @param patientName 患者姓名
-     * @param patientType 患者类别
-     * @param type        订单状态
      * @return
      */
     @Override
-    public List historyOrder(String doctorId, Date beginTime, Date endTime, String patientName, boolean patientType, int type) {
-        
-        return null;
+    public List historyOrder(JsonEntity jsonEntity) {
+        String doctorId = "";
+        String beginTime = null;
+        String endTime = null;
+        String patientName = null;
+        Integer patientType = null;
+        Integer type = null;
+        String drugstoreName = null;
+        if (jsonEntity.getBody().containsKey("doctorId")) {
+            doctorId = jsonEntity.getBody().get("doctorId");
+        }
+        if (jsonEntity.getBody().containsKey("beginTime")) {
+            beginTime = jsonEntity.getBody().get("beginTime");
+        }
+        if (jsonEntity.getBody().containsKey("endTime")) {
+            endTime = jsonEntity.getBody().get("endTime");
+        }
+        if (jsonEntity.getBody().containsKey("patientName")) {
+            patientName = jsonEntity.getBody().get("patientName");
+        }
+        if (jsonEntity.getBody().containsKey("patientType")) {
+            if ("" != jsonEntity.getBody().get("patientType")) {
+                patientType = Integer.parseInt(jsonEntity.getBody().get("patientType"));
+            }
+        }
+        if (jsonEntity.getBody().containsKey("type")) {
+            if ("" != jsonEntity.getBody().get("type")) {
+                type = Integer.parseInt(jsonEntity.getBody().get("type"));
+            }
+        }
+        if (jsonEntity.getBody().containsKey("drugstoreName")) {
+            drugstoreName = jsonEntity.getBody().get("drugstoreName");
+        }
+        List<HistoryOrderRep> result = doctorOperationMapper.selectHistoryOrder(doctorId, beginTime, endTime, patientName, patientType, type, drugstoreName);
+        result.stream().forEach(x-> {
+            try {
+                x.setAge(GetAge.getAge(x.getBirthDay()));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
+        return result;
+    }
+
+    /**
+     * 保存处方接口
+     *
+     * @param saveDrugInfoReq
+     * @return
+     */
+    @Override
+    public boolean saveDrugInfo(SaveDrugInfoReq saveDrugInfoReq, BigDecimal totalCost) {
+        if (saveDrugInfoReq.getIsSave() == 0) {
+            MedOvPresSheet medOvPresSheet = new MedOvPresSheet();
+            medOvPresSheet.setVisitid(saveDrugInfoReq.getOrderId());
+            medOvPresSheet.setDeleted(false);
+            medOvPresSheet.setAuditStatus(0);
+            medOvPresSheet.setAttention(saveDrugInfoReq.getAttention());
+            medOvPresSheet.setAdvice(saveDrugInfoReq.getAdvice());
+            medOvPresSheet.setCreatedBy(saveDrugInfoReq.getDoctorId());
+            medOvPresSheet.setCreatedDate(new Date());
+            medOvPresSheet.setTotalPrice(totalCost);
+            return medOvPresSheetMapper.insert(medOvPresSheet)>0;
+        } else {
+            MedOvPresSheet medOvPresSheet = new MedOvPresSheet();
+            medOvPresSheet.setVisitid(saveDrugInfoReq.getOrderId());
+            medOvPresSheet.setDeleted(false);
+            medOvPresSheet.setAuditStatus(0);
+            medOvPresSheet.setAttention(saveDrugInfoReq.getAttention());
+            medOvPresSheet.setAdvice(saveDrugInfoReq.getAdvice());
+            medOvPresSheet.setUpdatedBy(saveDrugInfoReq.getDoctorId());
+            medOvPresSheet.setUpdatedDate(new Date());
+            medOvPresSheet.setTotalPrice(totalCost);
+            return medOvPresSheetMapper.update(medOvPresSheet,new EntityWrapper<MedOvPresSheet>().eq("visitid",saveDrugInfoReq.getOrderId()))>0;
+        }
+
     }
 
 }

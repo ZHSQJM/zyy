@@ -1,11 +1,14 @@
 package com.kinglian.screeninquiry.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import cn.kinglian.spring.util.Query;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.kinglian.screeninquiry.dao.MedOvMedicalRecordMapper;
+import com.kinglian.screeninquiry.dao.MedPatientInfoMapper;
 import com.kinglian.screeninquiry.model.dto.SaveCase;
 import com.kinglian.screeninquiry.model.entity.MedOvMedicalRecord;
+import com.kinglian.screeninquiry.model.entity.MedPatientInfo;
 import com.kinglian.screeninquiry.service.MedOvMedicalRecordService;
 import com.kinglian.screeninquiry.utils.GetAge;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +28,17 @@ public class MedOvMedicalRecordServiceImpl extends ServiceImpl<MedOvMedicalRecor
     @Autowired
     private MedOvMedicalRecordMapper medOvMedicalRecordMapper;
 
+    @Autowired
+    private MedPatientInfoMapper medPatientInfoMapper;
+
     @Override
     public boolean saveCaseHistory(SaveCase saveCase) {
+        MedPatientInfo queryEntity = new MedPatientInfo();
+        queryEntity.setOpId(saveCase.getOpId());
+        MedPatientInfo medPatientInfo = medPatientInfoMapper.selectOne(queryEntity);
+       /* if (medPatientInfo.ge() == null || saveCase.getPatientName() == "") {
+
+        }*/
         MedOvMedicalRecord medOvMedicalRecord = new MedOvMedicalRecord();
         medOvMedicalRecord.setVisitid(saveCase.getOrderId());
         medOvMedicalRecord.setPatientid(saveCase.getPatientId());

@@ -61,6 +61,16 @@ public class MedPatientInfo implements Serializable {
 
     private int newUser;
 
+    private String opId;
+
+    public String getOpId() {
+        return opId;
+    }
+
+    public void setOpId(String opId) {
+        this.opId = opId;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public int getNewUser() {

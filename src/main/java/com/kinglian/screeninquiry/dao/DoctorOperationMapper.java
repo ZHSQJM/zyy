@@ -2,8 +2,10 @@ package com.kinglian.screeninquiry.dao;
 
 import com.kinglian.screeninquiry.model.dto.CompleteOrderRep;
 import com.kinglian.screeninquiry.model.dto.DoctorPendingOrderRep;
+import com.kinglian.screeninquiry.model.dto.HistoryOrderRep;
 import org.apache.ibatis.annotations.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -100,4 +102,19 @@ public interface DoctorOperationMapper {
             "WHERE\n" +
             "\ta.patientid = mpi.id")
     List<DoctorPendingOrderRep> selectFailOrder(@Param("doctorId") String doctorId);
+
+    /**
+     * 根据医生id查询所有历史订单
+     * @param doctorId
+     * @param beginTime
+     * @param endTime
+     * @param patientName
+     * @param patientType
+     * @param type
+     * @return
+     */
+    List<HistoryOrderRep> selectHistoryOrder(@Param("doctorId") String doctorId,@Param("beginTime") String beginTime,
+                                             @Param("endTime") String endTime, @Param("patientName") String patientName,
+                                             @Param("patientType") Integer patientType, @Param("type") Integer type,
+                                             @Param("drugstoreName") String drugstoreName);
 }

@@ -2,15 +2,13 @@ package com.kinglian.screeninquiry.model.entity;
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
-import com.sun.deploy.security.ValidationState;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
 
 /**
  * doc_evaluation
- * @author 
+ * @author
  */
 @Data
 public class DocEvaluation implements Serializable {
