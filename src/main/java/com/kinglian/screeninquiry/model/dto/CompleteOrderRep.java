@@ -44,4 +44,9 @@ public class CompleteOrderRep {
      * 患者生日
      */
     private Date birthDay;
+
+    /**
+     * 人脸识别id
+     */
+    private String opId;
 }
