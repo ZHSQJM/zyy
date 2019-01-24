@@ -1,7 +1,7 @@
 package com.kinglian.screeninquiry.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import cn.kinglian.spring.util.Query;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.kinglian.screeninquiry.dao.MedOvMedicalRecordMapper;
@@ -12,11 +12,11 @@ import com.kinglian.screeninquiry.model.entity.MedPatientInfo;
 import com.kinglian.screeninquiry.service.MedOvMedicalRecordService;
 import com.kinglian.screeninquiry.utils.GetAge;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * @author HXC
@@ -35,10 +35,18 @@ public class MedOvMedicalRecordServiceImpl extends ServiceImpl<MedOvMedicalRecor
     public boolean saveCaseHistory(SaveCase saveCase) {
         MedPatientInfo queryEntity = new MedPatientInfo();
         queryEntity.setOpId(saveCase.getOpId());
+        queryEntity.setDeleted(false);
+        System.out.println(queryEntity);
         MedPatientInfo medPatientInfo = medPatientInfoMapper.selectOne(queryEntity);
-       /* if (medPatientInfo.ge() == null || saveCase.getPatientName() == "") {
-
-        }*/
+        System.out.println(medPatientInfo);
+        if (medPatientInfo.getMemberName() == null || medPatientInfo.getMemberName() == "") {
+            MedPatientInfo saveEntity = new MedPatientInfo();
+            saveEntity.setMemberName(saveCase.getPatientName());
+            saveEntity.setSex(saveCase.getSex());
+            saveEntity.setBirthday(GetAge.getBirthDay(saveCase.getAge()));
+            saveEntity.setDeleted(false);
+            medPatientInfoMapper.update(saveEntity,new EntityWrapper<MedPatientInfo>().eq("op_id",saveCase.getOpId()));
+        }
         MedOvMedicalRecord medOvMedicalRecord = new MedOvMedicalRecord();
         medOvMedicalRecord.setVisitid(saveCase.getOrderId());
         medOvMedicalRecord.setPatientid(saveCase.getPatientId());

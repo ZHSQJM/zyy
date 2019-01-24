@@ -53,4 +53,13 @@ public class GetAge {
         return age;
     }
 
+    /**
+     * 获取几年前的当天日期
+     */
+    public static Date getBirthDay(int age) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR,-age);
+        return cal.getTime();
+    }
+
 }
