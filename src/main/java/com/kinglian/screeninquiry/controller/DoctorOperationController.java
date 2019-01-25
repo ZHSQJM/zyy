@@ -66,17 +66,17 @@ public class DoctorOperationController {
      */
     @RequestMapping("/pendingOrder")
     public R<List> pendingOrder(@RequestBody JsonEntity jsonEntity) {
+        System.out.println(jsonEntity);
         return new R<>(doctorOperationService.pendingOrder(jsonEntity.getHeader().get("timestamp"), jsonEntity.getBody().get("doctorId")));
     }
 
     /**
      * 医生端接单操作
-     * @param orderId
      * @return
      */
     @RequestMapping("/clinicalReception")
-    public R<Boolean> clinicalReception(@RequestParam String orderId) {
-        return new R<>(medOfficeVisitService.clinicalReception(orderId));
+    public R<Boolean> clinicalReception(@RequestBody JsonEntity jsonEntity) {
+        return new R<>(medOfficeVisitService.clinicalReception(jsonEntity.getBody().get("orderId")));
     }
 
     /**
