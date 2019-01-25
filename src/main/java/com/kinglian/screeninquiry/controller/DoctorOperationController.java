@@ -1,8 +1,10 @@
 package com.kinglian.screeninquiry.controller;
 
 import cn.kinglian.spring.config.LoginException;
+import cn.kinglian.spring.util.Query;
 import cn.kinglian.spring.util.R;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.kinglian.screeninquiry.model.dto.DrugList;
 import com.kinglian.screeninquiry.model.dto.SaveCase;
 import com.kinglian.screeninquiry.model.dto.SaveDrugInfoReq;
@@ -18,10 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -129,6 +128,18 @@ public class DoctorOperationController {
         medOfficeVisit.setUpdatedBy(jsonEntity.getBody().get("doctorId"));
         medOfficeVisit.setUpdatedDate(new Date());
         return new R<>(medOfficeVisitService.update(medOfficeVisit,new EntityWrapper<MedOfficeVisit>().eq("visitid",jsonEntity.getBody().get("orderId"))));
+    }
+
+    /**
+     * 病历详情
+     * @return
+     */
+    @RequestMapping("/getMedicalRecordDetails")
+    public R<Page> getMedicalRecordDetails(@RequestBody JsonEntity jsonEntity){
+        Map params = new HashMap();
+        params.put("visitid",jsonEntity.getBody().get("visitid"));
+        List<MedOvPrescription> medList = medOvPrescriptionService.findByVisitId((String) params.get("visitid"));
+        return new R<>(medOvMedicalRecordService.getMedicalRecordDetails(new Query<Map>(params)));
     }
 
     /**

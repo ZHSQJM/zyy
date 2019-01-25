@@ -19,23 +19,28 @@ public interface DoctorOperationMapper {
      * @param doctorId
      * @return
      */
-    @Results({@Result(property = "patientName",column = "member_name"),@Result(property = "patinetId",column = "patinetid"),@Result(property = "sex",column = "sex"),
-            @Result(property = "birthDay",column = "birthday"),@Result(property = "orderId",column = "visitid")})
+    @Results({@Result(property = "patientName",column = "member_name"),
+            @Result(property = "patinetId",column = "patientid"),@Result(property = "sex",column = "sex"),
+            @Result(property = "birthDay",column = "birthday"),@Result(property = "orderId",column = "visitid"),
+            @Result(property = "creatDay",column = "created_date"),@Result(property = "newUser",column = "new_user"),
+            @Result(property = "opId",column = "op_id")})
     @ResultType(DoctorPendingOrderRep.class)
     @Select("SELECT\n" +
             "\tmov.patientid,\n" +
             "\tmov.visitid,\n" +
+            "\tmov.created_date,\n" +
             "\tmpi.birthday,\n" +
+            "\tmpi.new_user,\n" +
             "\tmpi.sex,\n" +
+            "\tmpi.op_id,\n" +
             "\tmpi.member_name \n" +
             "FROM\n" +
-            "\tmed_office_visit mov,\n" +
-            "\tmed_patient_info mpi \n" +
+            "\tmed_office_visit mov\n" +
+            "\tLEFT JOIN med_patient_info mpi ON mov.patientid = mpi.id \n" +
             "WHERE\n" +
             "\tmov.cdid = #{doctorId} \n" +
             "\tAND mov.visit_status = '0' \n" +
-            "\tAND mov.deleted = '0' \n" +
-            "\tAND mov.patientid = mpi.id")
+            "\tAND mov.deleted = '0' ")
     List<DoctorPendingOrderRep> selectPengdingOrder(@Param("doctorId") String doctorId);
 
     /**
@@ -51,24 +56,22 @@ public interface DoctorOperationMapper {
             "\to.visit_date,\n" +
             "\to.visitid \n" +
             "FROM\n" +
-            "\tmed_patient_info mpi,\n" +
             "\t(\n" +
             "\tSELECT\n" +
             "\t\tmov.visitid,\n" +
             "\t\tmov.patientid,\n" +
             "\t\tmov.visit_date \n" +
             "\tFROM\n" +
-            "\t\tmed_ov_pres_sheet mops,\n" +
-            "\t\t( SELECT visitid, patientid, visit_date FROM med_office_visit WHERE cdid = #{doctorId} AND visit_status = '1' ) mov \n" +
+            "\t\t( SELECT visitid, patientid, visit_date FROM med_office_visit WHERE cdid = #{doctorId} AND visit_status = '1' ) mov\n" +
+            "\t\tLEFT JOIN med_ov_pres_sheet mops ON mops.visitid = mov.visitid \n" +
             "\tWHERE\n" +
-            "\t\tmops.visitid = mov.visitid \n" +
-            "\t\tAND mops.audit_status = 1 \n" +
-            "\t) o \n" +
-            "WHERE\n" +
-            "\tmpi.id = o.patientid")
+            "\t\tmops.audit_status = 1 \n" +
+            "\t) o\n" +
+            "\tLEFT JOIN med_patient_info mpi ON mpi.id = o.patientid")
     @Results({@Result(property = "patientName",column = "member_name"),@Result(property = "patinetId",column = "patinetid"),
             @Result(property = "sex",column = "sex"), @Result(property = "birthDay",column = "birthday"),
-            @Result(property = "orderId",column = "visitid"), @Result(property = "creatDay",column = "visit_date")})
+            @Result(property = "orderId",column = "visitid"), @Result(property = "creatDay",column = "visit_date"),
+            @Result(property = "opId",column = "op_id")})
     @ResultType(CompleteOrderRep.class)
     List<CompleteOrderRep> selectCompleteOrder(@Param("doctorId") String doctorId);
 
@@ -93,13 +96,15 @@ public interface DoctorOperationMapper {
             "\t\tmov.visitid,\n" +
             "\t\taudit_note \n" +
             "\tFROM\n" +
+            "\t( SELECT visitid, audit_note FROM med_ov_pres_sheet WHERE audit_status = '-1' AND deleted = '0' ) mops LEFT JOIN\n" +
             "\t\tmed_office_visit mov\n" +
-            "\t\t, ( SELECT visitid, audit_note FROM med_ov_pres_sheet WHERE audit_status = '-1' AND deleted = '0' ) mops \n" +
+            "\t\tON\n" +
+            "\t\tmov.visitid = mops.visitid\n" +
             "\tWHERE\n" +
-            "\t\tcdid = #{doctorId} AND mov.visitid = mops.visitid \n" +
-            "\t) a,\n" +
+            "\t\tcdid = #{doctorId} \n" +
+            "\t) a LEFT JOIN\n" +
             "\tmed_patient_info mpi \n" +
-            "WHERE\n" +
+            "ON\n" +
             "\ta.patientid = mpi.id")
     List<DoctorPendingOrderRep> selectFailOrder(@Param("doctorId") String doctorId);
 
