@@ -115,4 +115,14 @@ public class MedOvPrescriptionController {
         return new R<>(medOvMedicalRecordService.getMedicalRecordDetails(new Query<Map>(params)));
     }
 
+    /**
+     * 获取处方笺
+     * @return
+     */
+    @GetMapping("ObtainPrescriptionPad")
+    public R<Page> ObtainPrescriptionPad(@RequestParam Map<String, Object> params){
+        medOvPrescriptionService.findByVisitId((String) params.get("visitid"));
+        return new R<>(medOvPrescriptionService.ObtainPrescriptionPad(new Query<Map>(params)));
+    }
+
 }
