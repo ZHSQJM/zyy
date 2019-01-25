@@ -25,6 +25,7 @@ public interface MedOvMedicalRecordMapper extends BaseMapper<MedOvMedicalRecord>
             " mpi.birthday," +
             " mop.pre_sheet_id," +
             " mops.department," +
+            " mops.advice," +
             " momr.recordid," +
             " momr.chief_complaint," +
             " momr.present_illness," +
@@ -46,11 +47,13 @@ public interface MedOvMedicalRecordMapper extends BaseMapper<MedOvMedicalRecord>
             " INNER JOIN med_patient_info mpi ON mpi.id = momr.patientid " +
             " WHERE" +
             " momr.visitid = #{visitid}")
-    @Results({@Result(property = "memberName", column = "member_name"),
+    @Results({@Result(property = "visitid", column = "visitid",id=true),
+            @Result(property = "memberName", column = "member_name"),
             @Result(property = "sex", column = "sex"),
             @Result(property = "birthday", column = "birthday"),
             @Result(property = "preSheetId", column = "pre_sheet_id"),
             @Result(property = "department", column = "department"),
+            @Result(property = "advice", column = "advice"),
             @Result(property = "recordid", column = "recordid"),
             @Result(property = "chiefComplaint", column = "chief_complaint"),
             @Result(property = "presentIllness", column = "present_illness"),

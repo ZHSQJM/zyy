@@ -32,4 +32,6 @@ public interface MedOvPrescriptionService extends IService<MedOvPrescription> {
     Page getPresOrder(Query<Map> query);
 
     List<MedOvPrescription> findByVisitId(String visitid);
+
+    Page ObtainPrescriptionPad(Query<Map> mapQuery);
 }

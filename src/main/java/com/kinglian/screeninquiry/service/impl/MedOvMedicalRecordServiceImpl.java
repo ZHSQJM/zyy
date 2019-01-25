@@ -11,6 +11,7 @@ import com.kinglian.screeninquiry.model.entity.MedOvMedicalRecord;
 import com.kinglian.screeninquiry.model.entity.MedPatientInfo;
 import com.kinglian.screeninquiry.service.MedOvMedicalRecordService;
 import com.kinglian.screeninquiry.utils.GetAge;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,7 +76,7 @@ public class MedOvMedicalRecordServiceImpl extends ServiceImpl<MedOvMedicalRecor
                 medicalRecordDetails.add(map);
             }
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+           throw new RuntimeException("无数据");
         }
         return query.setRecords(medicalRecordDetails);
     }
