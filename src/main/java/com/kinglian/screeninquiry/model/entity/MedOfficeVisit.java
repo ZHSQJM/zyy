@@ -153,5 +153,10 @@ public class MedOfficeVisit implements Serializable {
      */
     private String drugstoreid;
 
+    /**
+     * 就诊医院名称
+     */
+    private String drugstoreName;
+
     private static final long serialVersionUID = 1L;
 }

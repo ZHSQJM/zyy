@@ -22,6 +22,16 @@ public class DoctorPendingOrderRep {
     private String patinetId;
 
     /**
+     * 是否为新用户
+     */
+    private Integer newUser;
+
+    /**
+     * 人脸识别id
+     */
+    private String opId;
+
+    /**
      * 患者性别
      */
     private String sex;

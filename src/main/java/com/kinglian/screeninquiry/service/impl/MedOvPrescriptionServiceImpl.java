@@ -14,11 +14,9 @@ import cn.kinglian.spring.util.Query;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.kinglian.screeninquiry.dao.MedOvPrescriptionMapper;
-import com.kinglian.screeninquiry.model.dto.Prescription;
 import com.kinglian.screeninquiry.model.entity.MedOvPrescription;
 import com.kinglian.screeninquiry.service.MedOvPrescriptionService;
 import com.kinglian.screeninquiry.utils.GetAge;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +39,23 @@ public class MedOvPrescriptionServiceImpl extends ServiceImpl<MedOvPrescriptionM
 
 
     @Override
+    public Page ObtainPrescriptionPad(Query<Map> mapQuery) {
+        List<Map> maps = medOvPrescriptionMapper.ObtainPrescriptionPad(mapQuery, mapQuery.getCondition());
+        try {
+            if (maps.size() != 0 || maps != null) {
+                Map map = maps.get(0);
+                java.util.Date birthday = (java.util.Date) map.get("birthday");
+
+                map.put("birthday", GetAge.getAge(birthday));
+                maps.add(map);
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return mapQuery.setRecords(maps);
+    }
+
+    @Override
     public Page getPreByPreId(Query<Map> query) {
         List<Map> maps = medOvPrescriptionMapper.getPreByPreId(query, query.getCondition());
         Map map = maps.get(0);
@@ -52,6 +67,11 @@ public class MedOvPrescriptionServiceImpl extends ServiceImpl<MedOvPrescriptionM
             e.printStackTrace();
         }
         return  query.setRecords(maps);
+    }
+
+    @Override
+    public List<MedOvPrescription> findByVisitId(String visitid) {
+        return medOvPrescriptionMapper.findByVisitId(visitid);
     }
 
     @Override

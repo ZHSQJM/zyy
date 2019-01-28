@@ -11,18 +11,22 @@
 package com.kinglian.screeninquiry.controller;
 
 import cn.kinglian.spring.util.Query;
+import cn.kinglian.spring.util.R;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.kinglian.screeninquiry.model.entity.DocEvaluation;
 import com.kinglian.screeninquiry.model.entity.MedOvPresSheet;
 import com.kinglian.screeninquiry.model.entity.MedOvPrescription;
+import com.kinglian.screeninquiry.service.*;
+import com.kinglian.screeninquiry.utils.Constant;
 import com.kinglian.screeninquiry.service.DocEvaluationService;
 import com.kinglian.screeninquiry.service.MedOvPresSheetService;
 import com.kinglian.screeninquiry.service.MedOvPrescriptionService;
-import com.kinglian.screeninquiry.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,6 +48,12 @@ public class MedOvPrescriptionController {
 
     @Autowired
     DocEvaluationService docEvaluationService;
+
+    @Autowired
+    MedOfficeVisitService medOfficeVisitService;
+
+    @Autowired
+    MedOvMedicalRecordService medOvMedicalRecordService;
 
     @GetMapping("getPrescription")
     public R<Page> getPrescription(@RequestParam Map<String, Object> params){
@@ -71,9 +81,51 @@ public class MedOvPrescriptionController {
         return new R<>(medOvPresSheetService.update(medOvPresSheet,new EntityWrapper<MedOvPresSheet>().eq("sheetid",sheetid)));
     }
 
+    /**
+     * 对医生服务进行评价
+     * @param docEvaluation
+     * @return
+     */
     @PostMapping("evaluate")
     public R<Boolean> evaluateDoctor(@RequestBody DocEvaluation docEvaluation){
         return new R<>(docEvaluationService.insert(docEvaluation));
     }
+
+    /**
+     * 获取病历
+     * @param code 微信公众号code
+     */
+    @GetMapping("getMedicalRecord")
+    public R<Page> getMedicalRecord(@RequestParam String code){
+//        String openId = Constant.gainOpenId(code);
+        String openid = code;
+        Map<String, Object> params = new HashMap<>();
+        params.put("openid",openid);
+        return new R<>(medOfficeVisitService.getMedicalRecordByOpenId(new Query<Map>(params)));
+    }
+
+    /**
+     * 病历详情
+     * @param params
+     * @return
+     */
+    @GetMapping("getMedicalRecordDetails")
+    public R<Page> getMedicalRecordDetails(@RequestParam Map<String, Object> params){
+        List<MedOvPrescription> medList = medOvPrescriptionService.findByVisitId((String) params.get("visitid"));
+        return new R<>(medOvMedicalRecordService.getMedicalRecordDetails(new Query<Map>(params)));
+    }
+
+    /**
+     * 获取处方笺
+     * @return
+     */
+    @GetMapping("ObtainPrescriptionPad")
+    public R<Page> ObtainPrescriptionPad(@RequestParam Map<String, Object> params){
+        medOvPrescriptionService.findByVisitId((String) params.get("visitid"));
+        return new R<>(medOvPrescriptionService.ObtainPrescriptionPad(new Query<Map>(params)));
+    }
+
+
+
 
 }

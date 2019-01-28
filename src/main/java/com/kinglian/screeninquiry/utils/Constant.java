@@ -12,6 +12,7 @@ package com.kinglian.screeninquiry.utils;
 
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StringUtils;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -34,6 +35,12 @@ public class Constant {
     private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
     private static final String APP_ID = "internethospital@kinglian.cn";
 
+    /**
+     * 模板消息请求路径
+     */
+    private static String TEMPLATEMESSAGE_URL="https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN";
+
+
     @Value("${appSecret.password}")
     private static String APP_SECRET ;
 
@@ -43,10 +50,16 @@ public class Constant {
         String openid = jsonObject.getString("openid");
         return openid;
     }
+    //access_token
+    public static String getAccessToken(String code){
+        String url = ACCESS_TOKEN_URL.replace("APPID", APP_ID).replace("SECRET", APP_SECRET).replace("CODE", code);
+        JSONObject jsonObject = httpsRequest(url,"GET",null);
+        String access_token = jsonObject.getString("access_token");
+        return access_token;
+    }
 
     /**
      * 发送https请求
-     *
      * @param requestUrl 请求地址
      * @param requestMethod 请求方式（GET、POST）
      * @param outputStr 提交的数据
@@ -100,4 +113,36 @@ public class Constant {
         return jsonObject;
     }
 
+
+
+    /**
+     * 自定义发送模板信息
+     * @param accessToken 公众号标识
+     * @param data 发送的内容拼接成的
+     * @return
+     *
+     */
+    public static boolean SendTempletTest(String accessToken,String data){
+//        String requestUrl = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN";
+        if(StringUtil.isEmptyString(data)){
+            System.out.println("模版参数为空");
+            return false;
+        }
+        // 拼接请求地址
+        TEMPLATEMESSAGE_URL = TEMPLATEMESSAGE_URL.replace("ACCESS_TOKEN", accessToken);
+        try {
+            //将这里修改为自己调用服务的方式
+            JSONObject jsonObject = httpsRequest(TEMPLATEMESSAGE_URL, "POST",data);
+            if(jsonObject!=null){
+                if("0".equals(jsonObject.getString("errcode"))){
+                    System.out.println("发送模板消息成功！");
+                }else{
+                    System.out.println(jsonObject.getString("errcode"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
 }

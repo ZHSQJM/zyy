@@ -69,4 +69,63 @@ public interface MedOvPrescriptionMapper extends BaseMapper<MedOvPrescription> {
             @Result(property = "auditStatus", column = "audit_status"),
             @Result(property = "auditDate", column = "audit_date")})
     List<Map> getPresOrder(Query<Map> query, Map<String,Object> condition);
+
+    @Select("SELECT " +
+            " stuff_name," +
+            " specs," +
+            " pres_usage," +
+            " dosage," +
+            " pres_freq" +
+            " FROM" +
+            " med_ov_prescription" +
+            " WHERE" +
+            " med_ov_prescription.visitid = #{visitid}")
+    @Results({@Result(property = "stuffName", column = "stuff_name"),
+              @Result(property = "specs", column = "specs"),
+              @Result(property = "presUsage", column = "pres_usage"),
+              @Result(property = "dosage", column = "dosage"),
+              @Result(property = "presFreq", column = "pres_freq")})
+    List<MedOvPrescription> findByVisitId(String visitid);
+
+
+    @Select("SELECT " +
+            " mpi.member_name, " +
+            " mpi.sex, " +
+            " mpi.birthday, " +
+            " mov.reg_department_name, " +
+            " mov.visit_date," +
+            " mov.cdid," +
+            " mop.visitid, " +
+            " mops.judgeMent, " +
+            " mops.audit_doctor_name, " +
+            " mops.audit_by," +
+            " mops.advice, " +
+            " u.address, " +
+            " u.mobile " +
+            " FROM " +
+            " med_patient_info mpi " +
+            " INNER JOIN med_ov_prescription mop ON mpi.id = mop.patientid " +
+            " INNER JOIN med_ov_pres_sheet mops ON mop.pre_sheet_id = mops.sheetid  " +
+            " INNER JOIN med_office_visit mov ON mov.visitid = mops.visitid " +
+            " INNER JOIN user u ON u.user_id = mpi.portal_id " +
+            " WHERE " +
+            " mop.visitid = #{visitid}")
+    @Results({@Result(property = "visitid", column = "visitid",id=true),
+            @Result(property = "memberName", column = "member_name"),
+            @Result(property = "sex", column = "sex"),
+            @Result(property = "birthday", column = "birthday"),
+            @Result(property = "regDepartmentName", column = "reg_department_name"),
+            @Result(property = "visitDate", column = "visit_date"),
+            @Result(property = "cdid", column = "cdid"),
+            @Result(property = "judgeMent", column = "judgeMent"),
+            @Result(property = "auditDoctorName", column = "audit_doctor_name"),
+            @Result(property = "audit_by", column = "audit_by"),
+            @Result(property = "advice", column = "advice"),
+            @Result(property = "address", column = "address"),
+            @Result(property = "mobile", column = "mobile"),
+            @Result(property = "medList",javaType=List.class,column = "visitid",many = @Many(
+                    select = "com.kinglian.screeninquiry.dao.MedOvPrescriptionMapper.findByVisitId"
+            ))
+    })
+    List<Map> ObtainPrescriptionPad(Query<Map> mapQuery, Map<String,Object> condition);
 }

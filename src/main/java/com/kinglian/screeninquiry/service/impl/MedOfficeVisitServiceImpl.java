@@ -40,4 +40,9 @@ public class MedOfficeVisitServiceImpl extends ServiceImpl<MedOfficeVisitMapper,
     public Page getMedicalRecordByOpenId(Query<Map> query) {
         return query.setRecords(medOfficeVisitMapper.getMedicalRecordByOpenId(query,query.getCondition()));
     }
+
+    @Override
+    public Map<String, String> SetWeChatTemplateInformation(String visitid) {
+        return medOfficeVisitMapper.SetWeChatTemplateInformation(visitid);
+    }
 }

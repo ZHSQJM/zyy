@@ -13,9 +13,9 @@ package com.kinglian.screeninquiry.service;
 import cn.kinglian.spring.util.Query;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
-import com.kinglian.screeninquiry.model.dto.Prescription;
 import com.kinglian.screeninquiry.model.entity.MedOvPrescription;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,4 +30,8 @@ public interface MedOvPrescriptionService extends IService<MedOvPrescription> {
     Page getPreByPreId(Query<Map> query);
 
     Page getPresOrder(Query<Map> query);
+
+    List<MedOvPrescription> findByVisitId(String visitid);
+
+    Page ObtainPrescriptionPad(Query<Map> mapQuery);
 }
