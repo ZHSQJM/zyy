@@ -48,10 +48,12 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
         List<DoctorPendingOrderRep> newOrder = doctorOperationMapper.selectPengdingOrder(doctorId);
         newOrder.stream().forEach(x-> {
             x.setType(1);
-            try {
-                x.setAge(GetAge.getAge(x.getBirthDay()));
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+            if (x.getBirthDay() != null) {
+                try {
+                    x.setAge(GetAge.getAge(x.getBirthDay()));
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
             }
         });
         //查询审核未通过订单
@@ -59,7 +61,9 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
         failOrder.stream().forEach(x->{
             x.setType(2);
             try {
-                x.setAge(GetAge.getAge(x.getBirthDay()));
+                if (x.getBirthDay() != null) {
+                    x.setAge(GetAge.getAge(x.getBirthDay()));
+                }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
@@ -165,7 +169,6 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
 
     /**
      * 保存处方接口
-     *
      * @param saveDrugInfoReq
      * @return
      */
