@@ -17,9 +17,9 @@ import java.util.Map;
  */
 public interface MedOvMedicalRecordMapper extends BaseMapper<MedOvMedicalRecord> {
 
+
     @Select("SELECT " +
-            " momr.visitid," +
-            " momr.recordid," +
+            " DISTINCT momr.visitid," +
             " mpi.member_name," +
             " mpi.sex," +
             " mpi.birthday," +
@@ -72,5 +72,4 @@ public interface MedOvMedicalRecordMapper extends BaseMapper<MedOvMedicalRecord>
             ))
     })
     List<Map> getMedicalRecordDetails(Query<Map> query, Map<String,Object> condition);
-
 }

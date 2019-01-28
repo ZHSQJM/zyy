@@ -94,6 +94,7 @@ public interface MedOvPrescriptionMapper extends BaseMapper<MedOvPrescription> {
             " mpi.birthday, " +
             " mov.reg_department_name, " +
             " mov.visit_date," +
+            " mov.cdid," +
             " mop.visitid, " +
             " mops.judgeMent, " +
             " mops.audit_doctor_name, " +
@@ -115,6 +116,7 @@ public interface MedOvPrescriptionMapper extends BaseMapper<MedOvPrescription> {
             @Result(property = "birthday", column = "birthday"),
             @Result(property = "regDepartmentName", column = "reg_department_name"),
             @Result(property = "visitDate", column = "visit_date"),
+            @Result(property = "cdid", column = "cdid"),
             @Result(property = "judgeMent", column = "judgeMent"),
             @Result(property = "auditDoctorName", column = "audit_doctor_name"),
             @Result(property = "audit_by", column = "audit_by"),
