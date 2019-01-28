@@ -2,7 +2,7 @@ package com.kinglian.screeninquiry.controller;
 
 import cn.kinglian.spring.config.LoginException;
 import cn.kinglian.spring.util.Query;
-import cn.kinglian.spring.util.R;
+import com.kinglian.screeninquiry.utils.R;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.kinglian.screeninquiry.model.dto.DrugList;

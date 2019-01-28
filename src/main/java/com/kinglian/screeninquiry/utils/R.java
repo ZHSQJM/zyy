@@ -15,7 +15,7 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.github.pig.common.util;
+package com.kinglian.screeninquiry.utils;
 
 import java.io.Serializable;
 

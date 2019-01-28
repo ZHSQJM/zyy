@@ -90,7 +90,7 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
         body.put("searchKey", searchKey);
         body.put("searchType", "1");
         reqJ.put("body", body);
-        String url = "http://118.190.165.84:80/hrs/api/cloudHospital?data={data}";
+        String url = "http://183.63.114.204:8888/hrs/api/cloudHospital?data={data}";
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> entity = restTemplate.getForEntity(url, String.class,reqJ.toString());
         JSONObject strBody = JSON.parseObject(entity.getBody());
