@@ -40,7 +40,7 @@ public class MedOvMedicalRecordServiceImpl extends ServiceImpl<MedOvMedicalRecor
         queryEntity.setOpId(saveCase.getOpId());
         queryEntity.setDeleted(false);
         MedPatientInfo medPatientInfo = medPatientInfoMapper.selectOne(queryEntity);
-        if (medPatientInfo.getMemberName() == null || medPatientInfo.getMemberName() == "") {
+        if (medPatientInfo.getMemberName() == null || "".equals(medPatientInfo.getMemberName())) {
             MedPatientInfo saveEntity = new MedPatientInfo();
             saveEntity.setMemberName(saveCase.getPatientName());
             saveEntity.setSex(saveCase.getSex());
