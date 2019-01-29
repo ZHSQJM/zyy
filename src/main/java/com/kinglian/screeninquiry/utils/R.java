@@ -17,6 +17,8 @@
 
 package com.kinglian.screeninquiry.utils;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -25,6 +27,7 @@ import java.io.Serializable;
  * @param <T>
  * @author lengleng
  */
+@Data
 public class R<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -73,32 +76,4 @@ public class R<T> implements Serializable {
         this.code = FAIL;
     }
 
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-
-    public String getResult() {
-        return result;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
 }
