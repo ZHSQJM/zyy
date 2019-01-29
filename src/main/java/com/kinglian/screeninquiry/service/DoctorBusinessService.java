@@ -20,7 +20,7 @@ public interface DoctorBusinessService  {
 
     OrderStateVto getOrderState(RequestBaseParam<SubmitVisitBodyParam> param);
 
-    Map queryVisitInfo(RequestBaseParam<SubmitVisitBodyParam> param);
+    MedVisitInfo queryVisitInfo(RequestBaseParam<SubmitVisitBodyParam> param);
 
-    Map queryVisitInfoByAudit(RequestBaseParam<SubmitVisitBodyParam> param);
+    MedVisitInfo queryVisitInfoByAudit(RequestBaseParam<SubmitVisitBodyParam> param);
 }

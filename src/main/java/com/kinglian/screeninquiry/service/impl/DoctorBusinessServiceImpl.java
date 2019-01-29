@@ -16,14 +16,9 @@ import com.kinglian.screeninquiry.utils.UUIDGenerator;
 import com.kinglian.screeninquiry.utils.WeixinPay;
 
 import com.xiaoleilu.hutool.date.DateTime;
-import org.apache.velocity.runtime.directive.Foreach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-
-import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -217,7 +212,7 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
         MedOfficeVisit medOfficeVisit =new MedOfficeVisit();
         medOfficeVisit.setVisitid(UUIDGenerator.generate());
         medOfficeVisit.setCdid(param.getBody().getDoctorId());
-
+        medOfficeVisit.setDeleted(false);
 
         HospitalDoctorExtension item= hospitalDoctorExtensionMapper.selectById(param.getBody().getDoctorId());
         if (item!=null) {
@@ -257,7 +252,7 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
              medPatientInfo.setId(param.getBody().getPortalId());
              medPatientInfo.setCreatedDate(DateTime.now());
              medPatientInfo.setNewUser(0);
-
+             medPatientInfo.setOpId(param.getBody().getPortalId());
              EntityWrapper<User> userEntity=new EntityWrapper<>();
 
              userEntity.eq("user_id",param.getBody().getPortalId());
@@ -278,6 +273,12 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
                  medPatientInfoMapper.insert(medPatientInfo);
              }
 
+         }
+         else
+         {
+             medPatientInfo.setNewUser(1);
+
+             medPatientInfoMapper.updateById(medPatientInfo);
          }
 
         medOfficeVisit.setPatientDob(medPatientInfo.getBirthday());
@@ -302,7 +303,7 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
             WeChatParams params =new WeChatParams();
             params.total_fee="1";
             params.attach="1";
-            params.body="大拼机";
+            params.body="视频问诊";
             params.out_trade_no=r.visitId;
             try {
                 String url= WeixinPay.getCodeUrl(params);
@@ -464,7 +465,7 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
 
 
     @Override
-    public Map queryVisitInfoByAudit(RequestBaseParam<SubmitVisitBodyParam> param)  {
+    public MedVisitInfo queryVisitInfoByAudit(RequestBaseParam<SubmitVisitBodyParam> param)  {
 
       /*  public String doctorId;
         public String doctorName;
@@ -473,7 +474,7 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
         public String visitTime;
         public String doctorImgUrl;
         public List<DoctorDepartmentVto> listDept;*/
-
+        MedVisitInfo medVisitInfo=new MedVisitInfo();
         Map map=new HashMap();
         Map params = new HashMap();
         params.put("visitid", param.getBody().visitId);
@@ -512,6 +513,11 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
                       //  }
                         map.put("presUrl","http://yun-test.kinglian.net/officialWeChat/prescriptionDetail?visitId="+param.getBody().visitId);
                     }
+                    ConversionUtils.TypeConversion(medicalRecordDetails1,medVisitInfo,null);
+                }
+                else
+                {
+
 
                 }
 
@@ -521,6 +527,6 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
         }
 
 
-        return  map;
+        return  medVisitInfo;
     }
 }

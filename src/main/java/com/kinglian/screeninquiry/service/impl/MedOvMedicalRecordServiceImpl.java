@@ -4,9 +4,11 @@ import cn.kinglian.spring.util.Query;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.kinglian.screeninquiry.dao.MedOfficeVisitMapper;
 import com.kinglian.screeninquiry.dao.MedOvMedicalRecordMapper;
 import com.kinglian.screeninquiry.dao.MedPatientInfoMapper;
 import com.kinglian.screeninquiry.model.dto.SaveCase;
+import com.kinglian.screeninquiry.model.entity.MedOfficeVisit;
 import com.kinglian.screeninquiry.model.entity.MedOvMedicalRecord;
 import com.kinglian.screeninquiry.model.entity.MedPatientInfo;
 import com.kinglian.screeninquiry.service.MedOvMedicalRecordService;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,19 +37,38 @@ public class MedOvMedicalRecordServiceImpl extends ServiceImpl<MedOvMedicalRecor
     @Autowired
     private MedPatientInfoMapper medPatientInfoMapper;
 
+
+    @Autowired
+    private MedOfficeVisitMapper medOfficeVisitMapper;
+
     @Override
     public boolean saveCaseHistory(SaveCase saveCase) {
         MedPatientInfo queryEntity = new MedPatientInfo();
         queryEntity.setOpId(saveCase.getOpId());
-        queryEntity.setDeleted(false);
-        MedPatientInfo medPatientInfo = medPatientInfoMapper.selectOne(queryEntity);
-        if (medPatientInfo.getMemberName() == null || "".equals(medPatientInfo.getMemberName())) {
-            MedPatientInfo saveEntity = new MedPatientInfo();
+       // queryEntity.setDeleted(false);
+        MedPatientInfo saveEntity = medPatientInfoMapper.selectOne(queryEntity);
+        if (saveEntity.getMemberName() == null || "".equals(saveEntity.getMemberName())) {
+           // MedPatientInfo saveEntity = new MedPatientInfo();
             saveEntity.setMemberName(saveCase.getPatientName());
             saveEntity.setSex(saveCase.getSex());
             saveEntity.setBirthday(GetAge.getBirthDay(saveCase.getAge()));
             saveEntity.setDeleted(false);
             medPatientInfoMapper.update(saveEntity, new EntityWrapper<MedPatientInfo>().eq("op_id", saveCase.getOpId()));
+        }
+
+        EntityWrapper<MedOfficeVisit> entity=new EntityWrapper<>();
+        entity.eq("visitid",saveCase.getOrderId());
+        Map params1 = new HashMap();
+        params1.put("page", 1);
+
+        List<MedOfficeVisit> list=medOfficeVisitMapper.selectPage(new Query<>(params1),entity);
+        if (list!=null&&list.size()>0) {
+            MedOfficeVisit medOfficeVisit1 = list.get(0);
+            medOfficeVisit1.setPatientName(saveEntity.getMemberName());
+            medOfficeVisit1.setPatientSex(Integer.parseInt(saveEntity.getSex()));
+            medOfficeVisit1.setPatientDob(GetAge.getBirthDay(saveCase.getAge()));
+            medOfficeVisitMapper.update(medOfficeVisit1, new EntityWrapper<MedOfficeVisit>().eq("visitid", medOfficeVisit1.getVisitid()));
+
         }
         MedOvMedicalRecord medOvMedicalRecord = new MedOvMedicalRecord();
         medOvMedicalRecord.setVisitid(saveCase.getOrderId());

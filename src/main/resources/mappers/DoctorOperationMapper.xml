@@ -62,7 +62,7 @@
         ) mov
         LEFT JOIN med_patient_info mpi ON mov.patientid = mpi.id
         WHERE
-        mpi.deleted = '0'
+        1=1
         <if test="patientType != null and patientType !=''">
             AND mpi.new_user = #{patientType}
         </if>
