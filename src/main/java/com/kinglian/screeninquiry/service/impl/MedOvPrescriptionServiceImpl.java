@@ -13,11 +13,14 @@ package com.kinglian.screeninquiry.service.impl;
 import cn.kinglian.spring.util.Query;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.kinglian.screeninquiry.dao.DocEvaluationMapper;
 import com.kinglian.screeninquiry.dao.MedOvPrescriptionMapper;
+import com.kinglian.screeninquiry.model.entity.DocEvaluation;
 import com.kinglian.screeninquiry.model.entity.MedOvPrescription;
 import com.kinglian.screeninquiry.service.MedOvPrescriptionService;
 import com.kinglian.screeninquiry.utils.DateConvertUtils;
 import com.kinglian.screeninquiry.utils.GetAge;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,11 +42,15 @@ public class MedOvPrescriptionServiceImpl extends ServiceImpl<MedOvPrescriptionM
     @Resource
     private MedOvPrescriptionMapper medOvPrescriptionMapper;
 
+    @Autowired
+    private DocEvaluationMapper docEvaluationMapper;
 
     @Override
     public Page ObtainPrescriptionPad(Query<Map> mapQuery) {
         List<Map> result = new ArrayList<>();
         List<Map> maps = medOvPrescriptionMapper.ObtainPrescriptionPad(mapQuery, mapQuery.getCondition());
+        DocEvaluation docEvaluation = docEvaluationMapper.selectById((String) mapQuery.getCondition().get("visitid"));
+
         try {
             if (maps != null && maps.size() != 0 ) {
                 Map map = maps.get(0);
@@ -53,6 +60,12 @@ public class MedOvPrescriptionServiceImpl extends ServiceImpl<MedOvPrescriptionM
                 java.util.Date visitDate = (java.util.Date) map.get("visitDate");
                 String date = DateConvertUtils.dateToStrLong(visitDate);
                 map.put("visitDate", date);
+
+                if (docEvaluation != null){
+                  map.put("isAppraise",Boolean.TRUE);
+                }else {
+                    map.put("isAppraise",Boolean.FALSE);
+                }
                 result.add(map);
             }
         } catch (IllegalAccessException e) {
