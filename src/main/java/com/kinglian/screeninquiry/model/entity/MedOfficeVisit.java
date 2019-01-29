@@ -3,6 +3,7 @@ package com.kinglian.screeninquiry.model.entity;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -158,5 +159,17 @@ public class MedOfficeVisit implements Serializable {
      */
     private String drugstoreName;
 
+
+    private  int orderState;
+
+    private  int payMode;
+
+    private BigDecimal payCost;
+
+
+    private BigDecimal getCost;
+
     private static final long serialVersionUID = 1L;
+
+    private String orderNo;
 }
