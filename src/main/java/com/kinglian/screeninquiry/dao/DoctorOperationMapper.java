@@ -40,7 +40,7 @@ public interface DoctorOperationMapper {
             "WHERE\n" +
             "\tmov.cdid = #{doctorId} \n" +
             "\tAND mov.visit_status = '0' \n" +
-            "\t ")
+            "\t order by created_date desc")
     List<DoctorPendingOrderRep> selectPengdingOrder(@Param("doctorId") String doctorId);
 
     /**
