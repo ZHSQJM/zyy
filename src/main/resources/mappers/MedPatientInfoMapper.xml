@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kinglian.screeninquiry.dao.MedPatientInfoMapper">
-  <resultMap id="BaseResultMap" type="com.kinglian.screeninquiry.model.entity.MedPatientInfo">
+ <!-- <resultMap id="BaseResultMap" type="com.kinglian.screeninquiry.model.entity.MedPatientInfo">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="portal_id" jdbcType="VARCHAR" property="portalId" />
     <result column="id_card" jdbcType="VARCHAR" property="idCard" />
@@ -165,5 +165,5 @@
       updated_date = #{updatedDate,jdbcType=TIMESTAMP},
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=VARCHAR}
-  </update>
+  </update>-->
 </mapper>

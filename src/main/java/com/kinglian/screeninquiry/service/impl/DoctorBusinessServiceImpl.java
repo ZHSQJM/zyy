@@ -251,9 +251,17 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
              medPatientInfo=new MedPatientInfo();
              medPatientInfo.setId(param.getBody().getPortalId());
              medPatientInfo.setCreatedDate(DateTime.now());
+             medPatientInfo.setDeleted(false);
              medPatientInfo.setNewUser(0);
              medPatientInfo.setOpId(param.getBody().getPortalId());
-             EntityWrapper<User> userEntity=new EntityWrapper<>();
+
+
+             /**
+              * by HXC
+              */
+             medPatientInfoMapper.insert(medPatientInfo);
+
+             /*EntityWrapper<User> userEntity=new EntityWrapper<>();
 
              userEntity.eq("user_id",param.getBody().getPortalId());
 
@@ -271,7 +279,7 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
                  medPatientInfo.setPortalId(param.getBody().getPortalId());
 
                  medPatientInfoMapper.insert(medPatientInfo);
-             }
+             }*/
 
          }
          else
