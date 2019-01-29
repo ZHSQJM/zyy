@@ -36,6 +36,11 @@ public class DocEvaluation implements Serializable {
      */
     private String appraiserId;
 
+    /**
+     * 问诊id
+     */
+    private String visitId;
+
     private static final long serialVersionUID = 1L;
 
 }

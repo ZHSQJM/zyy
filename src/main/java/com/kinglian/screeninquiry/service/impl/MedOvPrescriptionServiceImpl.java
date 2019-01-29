@@ -16,11 +16,13 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.kinglian.screeninquiry.dao.MedOvPrescriptionMapper;
 import com.kinglian.screeninquiry.model.entity.MedOvPrescription;
 import com.kinglian.screeninquiry.service.MedOvPrescriptionService;
+import com.kinglian.screeninquiry.utils.DateConvertUtils;
 import com.kinglian.screeninquiry.utils.GetAge;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,14 +42,18 @@ public class MedOvPrescriptionServiceImpl extends ServiceImpl<MedOvPrescriptionM
 
     @Override
     public Page ObtainPrescriptionPad(Query<Map> mapQuery) {
+        List<Map> result = new ArrayList<>();
         List<Map> maps = medOvPrescriptionMapper.ObtainPrescriptionPad(mapQuery, mapQuery.getCondition());
         try {
-            if (maps.size() != 0 || maps != null) {
+            if (maps != null && maps.size() != 0 ) {
                 Map map = maps.get(0);
                 java.util.Date birthday = (java.util.Date) map.get("birthday");
-
                 map.put("birthday", GetAge.getAge(birthday));
-                maps.add(map);
+
+                java.util.Date visitDate = (java.util.Date) map.get("visitDate");
+                String date = DateConvertUtils.dateToStrLong(visitDate);
+                map.put("visitDate", date);
+                result.add(map);
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();

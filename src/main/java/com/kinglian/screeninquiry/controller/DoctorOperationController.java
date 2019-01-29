@@ -2,7 +2,8 @@ package com.kinglian.screeninquiry.controller;
 
 import cn.kinglian.spring.config.LoginException;
 import cn.kinglian.spring.util.Query;
-import cn.kinglian.spring.util.R;
+import com.kinglian.screeninquiry.model.entity.User;
+import com.kinglian.screeninquiry.utils.R;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.kinglian.screeninquiry.model.dto.DrugList;
@@ -51,11 +52,21 @@ public class DoctorOperationController {
      * @return
      */
     @PostMapping("/login")
-    public R<String> login(@RequestBody JsonEntity jsonEntity) throws Exception {
+    public R<Map> login(@RequestBody JsonEntity jsonEntity) throws Exception {
         if (!userService.login(jsonEntity.getBody().get("user"), jsonEntity.getBody().get("password"))) {
             throw new LoginException("帐号密码错误");
         } else {
-            return new R<>(jsonEntity.getBody().get("user"));
+            Map resutl = new HashMap();
+            User user = userService.selectOne(new EntityWrapper<User>().eq("user_account", jsonEntity.getBody().get("user")));
+            resutl.put("userId", user.getUserId());
+            resutl.put("userName", user.getUserName());
+            resutl.put("sex", user.getSex());
+            resutl.put("userAccount", user.getUserAccount());
+            resutl.put("sfzh", user.getSfzh());
+            resutl.put("imagePath", user.getImagePath());
+            resutl.put("birthDay",user.getBirthday());
+            resutl.put("nickName", user.getNickName());
+            return new R<>(resutl);
         }
     }
 

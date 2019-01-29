@@ -18,6 +18,7 @@ import com.kinglian.screeninquiry.model.entity.*;
 import com.kinglian.screeninquiry.service.MedOfficeVisitService;
 import com.kinglian.screeninquiry.service.MedOvPrescriptionService;
 import com.kinglian.screeninquiry.utils.Constant;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,10 +61,18 @@ public class WeChatController {
         String openId = Constant.gainOpenId(code);
         //获取accessToken
         String accessToken = Constant.getAccessToken(code);
+        //创建消息发送实体对象
+        TemplateMessage templateMessage = new TemplateMessage();
         Map<String, Object> queryMap = new HashMap<>();
         queryMap.put("openid",openId);
         Page record = medOfficeVisitService.getMedicalRecordByOpenId(new Query<>(queryMap));
         String visitid = (String) record.getCondition().get("visitid");
+        Integer auditStatus = (Integer) record.getCondition().get("auditStatus");
+        String jsonString = null;
+        if (auditStatus == 0 || auditStatus == -1){
+            //"处方正在审核中，请稍等..."
+            jsonString = "处方正在审核中，请稍等...";
+        }
 
         //获取“初步诊断”设置模板消息
         Map<String, String> Map = medOfficeVisitService.SetWeChatTemplateInformation(visitid);
@@ -75,8 +84,7 @@ public class WeChatController {
             String stuffName = med.getStuffName();
             stringBuffer.append(stringBuffer).append(",").deleteCharAt(stringBuffer.length()-1);
         }
-        //创建消息发送实体对象
-        TemplateMessage templateMessage = new TemplateMessage();
+
         templateMessage.setTouser(openId);
         templateMessage.setTemplate_id(Template);
         StringBuffer HaveALookStringBuffer = new StringBuffer(HaveALook);
@@ -100,7 +108,7 @@ public class WeChatController {
         data.setRemark(remark);
        templateMessage.setData(data);
         //将封装的数据转成JSON
-        String jsonString = JSON.toJSONString(templateMessage);
+        jsonString = JSON.toJSONString(templateMessage);
         boolean bool = Constant.SendTempletTest(accessToken, jsonString);
         return bool;
     }

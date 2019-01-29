@@ -1,3 +1,20 @@
+/*
+ *    Copyright (c) 2018-2025, lengleng All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice,
+ * this list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ * Neither the name of the pig4cloud.com developer nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * Author: lengleng (wangiegie@gmail.com)
+ */
+
 package com.kinglian.screeninquiry.utils;
 
 import java.io.Serializable;
@@ -22,11 +39,11 @@ public class R<T> implements Serializable {
 
     private String msg = "success";
 
-    private int code = SUCCESS;
+    private int code = 200;
 
     private T data;
 
-    public String result = "0";
+    private String result="0";
 
     public R() {
         super();
@@ -43,7 +60,7 @@ public class R<T> implements Serializable {
         this.msg = msg;
     }
 
-    public R(T data, String result, String msg) {
+    public R(T data,String result, String msg) {
         super();
         this.data = data;
         this.result = result;
@@ -73,12 +90,15 @@ public class R<T> implements Serializable {
         return result;
     }
 
-
-    public void setResult(String result) {
-        this.result = result;
-    }
-
     public void setCode(int code) {
         this.code = code;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }
