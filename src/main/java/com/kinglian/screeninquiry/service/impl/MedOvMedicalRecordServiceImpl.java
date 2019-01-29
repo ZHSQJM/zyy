@@ -54,6 +54,8 @@ public class MedOvMedicalRecordServiceImpl extends ServiceImpl<MedOvMedicalRecor
             saveEntity.setBirthday(GetAge.getBirthDay(saveCase.getAge()));
             saveEntity.setDeleted(false);
             medPatientInfoMapper.update(saveEntity, new EntityWrapper<MedPatientInfo>().eq("op_id", saveCase.getOpId()));
+        } else {
+            saveCase.setPatientId(saveEntity.getId());
         }
 
         EntityWrapper<MedOfficeVisit> entity=new EntityWrapper<>();
