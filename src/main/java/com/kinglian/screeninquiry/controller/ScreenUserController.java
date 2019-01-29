@@ -132,7 +132,7 @@ public class ScreenUserController {
      */
     @PostMapping(value = "/queryVisitInfoByAudit")
     public R queryPresOrder(@RequestBody RequestBaseParam<SubmitVisitBodyParam> param) {
-        return new R<>(doctorBusinessService.queryVisitInfo(param));
+        return new R<>(doctorBusinessService.queryVisitInfoByAudit(param));
     }
 
 }
