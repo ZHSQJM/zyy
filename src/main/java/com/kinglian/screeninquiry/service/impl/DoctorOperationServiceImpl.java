@@ -183,7 +183,7 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
             medOvPresSheet.setAdvice(saveDrugInfoReq.getAdvice());
             medOvPresSheet.setCreatedBy(saveDrugInfoReq.getDoctorId());
             medOvPresSheet.setCreatedDate(new Date());
-            medOvPresSheet.setTotalPrice(totalCost);
+            //medOvPresSheet.setTotalPrice(totalCost);
             return medOvPresSheetMapper.insert(medOvPresSheet)>0;
         } else {
             MedOvPresSheet medOvPresSheet = new MedOvPresSheet();
@@ -194,7 +194,7 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
             medOvPresSheet.setAdvice(saveDrugInfoReq.getAdvice());
             medOvPresSheet.setUpdatedBy(saveDrugInfoReq.getDoctorId());
             medOvPresSheet.setUpdatedDate(new Date());
-            medOvPresSheet.setTotalPrice(totalCost);
+            //medOvPresSheet.setTotalPrice(totalCost);
             return medOvPresSheetMapper.update(medOvPresSheet,new EntityWrapper<MedOvPresSheet>().eq("visitid",saveDrugInfoReq.getOrderId()))>0;
         }
 
