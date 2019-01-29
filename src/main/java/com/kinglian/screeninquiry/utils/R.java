@@ -15,7 +15,7 @@
  * Author: lengleng (wangiegie@gmail.com)
  */
 
-package com.github.pig.common.util;
+package com.kinglian.screeninquiry.utils;
 
 import java.io.Serializable;
 
@@ -39,7 +39,7 @@ public class R<T> implements Serializable {
 
     private String msg = "success";
 
-    private int code = SUCCESS;
+    private int code = 200;
 
     private T data;
 

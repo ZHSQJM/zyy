@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -35,6 +36,7 @@ public class MedOfficeVisitServiceImpl extends ServiceImpl<MedOfficeVisitMapper,
     @Override
     public Boolean clinicalReception(String orderId) {
         MedOfficeVisit medOfficeVisit = new MedOfficeVisit();
+        medOfficeVisit.setVisitDate(new Date());
         medOfficeVisit.setVisitStatus("1");
         return medOfficeVisitMapper.update(medOfficeVisit, new EntityWrapper<MedOfficeVisit>().eq("visitid", orderId))>0;
     }

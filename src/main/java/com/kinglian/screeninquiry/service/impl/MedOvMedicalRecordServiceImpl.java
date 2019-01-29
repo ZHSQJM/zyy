@@ -15,6 +15,7 @@ import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -66,18 +67,19 @@ public class MedOvMedicalRecordServiceImpl extends ServiceImpl<MedOvMedicalRecor
 
     @Override
     public Page getMedicalRecordDetails(Query<Map> query) {
+        List<Map> result = new ArrayList<>();
         List<Map> medicalRecordDetails = null;
         try {
             medicalRecordDetails = medOvMedicalRecordMapper.getMedicalRecordDetails(query, query.getCondition());
-            if (medicalRecordDetails != null || medicalRecordDetails.size() != 0){
+            if (medicalRecordDetails != null && medicalRecordDetails.size() != 0){
                 Map map = medicalRecordDetails.get(0);
                 java.util.Date birthday = (java.util.Date)map.get("birthday");
                 map.put("birthday", GetAge.getAge(birthday));
-                medicalRecordDetails.add(map);
+                result.add(map);
             }
         } catch (IllegalAccessException e) {
            throw new RuntimeException("无数据");
         }
-        return query.setRecords(medicalRecordDetails);
+        return query.setRecords(result);
     }
 }
