@@ -23,6 +23,8 @@ public interface MedOvMedicalRecordMapper extends BaseMapper<MedOvMedicalRecord>
             " mpi.member_name," +
             " mpi.sex," +
             " mpi.birthday," +
+            " mpi.member_id," +
+            " mov.visit_date," +
             " mop.pre_sheet_id," +
             " mops.department," +
             " mops.advice," +
