@@ -1,5 +1,6 @@
 package com.kinglian.screeninquiry.model.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
@@ -13,8 +14,14 @@ import java.io.Serializable;
 @Data
 public class DocEvaluation implements Serializable {
 
-    @TableId(value = "id",type = IdType.UUID)
-    private String id;
+    /*@TableField(value = "id",type = IdType.UUID)
+    private String id;*/
+
+    /**
+     * 问诊id
+     */
+    @TableId
+    private String visitId;
 
     /**
      * 医生id
@@ -35,11 +42,6 @@ public class DocEvaluation implements Serializable {
      * 评价人id
      */
     private String appraiserId;
-
-    /**
-     * 问诊id
-     */
-    private String visitId;
 
     private static final long serialVersionUID = 1L;
 

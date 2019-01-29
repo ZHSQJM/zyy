@@ -127,7 +127,6 @@ public class MedOvPrescriptionController {
      */
     @GetMapping("getMedicalRecordDetails")
     public R<Page> getMedicalRecordDetails(@RequestParam Map<String, Object> params){
-//        List<MedOvPrescription> medList = medOvPrescriptionService.findByVisitId((String) params.get("visitid"));
         return new R<>(medOvMedicalRecordService.getMedicalRecordDetails(new Query<Map>(params)));
     }
 
@@ -137,7 +136,7 @@ public class MedOvPrescriptionController {
      */
     @GetMapping("ObtainPrescriptionPad")
     public R<Page> ObtainPrescriptionPad(@RequestParam Map<String, Object> params){
-        medOvPrescriptionService.findByVisitId((String) params.get("visitid"));
+//        medOvPrescriptionService.findByVisitId((String) params.get("visitid"));
         return new R<>(medOvPrescriptionService.ObtainPrescriptionPad(new Query<Map>(params)));
     }
 
