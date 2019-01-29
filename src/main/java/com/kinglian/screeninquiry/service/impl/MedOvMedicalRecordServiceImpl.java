@@ -45,7 +45,7 @@ public class MedOvMedicalRecordServiceImpl extends ServiceImpl<MedOvMedicalRecor
             saveEntity.setSex(saveCase.getSex());
             saveEntity.setBirthday(GetAge.getBirthDay(saveCase.getAge()));
             saveEntity.setDeleted(false);
-            medPatientInfoMapper.update(saveEntity,new EntityWrapper<MedPatientInfo>().eq("op_id",saveCase.getOpId()));
+            medPatientInfoMapper.update(saveEntity, new EntityWrapper<MedPatientInfo>().eq("op_id", saveCase.getOpId()));
         }
         MedOvMedicalRecord medOvMedicalRecord = new MedOvMedicalRecord();
         medOvMedicalRecord.setVisitid(saveCase.getOrderId());
@@ -62,7 +62,7 @@ public class MedOvMedicalRecordServiceImpl extends ServiceImpl<MedOvMedicalRecor
         medOvMedicalRecord.setUntowardEffect(saveCase.getUntowardEffect());
         medOvMedicalRecord.setUncomfortableSymptom(saveCase.getUncomfortableSymptom());
         medOvMedicalRecord.setDiagnosis(saveCase.getDiagnosis());
-        return medOvMedicalRecordMapper.insert(medOvMedicalRecord)>0;
+        return medOvMedicalRecordMapper.insert(medOvMedicalRecord) > 0;
     }
 
     @Override
@@ -71,14 +71,18 @@ public class MedOvMedicalRecordServiceImpl extends ServiceImpl<MedOvMedicalRecor
         List<Map> medicalRecordDetails = null;
         try {
             medicalRecordDetails = medOvMedicalRecordMapper.getMedicalRecordDetails(query, query.getCondition());
-            if (medicalRecordDetails != null && medicalRecordDetails.size() != 0){
+            if (medicalRecordDetails != null && medicalRecordDetails.size() != 0) {
                 Map map = medicalRecordDetails.get(0);
-                java.util.Date birthday = (java.util.Date)map.get("birthday");
+                java.util.Date birthday = (java.util.Date) map.get("birthday");
                 map.put("birthday", GetAge.getAge(birthday));
+
+                java.util.Date visitDate = (java.util.Date) map.get("visitDate");
+                String date = DateConvertUtils.dateToStrLong(visitDate);
+                map.put("visitDate", date);
                 result.add(map);
             }
         } catch (IllegalAccessException e) {
-           throw new RuntimeException("无数据");
+            throw new RuntimeException("无数据");
         }
         return query.setRecords(result);
     }
