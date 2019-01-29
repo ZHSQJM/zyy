@@ -3,7 +3,7 @@
 <mapper namespace="com.kinglian.screeninquiry.dao.DoctorOperationMapper">
 
     <resultMap id="HistoryOrderRep" type="com.kinglian.screeninquiry.model.dto.HistoryOrderRep">
-        <result column="visit_date" property="visitiDate" />
+        <result column="visit_date" property="visitiDate"/>
         <result column="visitid" property="visitiId"/>
         <result column="visit_status" property="visitiStauts"/>
         <result column="drugstoreid" property="drugStoreId"/>

@@ -144,12 +144,12 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
             patientName = jsonEntity.getBody().get("patientName");
         }
         if (jsonEntity.getBody().containsKey("patientType")) {
-            if ("" != jsonEntity.getBody().get("patientType") || jsonEntity.getBody().get("patientType") != null) {
+            if (!"".equals(jsonEntity.getBody().get("patientType")) && jsonEntity.getBody().get("patientType") != null) {
                 patientType = Integer.parseInt(jsonEntity.getBody().get("patientType"));
             }
         }
         if (jsonEntity.getBody().containsKey("type")) {
-            if ("" != jsonEntity.getBody().get("type") || jsonEntity.getBody().get("type")!= null) {
+            if (!"".equals(jsonEntity.getBody().get("type")) && jsonEntity.getBody().get("type")!= null) {
                 type = Integer.parseInt(jsonEntity.getBody().get("type"));
             }
         }
