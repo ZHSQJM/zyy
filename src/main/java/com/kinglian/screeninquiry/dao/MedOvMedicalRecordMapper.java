@@ -51,6 +51,8 @@ public interface MedOvMedicalRecordMapper extends BaseMapper<MedOvMedicalRecord>
             @Result(property = "memberName", column = "member_name"),
             @Result(property = "sex", column = "sex"),
             @Result(property = "birthday", column = "birthday"),
+            @Result(property = "memberId", column = "member_id"),
+            @Result(property = "visitDate", column = "visit_date"),
             @Result(property = "preSheetId", column = "pre_sheet_id"),
             @Result(property = "department", column = "department"),
             @Result(property = "advice", column = "advice"),

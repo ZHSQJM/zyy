@@ -10,6 +10,7 @@ import com.kinglian.screeninquiry.model.dto.SaveCase;
 import com.kinglian.screeninquiry.model.entity.MedOvMedicalRecord;
 import com.kinglian.screeninquiry.model.entity.MedPatientInfo;
 import com.kinglian.screeninquiry.service.MedOvMedicalRecordService;
+import com.kinglian.screeninquiry.utils.DateConvertUtils;
 import com.kinglian.screeninquiry.utils.GetAge;
 import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
