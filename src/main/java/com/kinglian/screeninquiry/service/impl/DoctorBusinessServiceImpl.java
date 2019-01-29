@@ -6,6 +6,7 @@ import com.kinglian.screeninquiry.dao.*;
 import com.kinglian.screeninquiry.model.dto.*;
 import com.kinglian.screeninquiry.model.entity.*;
 import com.kinglian.screeninquiry.model.entity.User;
+import com.kinglian.screeninquiry.utils.ConversionUtils;
 import com.kinglian.screeninquiry.utils.GetAge;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -22,12 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -361,7 +359,7 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
 
             }
 
-            //vto.setOrderState(Convert.toStr(medOfficeVisit1.getOrderState()));
+
 
         }
 
@@ -369,7 +367,7 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
     }
 
     @Override
-    public Map queryVisitInfo(RequestBaseParam<SubmitVisitBodyParam> param)  {
+    public MedVisitInfo queryVisitInfo(RequestBaseParam<SubmitVisitBodyParam> param)  {
 
       /*  public String doctorId;
         public String doctorName;
@@ -379,6 +377,7 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
         public String doctorImgUrl;
         public List<DoctorDepartmentVto> listDept;*/
 
+        MedVisitInfo medVisitInfo=new MedVisitInfo();
         Map map=new HashMap();
         Map params = new HashMap();
         params.put("visitid", param.getBody().visitId);
@@ -386,7 +385,9 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
         List<Map> medicalRecordDetails1 = null;
         try {
             medicalRecordDetails1 = medOvMedicalRecordMapper.getMedicalRecordDetails(query, query.getCondition());
-            if (medicalRecordDetails1 != null || medicalRecordDetails1.size() != 0){
+            if (medicalRecordDetails1 != null && medicalRecordDetails1.size() != 0)
+
+            {
                  map = medicalRecordDetails1.get(0);
                 java.util.Date birthday = (java.util.Date)map.get("birthday");
                 map.put("birthday", GetAge.getAge(birthday));
@@ -418,13 +419,47 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
                 }
                 medicalRecordDetails1.remove(0);
                 medicalRecordDetails1.add(map);
+
+                ConversionUtils.TypeConversion(medicalRecordDetails1,medVisitInfo,null);
+            }
+            else
+            {
+                EntityWrapper<MedOfficeVisit> entity=new EntityWrapper<>();
+                entity.eq("visitid",param.getBody().getVisitId());
+                Map params1 = new HashMap();
+                params1.put("page", 1);
+
+                List<MedOfficeVisit> list=medOfficeVisitMapper.selectPage(new Query<>(params1),entity);
+                if (list!=null&&list.size()>0) {
+                    MedOfficeVisit medOfficeVisit1 = list.get(0);
+                    if (medOfficeVisit1!=null) {
+                        medVisitInfo.setDoctorId( medOfficeVisit1.getCdid());
+                        medVisitInfo.setDoctorName( medOfficeVisit1.getCdName());
+                        medVisitInfo.setVisitTime("1000");
+                        medVisitInfo.setRate("100%");
+
+                        HospitalDoctorExtension item= hospitalDoctorExtensionMapper.selectById(medOfficeVisit1.getCdid());
+
+                        if (item!=null)
+                        {
+                            medVisitInfo.setDoctorImgUrl(item.getPictureUrl());
+                            medVisitInfo.setHospitalName("互联网医院");
+                        }
+
+                    }
+
+                }
+                List<MedList> listMed=new ArrayList<>() ;
+                medVisitInfo.setMedList(listMed);
+
+
             }
         } catch (IllegalAccessException e) {
             throw new RuntimeException("无数据");
         }
 
 
-        return  map;
+        return  medVisitInfo;
     }
 
 
@@ -446,7 +481,7 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
         List<Map> medicalRecordDetails1 = null;
         try {
             medicalRecordDetails1 = medOvMedicalRecordMapper.getMedicalRecordDetails(query, query.getCondition());
-            if (medicalRecordDetails1 != null || medicalRecordDetails1.size() != 0){
+            if (medicalRecordDetails1 != null && medicalRecordDetails1.size() != 0){
                 map = medicalRecordDetails1.get(0);
                 java.util.Date birthday = (java.util.Date)map.get("birthday");
                 map.put("birthday", GetAge.getAge(birthday));
@@ -479,8 +514,7 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
                     }
 
                 }
-                medicalRecordDetails1.remove(0);
-                medicalRecordDetails1.add(map);
+
             }
         } catch (IllegalAccessException e) {
             throw new RuntimeException("无数据");
