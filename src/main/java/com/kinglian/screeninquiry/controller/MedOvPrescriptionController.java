@@ -15,6 +15,7 @@ import cn.kinglian.spring.util.R;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.kinglian.screeninquiry.model.entity.DocEvaluation;
+import com.kinglian.screeninquiry.model.entity.MedOfficeVisit;
 import com.kinglian.screeninquiry.model.entity.MedOvPresSheet;
 import com.kinglian.screeninquiry.model.entity.MedOvPrescription;
 import com.kinglian.screeninquiry.service.*;
@@ -25,6 +26,7 @@ import com.kinglian.screeninquiry.service.MedOvPrescriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +79,20 @@ public class MedOvPrescriptionController {
     public R<Boolean> reviewPrescription(@PathVariable String sheetid,@PathVariable String auditStatus){
         MedOvPresSheet medOvPresSheet = new MedOvPresSheet();
         medOvPresSheet.setAuditStatus(Integer.parseInt(auditStatus));
+        /**
+         * 修改订单处方状态
+         * by HXC
+         */
+        //订单审核通过时修改订单状态为已完成
+        if ("1".equals(auditStatus)) {
+            MedOfficeVisit medOfficeVisit = medOfficeVisitService.selectOne(new EntityWrapper<MedOfficeVisit>().eq("sheetid", sheetid));
+            MedOfficeVisit updateEntity = new MedOfficeVisit();
+            updateEntity.setUpdatedDate(new Date());
+            updateEntity.setVisitStatus("3");
+            medOfficeVisitService.update(updateEntity, new EntityWrapper<MedOfficeVisit>().eq("visitid", medOfficeVisit.getVisitid()));
+        }
+        //结束操作
+
 //        medOvPresSheet.setSheetid(sheetid);
         return new R<>(medOvPresSheetService.update(medOvPresSheet,new EntityWrapper<MedOvPresSheet>().eq("sheetid",sheetid)));
     }
