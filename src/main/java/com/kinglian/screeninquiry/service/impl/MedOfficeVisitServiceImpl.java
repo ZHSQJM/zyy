@@ -7,10 +7,13 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.kinglian.screeninquiry.dao.MedOfficeVisitMapper;
 import com.kinglian.screeninquiry.model.entity.MedOfficeVisit;
 import com.kinglian.screeninquiry.service.MedOfficeVisitService;
+import com.kinglian.screeninquiry.utils.DateConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,7 +41,16 @@ public class MedOfficeVisitServiceImpl extends ServiceImpl<MedOfficeVisitMapper,
 
     @Override
     public Page getMedicalRecordByOpenId(Query<Map> query) {
-        return query.setRecords(medOfficeVisitMapper.getMedicalRecordByOpenId(query,query.getCondition()));
+        List<Map> result = new ArrayList<>();
+        List<Map> records = medOfficeVisitMapper.getMedicalRecordByOpenId(query, query.getCondition());
+            if (records != null && records.size() != 0){
+                Map map = records.get(0);
+                java.util.Date visitDate = (java.util.Date)map.get("visitDate");
+                String date = DateConvertUtils.dateToStrLong(visitDate);
+                map.put("visitDate", date);
+                result.add(map);
+            }
+        return query.setRecords(result);
     }
 
     @Override

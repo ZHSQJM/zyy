@@ -113,8 +113,6 @@ public class Constant {
         return jsonObject;
     }
 
-
-
     /**
      * 自定义发送模板信息
      * @param accessToken 公众号标识
