@@ -71,8 +71,6 @@ public class MedOvMedicalRecordServiceImpl extends ServiceImpl<MedOvMedicalRecor
         List<Map> medicalRecordDetails = null;
         try {
             medicalRecordDetails = medOvMedicalRecordMapper.getMedicalRecordDetails(query, query.getCondition());
-            System.out.println(medicalRecordDetails);
-
             if (medicalRecordDetails != null && medicalRecordDetails.size() != 0){
                 Map map = medicalRecordDetails.get(0);
                 java.util.Date birthday = (java.util.Date)map.get("birthday");
