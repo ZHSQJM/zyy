@@ -8,6 +8,7 @@ import com.kinglian.screeninquiry.dao.MedOvPresSheetMapper;
 import com.kinglian.screeninquiry.model.dto.*;
 import com.kinglian.screeninquiry.model.entity.MedOvPresSheet;
 import com.kinglian.screeninquiry.service.DoctorOperationService;
+import com.kinglian.screeninquiry.utils.DateConvertUtils;
 import com.kinglian.screeninquiry.utils.GetAge;
 import com.kinglian.screeninquiry.utils.JsonEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,7 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
             if (x.getBirthDay() != null) {
                 try {
                     x.setAge(GetAge.getAge(x.getBirthDay()));
+                    x.setFrommatDay(DateConvertUtils.dateToStrLong(x.getCreatDay()));
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -63,6 +65,7 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
             try {
                 if (x.getBirthDay() != null) {
                     x.setAge(GetAge.getAge(x.getBirthDay()));
+                    x.setFrommatDay(DateConvertUtils.dateToStrLong(x.getCreatDay()));
                 }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();

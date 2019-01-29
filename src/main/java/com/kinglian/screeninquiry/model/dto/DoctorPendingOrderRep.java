@@ -1,5 +1,6 @@
 package com.kinglian.screeninquiry.model.dto;
 
+import com.kinglian.screeninquiry.utils.DateConvertUtils;
 import lombok.Data;
 
 import java.util.Date;
@@ -65,4 +66,17 @@ public class DoctorPendingOrderRep {
      * 1:待接订单，2：审核未通过订单
      */
     private int type;
+
+    /**
+     * 格式化日期时间
+     */
+    private String frommatDay;
+
+    public String getFrommatDay() {
+        if (creatDay != null) {
+            return DateConvertUtils.dateToStrLong(creatDay);
+        } else {
+            return "";
+        }
+    }
 }
