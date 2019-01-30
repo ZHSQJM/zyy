@@ -1,5 +1,6 @@
 package com.kinglian.screeninquiry;
 
+import com.kinglian.screeninquiry.utils.Constant;
 import org.jasypt.encryption.StringEncryptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,12 +16,22 @@ public class ScreenInquiryApplicationTests {
 
     @Autowired
     StringEncryptor stringEncryptor;
+    @Autowired
+    Constant constant;
 
     @Test
     public void contextLoads() {
         String result = stringEncryptor.encrypt("Jinglian12345");
         System.out.println("==================");
         System.out.println(result);
+        System.out.println("==================");
+
+    }
+
+    @Test
+    public void asstoken() {
+        System.out.println("==================");
+        System.out.println(constant.getAccessToken());
         System.out.println("==================");
 
     }

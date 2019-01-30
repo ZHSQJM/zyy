@@ -17,7 +17,6 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.kinglian.screeninquiry.model.entity.DocEvaluation;
 import com.kinglian.screeninquiry.model.entity.MedOfficeVisit;
 import com.kinglian.screeninquiry.model.entity.MedOvPresSheet;
-import com.kinglian.screeninquiry.model.entity.MedOvPrescription;
 import com.kinglian.screeninquiry.service.*;
 import com.kinglian.screeninquiry.utils.Constant;
 import com.kinglian.screeninquiry.service.DocEvaluationService;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,6 +54,9 @@ public class MedOvPrescriptionController {
 
     @Autowired
     MedOvMedicalRecordService medOvMedicalRecordService;
+
+    @Autowired
+    Constant constant;
 
     @GetMapping("getPrescription")
     public R<Page> getPrescription(@RequestParam Map<String, Object> params){
@@ -92,7 +93,6 @@ public class MedOvPrescriptionController {
             medOfficeVisitService.update(updateEntity, new EntityWrapper<MedOfficeVisit>().eq("visitid", medOfficeVisit.getVisitid()));
         }
         //结束操作
-
 //        medOvPresSheet.setSheetid(sheetid);
         return new R<>(medOvPresSheetService.update(medOvPresSheet,new EntityWrapper<MedOvPresSheet>().eq("sheetid",sheetid)));
     }
@@ -113,7 +113,7 @@ public class MedOvPrescriptionController {
      */
     @GetMapping("getMedicalRecord")
     public R<Page> getMedicalRecord(@RequestParam String code){
-        String openid = Constant.gainOpenId(code);
+        String openid = constant.gainOpenId(code);
 //        String openid = code;//测试用
         Map<String, Object> params = new HashMap<>();
         params.put("openid",openid);
