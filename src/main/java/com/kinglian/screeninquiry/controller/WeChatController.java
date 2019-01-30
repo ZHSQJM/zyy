@@ -55,12 +55,16 @@ public class WeChatController {
     @Autowired
    MedOvPrescriptionService medOvPrescriptionService;
 
+    @Autowired
+    Constant constant;
+
     @PostMapping("send")
     public Boolean PushNotification(@RequestParam String code){
         //获取openId
-        String openId = Constant.gainOpenId(code);
+        String openId = constant.gainOpenId(code);
         //获取accessToken
-        String accessToken = Constant.getAccessToken();
+        String accessToken = null;
+//                constant.getAccessToken();
         //创建消息发送实体对象
         TemplateMessage templateMessage = new TemplateMessage();
         Map<String, Object> queryMap = new HashMap<>();
