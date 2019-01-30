@@ -22,9 +22,11 @@ import com.kinglian.screeninquiry.utils.Constant;
 import com.kinglian.screeninquiry.service.DocEvaluationService;
 import com.kinglian.screeninquiry.service.MedOvPresSheetService;
 import com.kinglian.screeninquiry.service.MedOvPrescriptionService;
+import com.kinglian.screeninquiry.utils.MessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,9 +56,6 @@ public class MedOvPrescriptionController {
 
     @Autowired
     MedOvMedicalRecordService medOvMedicalRecordService;
-
-    @Autowired
-    Constant constant;
 
     @GetMapping("getPrescription")
     public R<Page> getPrescription(@RequestParam Map<String, Object> params){
@@ -109,14 +108,19 @@ public class MedOvPrescriptionController {
 
     /**
      * 获取病历
-     * @param code 微信公众号code
+     * @param request
      */
     @GetMapping("getMedicalRecord")
-    public R<Page> getMedicalRecord(@RequestParam String code){
-        String openid = constant.gainOpenId(code);
-//        String openid = code;//测试用
+    public R<Page> getMedicalRecord(HttpServletRequest request){
+//        String openid = constant.gainOpenId(code);
+        String visitid = null;
+        Map<String, String> message = MessageUtil.parseXml(request);
+        String msgType = message.get("MsgType");
+        if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)){
+            visitid = message.get("visitid");
+        }
         Map<String, Object> params = new HashMap<>();
-        params.put("openid",openid);
+        params.put("visitid",visitid);
         return new R<>(medOfficeVisitService.getMedicalRecordByOpenId(new Query<Map>(params)));
     }
 

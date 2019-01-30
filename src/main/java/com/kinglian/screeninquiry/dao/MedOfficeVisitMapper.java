@@ -28,7 +28,7 @@ public interface MedOfficeVisitMapper extends BaseMapper<MedOfficeVisit> {
             " INNER JOIN `user` u ON u.user_id = mov.portalid " +
             " INNER JOIN med_ov_pres_sheet mops ON mops.visitid = mov.visitid" +
             " WHERE" +
-            " u.wx_open_id_gzh = #{openid}")
+            " mov.visitid = #{visitid}")
     @Results({@Result(property = "pictureUrl", column = "picture_url"),@Result(property = "doctorName", column = "doctor_name"),
               @Result(property = "visitStatus", column = "visit_status"),@Result(property = "visitDate", column = "visit_date"),
               @Result(property = "InterrogationType", column = "Interrogation_type") ,
