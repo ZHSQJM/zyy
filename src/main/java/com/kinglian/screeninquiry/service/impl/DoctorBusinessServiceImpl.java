@@ -426,10 +426,14 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
                     }
 
                 }
-                medicalRecordDetails1.remove(0);
-                medicalRecordDetails1.add(map);
+               // medicalRecordDetails1.remove(0);
+              //  medicalRecordDetails1.add(map);
+                List<String> listTemp = new ArrayList<>();
+                // 不需要反射的字段
+                listTemp.add("medList");
 
-                ConversionUtils.TypeConversion(medicalRecordDetails1,medVisitInfo,null);
+
+                ConversionUtils.mapConvertBean(map,medVisitInfo);
             }
             else
             {
@@ -521,7 +525,12 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
                       //  }
                         map.put("presUrl","http://yun-test.kinglian.net/officialWeChat/prescriptionDetail?visitId="+param.getBody().visitId);
                     }
-                    ConversionUtils.TypeConversion(medicalRecordDetails1,medVisitInfo,null);
+                    List<String> listTemp = new ArrayList<>();
+                    // 不需要反射的字段
+                    listTemp.add("medList");
+                    listTemp.add("presUrl");
+
+                    ConversionUtils.mapConvertBean(map,medVisitInfo);
                 }
                 else
                 {

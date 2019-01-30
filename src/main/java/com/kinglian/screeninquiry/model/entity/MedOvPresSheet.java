@@ -142,7 +142,7 @@ public class MedOvPresSheet implements Serializable {
 
     private Boolean isTest;
 
-    private String test;
+    //private String test;
 
     /**
      * 注意事项
