@@ -60,7 +60,7 @@ public class WeChatController {
         //获取openId
         String openId = Constant.gainOpenId(code);
         //获取accessToken
-        String accessToken = Constant.getAccessToken(code);
+        String accessToken = Constant.getAccessToken();
         //创建消息发送实体对象
         TemplateMessage templateMessage = new TemplateMessage();
         Map<String, Object> queryMap = new HashMap<>();

@@ -51,8 +51,8 @@ public class Constant {
         return openid;
     }
     //access_token
-    public static String getAccessToken(String code){
-        String url = ACCESS_TOKEN_URL.replace("APPID", APP_ID).replace("SECRET", APP_SECRET).replace("CODE", code);
+    public static String getAccessToken(){
+        String url = ACCESS_TOKEN_URL.replace("APPID", APP_ID).replace("SECRET", APP_SECRET);
         JSONObject jsonObject = httpsRequest(url,"GET",null);
         String access_token = jsonObject.getString("access_token");
         return access_token;
