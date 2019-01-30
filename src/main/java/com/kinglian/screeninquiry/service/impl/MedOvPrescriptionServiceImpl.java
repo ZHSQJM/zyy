@@ -95,6 +95,15 @@ public class MedOvPrescriptionServiceImpl extends ServiceImpl<MedOvPrescriptionM
 
     @Override
     public Page getPresOrder(Query<Map> query) {
-        return query.setRecords(medOvPrescriptionMapper.getPresOrder(query,query.getCondition()));
+        List<Map> result = new ArrayList<>();
+        List<Map> maps = medOvPrescriptionMapper.getPresOrder(query, query.getCondition());
+        if (maps != null && maps.size() != 0){
+            Map map = maps.get(0);
+            java.util.Date visitDate = (java.util.Date)map.get("auditDate");
+            String date = DateConvertUtils.dateToStrLong(visitDate);
+            map.put("auditDate", date);
+            result.add(map);
+        }
+        return query.setRecords(maps);
     }
 }
