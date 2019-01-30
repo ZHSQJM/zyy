@@ -6,14 +6,11 @@ import com.kinglian.screeninquiry.dao.*;
 import com.kinglian.screeninquiry.model.dto.*;
 import com.kinglian.screeninquiry.model.entity.*;
 import com.kinglian.screeninquiry.model.entity.User;
-import com.kinglian.screeninquiry.utils.ConversionUtils;
-import com.kinglian.screeninquiry.utils.GetAge;
+import com.kinglian.screeninquiry.utils.*;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.kinglian.screeninquiry.service.DoctorBusinessService;
-import com.kinglian.screeninquiry.utils.UUIDGenerator;
-import com.kinglian.screeninquiry.utils.WeixinPay;
 
 import com.xiaoleilu.hutool.date.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;

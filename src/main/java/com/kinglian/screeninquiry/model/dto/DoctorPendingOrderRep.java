@@ -20,7 +20,7 @@ public class DoctorPendingOrderRep {
     /**
      * 患者id
      */
-    private String patinetId;
+    private String patientId;
 
     /**
      * 是否为新用户
