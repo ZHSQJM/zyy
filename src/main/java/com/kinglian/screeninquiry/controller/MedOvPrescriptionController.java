@@ -17,18 +17,18 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.kinglian.screeninquiry.model.entity.DocEvaluation;
 import com.kinglian.screeninquiry.model.entity.MedOfficeVisit;
 import com.kinglian.screeninquiry.model.entity.MedOvPresSheet;
-import com.kinglian.screeninquiry.model.entity.MedOvPrescription;
 import com.kinglian.screeninquiry.service.*;
 import com.kinglian.screeninquiry.utils.Constant;
 import com.kinglian.screeninquiry.service.DocEvaluationService;
 import com.kinglian.screeninquiry.service.MedOvPresSheetService;
 import com.kinglian.screeninquiry.service.MedOvPrescriptionService;
+import com.kinglian.screeninquiry.utils.MessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -92,7 +92,6 @@ public class MedOvPrescriptionController {
             medOfficeVisitService.update(updateEntity, new EntityWrapper<MedOfficeVisit>().eq("visitid", medOfficeVisit.getVisitid()));
         }
         //结束操作
-
 //        medOvPresSheet.setSheetid(sheetid);
         return new R<>(medOvPresSheetService.update(medOvPresSheet,new EntityWrapper<MedOvPresSheet>().eq("sheetid",sheetid)));
     }
@@ -109,14 +108,19 @@ public class MedOvPrescriptionController {
 
     /**
      * 获取病历
-     * @param code 微信公众号code
+     * @param request
      */
     @GetMapping("getMedicalRecord")
-    public R<Page> getMedicalRecord(@RequestParam String code){
-        String openid = Constant.gainOpenId(code);
-//        String openid = code;//测试用
+    public R<Page> getMedicalRecord(HttpServletRequest request){
+//        String openid = constant.gainOpenId(code);
+        String visitid = null;
+        Map<String, String> message = MessageUtil.parseXml(request);
+        String msgType = message.get("MsgType");
+        if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)){
+            visitid = message.get("visitid");
+        }
         Map<String, Object> params = new HashMap<>();
-        params.put("openid",openid);
+        params.put("visitid",visitid);
         return new R<>(medOfficeVisitService.getMedicalRecordByOpenId(new Query<Map>(params)));
     }
 
