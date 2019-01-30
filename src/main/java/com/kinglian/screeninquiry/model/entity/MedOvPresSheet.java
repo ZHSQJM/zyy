@@ -143,7 +143,8 @@ public class MedOvPresSheet implements Serializable {
 
     private Boolean isTest;
 
-    //private String test;
+    @TableField(exist = false)
+    private String test;
 
     /**
      * 注意事项

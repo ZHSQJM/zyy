@@ -52,7 +52,7 @@ public class HospitalUserExtension implements Serializable {
      */
     private String contactPhone;
 
-    private String qrCodeUrl;
+    private String l;
 
     private Integer reFerralCode;
 
