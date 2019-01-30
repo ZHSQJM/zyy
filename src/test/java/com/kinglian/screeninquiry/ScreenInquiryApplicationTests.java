@@ -1,6 +1,6 @@
 package com.kinglian.screeninquiry;
 
-import com.kinglian.screeninquiry.utils.Constant;
+import com.kinglian.screeninquiry.utils.CreateParmsCode;
 import org.jasypt.encryption.StringEncryptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,8 +16,9 @@ public class ScreenInquiryApplicationTests {
 
     @Autowired
     StringEncryptor stringEncryptor;
+
     @Autowired
-    Constant constant;
+    CreateParmsCode createParmsCode;
 
     @Test
     public void contextLoads() {
@@ -29,11 +30,9 @@ public class ScreenInquiryApplicationTests {
     }
 
     @Test
-    public void asstoken() {
-        System.out.println("==================");
-        System.out.println(constant.getAccessToken());
-        System.out.println("==================");
-
+    public void test1() {
+        System.out.println("========");
+        System.out.println(createParmsCode.getParmsCode("1111"));
     }
 
 }

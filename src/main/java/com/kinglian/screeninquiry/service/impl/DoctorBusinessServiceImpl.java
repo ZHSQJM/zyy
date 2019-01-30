@@ -58,6 +58,9 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
     @Autowired
     WXPayConfigInfo info;
 
+    @Autowired
+    CreateParmsCode createParmsCode;
+
 
 
     @Autowired
@@ -521,6 +524,8 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
                             map.put("hospitalName", "互联网医院");
                       //  }
                         map.put("presUrl","http://yun-test.kinglian.net/officialWeChat/prescriptionDetail?visitId="+param.getBody().visitId);
+                        //微信公众号二维码
+                        map.put("qrCodeUrl",createParmsCode.getParmsCode(param.getBody().visitId));
                     }
                     List<String> listTemp = new ArrayList<>();
                     // 不需要反射的字段

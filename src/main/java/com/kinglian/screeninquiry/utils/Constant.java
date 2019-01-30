@@ -34,6 +34,7 @@ public class Constant {
 
     private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
     private static final String APP_ID = "internethospital@kinglian.cn";
+    private static final String URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 
     /**
      * 模板消息请求路径
@@ -52,7 +53,7 @@ public class Constant {
     }
     //access_token
     public static String getAccessToken(){
-        String url = ACCESS_TOKEN_URL.replace("APPID", APP_ID).replace("SECRET", APP_SECRET);
+        String url = URL.replace("APPID", APP_ID).replace("APPSECRET", APP_SECRET);
         JSONObject jsonObject = httpsRequest(url,"GET",null);
         String access_token = jsonObject.getString("access_token");
         return access_token;

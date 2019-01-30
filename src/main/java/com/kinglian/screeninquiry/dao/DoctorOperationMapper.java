@@ -20,7 +20,7 @@ public interface DoctorOperationMapper {
      * @return
      */
     @Results({@Result(property = "patientName",column = "member_name"),
-            @Result(property = "patinetId",column = "patientid"),@Result(property = "sex",column = "sex"),
+            @Result(property = "patientId",column = "patientid"),@Result(property = "sex",column = "sex"),
             @Result(property = "birthDay",column = "birthday"),@Result(property = "orderId",column = "visitid"),
             @Result(property = "creatDay",column = "created_date"),@Result(property = "newUser",column = "new_user"),
             @Result(property = "opId",column = "op_id")})

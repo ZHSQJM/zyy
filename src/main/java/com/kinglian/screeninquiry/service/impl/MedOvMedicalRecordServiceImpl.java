@@ -73,6 +73,7 @@ public class MedOvMedicalRecordServiceImpl extends ServiceImpl<MedOvMedicalRecor
 
         }
         MedOvMedicalRecord medOvMedicalRecord = new MedOvMedicalRecord();
+        medOvMedicalRecord.setPharmacyInfo(saveCase.getPharmacyInfo());
         medOvMedicalRecord.setVisitid(saveCase.getOrderId());
         medOvMedicalRecord.setPatientid(saveCase.getPatientId());
         medOvMedicalRecord.setChiefComplaint(saveCase.getChiefCmplaint());

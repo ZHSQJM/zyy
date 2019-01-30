@@ -60,6 +60,13 @@ public class MedVisitInfo {
 
      private String hospitalName;
 
+     private String presUrl;
+
+    /**
+     * 微信公众号二维码
+     */
+    private String qrCodeUrl;
+
 
 
 }

@@ -42,7 +42,7 @@ public class QRCodeController {
 	 * @throws WriterException
 	 */
 	@RequestMapping(value = {"qrcode"}, method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS})
-	@ResponseBody
+//	@ResponseBody
 	public R execute(HttpServletRequest httpServletRequest,
 					 HttpServletResponse httpServletResponse, String url) throws IOException, WriterException {
 		WeixinPay.encodeQrcode(url, httpServletResponse);
