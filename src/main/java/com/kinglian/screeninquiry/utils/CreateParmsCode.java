@@ -42,6 +42,7 @@ public class CreateParmsCode {
         scene.put("visitid", visitId);
         Map<String, Object> actionInfo = new HashMap<>();
         actionInfo.put("scene", scene);
+        map.put("action_info", actionInfo);
         String parms = JSON.toJSONString(map);
         String body = restTemplate.postForObject(url, parms, String.class);
         Map<String, String> data = JSONObject.parseObject(body, HashMap.class);
