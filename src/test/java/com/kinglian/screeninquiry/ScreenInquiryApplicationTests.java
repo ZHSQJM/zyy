@@ -13,15 +13,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class ScreenInquiryApplicationTests {
 
 
-   /* @Autowired
-    StringEncryptor stringEncryptor;*/
+    @Autowired
+    StringEncryptor stringEncryptor;
 
     @Test
     public void contextLoads() {
-       /* String result = stringEncryptor.encrypt("");
+        String result = stringEncryptor.encrypt("Jinglian12345");
         System.out.println("==================");
         System.out.println(result);
-        System.out.println("==================");*/
+        System.out.println("==================");
 
     }
 

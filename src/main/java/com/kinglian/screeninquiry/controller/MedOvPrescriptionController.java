@@ -113,8 +113,8 @@ public class MedOvPrescriptionController {
      */
     @GetMapping("getMedicalRecord")
     public R<Page> getMedicalRecord(@RequestParam String code){
-//        String openId = Constant.gainOpenId(code);
-        String openid = code;
+        String openid = Constant.gainOpenId(code);
+//        String openid = code;
         Map<String, Object> params = new HashMap<>();
         params.put("openid",openid);
         return new R<>(medOfficeVisitService.getMedicalRecordByOpenId(new Query<Map>(params)));
