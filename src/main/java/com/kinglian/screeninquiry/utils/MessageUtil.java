@@ -83,6 +83,11 @@ public class MessageUtil {
      */
     public static final String REQ_MESSAGE_TYPE_VIDEO = "video";
 
+
+    public static final String REQ_MESSAGE_TYPE_SCAN = "SCAN";
+
+
+
     /**
      * shortvideo
      */
