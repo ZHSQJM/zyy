@@ -1,5 +1,6 @@
 package com.kinglian.screeninquiry.model.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
@@ -142,7 +143,7 @@ public class MedOvPresSheet implements Serializable {
 
     private Boolean isTest;
 
-    private String test;
+    //private String test;
 
     /**
      * 注意事项

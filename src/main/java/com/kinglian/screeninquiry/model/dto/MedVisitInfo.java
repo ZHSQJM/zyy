@@ -6,52 +6,52 @@ import java.util.List;
 @Data
 public class MedVisitInfo {
 
-        private int birthday;
+        private int birthday =0;
 
-        private int specialCrowd;
+        private int specialCrowd=0;
 
-        private int untowardEffect;
+        private int untowardEffect=0;
 
-        private String advice;
+        private String advice="";
 
-        private String sex;
+        private String sex="";
 
-        private String pharmacyInfo;
+        private String pharmacyInfo="";
 
-        private String memberName;
+        private String memberName="";
 
-        private String diagnosis;
+        private String diagnosis="";
 
-        private String drugAllergy;
+        private String drugAllergy="";
 
-        private int highBloodPressure;
+        private int highBloodPressure=0;
 
-        private String otherIllness;
+        private String otherIllness="";
 
-        private String uncomfortableSymptom;
+        private String uncomfortableSymptom="";
 
         private List<MedList> medList;
 
-        private String chiefComplaint;
+        private String chiefComplaint="";
 
-        private String recordid;
+        private String recordid="";
 
-        private String presentIllness;
+        private String presentIllness="";
 
-        private String visitid;
+        private String visitid="";
 
-        private int cardiopathy;
+        private int cardiopathy=0;
 
-        private String department;
+        private String department="";
 
-        private int diabetes;
+        private int diabetes=0;
 
 
-        private String doctorId;
+        private String doctorId="";
 
-       private String doctorName;
+       private String doctorName="";
 
-       private String visitTime;
+       private String visitTime="";
 
        private String rate;
 
@@ -59,5 +59,7 @@ public class MedVisitInfo {
 
 
      private String hospitalName;
+
+
 
 }
