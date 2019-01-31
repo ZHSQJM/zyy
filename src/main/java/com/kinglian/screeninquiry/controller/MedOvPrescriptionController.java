@@ -27,6 +27,7 @@ import com.kinglian.screeninquiry.utils.MessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.nio.channels.SeekableByteChannel;
@@ -135,8 +136,8 @@ public class MedOvPrescriptionController {
                 visitid = message.get("EventKey");
             }
             }*/
-        HttpSession session = CreateParmsCode.getSession();
-        Map map = (Map) session.getAttribute("map");
+        ServletContext application = CreateParmsCode.getApplication();
+        Map map = (Map) application.getAttribute("map");
         visitid = (String) map.get("EventKey");
         MedOfficeVisit medOfficeVisit = medOfficeVisitService.getByVisitId(visitid);
         medPatientInfoService.updateByPortalid(medOfficeVisit.getPortalid());

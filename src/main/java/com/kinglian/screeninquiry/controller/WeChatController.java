@@ -37,6 +37,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.util.WebUtils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.InputStream;
@@ -228,8 +229,8 @@ public class WeChatController {
 
         System.out.println(map);
 
-        HttpSession session = CreateParmsCode.getSession();
-        session.setAttribute("map", map);
+        ServletContext application = CreateParmsCode.getApplication();
+        application.setAttribute("map", map);
     }
 
 }

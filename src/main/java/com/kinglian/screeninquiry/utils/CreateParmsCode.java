@@ -2,6 +2,8 @@ package com.kinglian.screeninquiry.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import javafx.application.Application;
+import org.apache.catalina.core.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -86,14 +89,18 @@ public class CreateParmsCode {
      * @return HttpSession
      */
     @SuppressWarnings("unchecked")
-    public static HttpSession getSession() {
+    public static ServletContext getApplication() {
         try {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            return request.getSession();
+            return request.getSession().getServletContext();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+
+
     }
+
+
 
 }
