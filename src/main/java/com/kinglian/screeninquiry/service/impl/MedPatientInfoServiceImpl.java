@@ -32,7 +32,7 @@ public class MedPatientInfoServiceImpl extends ServiceImpl<MedPatientInfoMapper,
     MedPatientInfoMapper medPatientInfoMapper;
 
     @Override
-    public void updateById(String portalid) {
-        medPatientInfoMapper.updateById(portalid);
+    public void updateById(String openid,String portalid) {
+        medPatientInfoMapper.updateById(openid,portalid);
     }
 }
