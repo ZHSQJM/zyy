@@ -128,7 +128,7 @@ public class MedOvPrescriptionController {
     public R<Page> getMedicalRecord(@RequestParam  String code) {/*HttpServletRequest request*/
         String openid = createParmsCode.getOpenId(code);
         String visitid = null;
-        String qrscene_visitid = null;
+//        String qrscene_visitid = null;
        /* Map<String, String> message = MessageUtil.parseXml(request);
         String event = message.get("Event");//事件
         String msgType = message.get("MsgType");//消息类型

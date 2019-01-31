@@ -90,34 +90,32 @@ public interface MedOvPrescriptionMapper extends BaseMapper<MedOvPrescription> {
 
 
     @Select("SELECT " +
-            " mpi.member_name, " +
-            " mpi.sex, " +
-            " mpi.birthday, " +
-            " mpi.member_id," +
-            " mov.reg_department_name, " +
-            " mov.visit_date," +
-            " mov.cdid," +
-            " mop.visitid, " +
-            " mops.judgeMent, " +
-            " mops.audit_doctor_name, " +
-            " mops.audit_by," +
-            " mops.advice, " +
-            " u.address, " +
-            " u.mobile " +
-            " FROM " +
-            " med_patient_info mpi " +
-            " INNER JOIN med_ov_prescription mop ON mpi.id = mop.patientid " +
-            " INNER JOIN med_ov_pres_sheet mops ON mop.pre_sheet_id = mops.sheetid  " +
-            " INNER JOIN med_office_visit mov ON mov.visitid = mops.visitid " +
-            " INNER JOIN user u ON u.user_id = mpi.portal_id " +
-            " WHERE " +
-            " mop.visitid = #{visitid}")
+            "  mpi.member_name, " +
+            "  mpi.sex, " +
+            "  mpi.birthday, " +
+            "  mpi.id, " +
+            "  mov.visit_date, " +
+            "  mov.cdid, " +
+            "  mop.visitid, " +
+            "  momr.diagnosis, " +
+            "  mops.audit_doctor_name, " +
+            "  mops.audit_by, " +
+            "  mops.department, " +
+            "  mops.advice " +
+            "  FROM " +
+            "  med_office_visit mov " +
+            "  inner JOIN med_ov_pres_sheet mops ON mov.visitid = mops.visitid " +
+            "  inner JOIN med_ov_prescription mop ON mop.visitid = mops.visitid " +
+            "  inner JOIN med_ov_medical_record momr ON momr.visitid = mov.visitid " +
+            "  inner JOIN med_patient_info mpi ON mpi.id = mov.patientid " +
+            "  WHERE  " +
+            "  mov.visitid =  #{visitid}")
     @Results({@Result(property = "visitid", column = "visitid",id=true),
             @Result(property = "memberName", column = "member_name"),
             @Result(property = "sex", column = "sex"),
             @Result(property = "birthday", column = "birthday"),
             @Result(property = "memberId", column = "member_id"),
-            @Result(property = "regDepartmentName", column = "reg_department_name"),
+            @Result(property = "regDepartmentName", column = "department"),
             @Result(property = "visitDate", column = "visit_date"),
             @Result(property = "cdid", column = "cdid"),
             @Result(property = "judgeMent", column = "judgeMent"),
