@@ -51,7 +51,7 @@ public interface MedOvPrescriptionMapper extends BaseMapper<MedOvPrescription> {
     List<Map> getPreByPreId(Query<Map> objectQuery, Map<String, Object> objectEntityWrapper);
 
     @Select("SELECT" +
-            " u.user_name," +
+            " mpi.member_name," +
             " mops.sheetid," +
             " mops.audit_note," +
             " mops.audit_status," +
@@ -60,11 +60,12 @@ public interface MedOvPrescriptionMapper extends BaseMapper<MedOvPrescription> {
             " med_patient_info mpi" +
             " INNER JOIN med_ov_prescription mop ON mpi.id = mop.patientid" +
             " INNER JOIN med_ov_pres_sheet mops ON mops.sheetid = mop.pre_sheet_id" +
-            " INNER JOIN USER u ON u.user_id = mpi.portal_id" +
+            " INNER JOIN med_office_visit mov ON mov.visitid = mops.visitid" +
             " WHERE" +
-            " mops.audit_status = #{auditStatus}")
+            " mops.audit_status = #{auditStatus}" +
+            " AND mov.cdid = '1000910'")
     @Results({@Result(property = "sheetid", column = "sheetid"),
-            @Result(property = "userName", column = "user_name"),
+            @Result(property = "userName", column = "member_name"),
             @Result(property = "auditNote", column = "audit_note"),
             @Result(property = "auditStatus", column = "audit_status"),
             @Result(property = "auditDate", column = "audit_date")})
