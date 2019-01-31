@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
 public interface MedPatientInfoMapper extends BaseMapper<MedPatientInfo> {
 
     @Update("UPDATE med_patient_info set open_id = #{openid} where id = #{portalid}")
-    void updateById(String openid,String portalid);
+    void updateByPatientId(String openid,String portalid);
 }

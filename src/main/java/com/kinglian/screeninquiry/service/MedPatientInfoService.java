@@ -22,5 +22,5 @@ import com.kinglian.screeninquiry.model.entity.MedPatientInfo;
  */
 public interface MedPatientInfoService extends IService<MedPatientInfo> {
 
-    void updateById(String openid,String portalid);
+    void updateByPatientId(String openid,String portalid);
 }
