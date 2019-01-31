@@ -42,7 +42,14 @@ public class CreateParmsCode {
      * @return
      */
     public String getParmsCode(String visitId) {
-        String accessToken = getAccessToken();
+        String accessToken = KeyManager.getValue("getToken");
+        if (accessToken == null) {
+            String newToken = getAccessToken();
+            KeyManager.putValue("getToken",newToken);
+            accessToken = newToken;
+        }
+        System.out.println(accessToken);
+//        String accessToken = getAccessToken();
         String url = CODE_URL+accessToken;
         Map<String, Object> map = new HashMap<>();
         map.put("expire_seconds", "3600");
