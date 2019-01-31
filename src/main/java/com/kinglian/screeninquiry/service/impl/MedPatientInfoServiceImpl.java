@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.kinglian.screeninquiry.dao.MedPatientInfoMapper;
 import com.kinglian.screeninquiry.model.entity.MedPatientInfo;
 import com.kinglian.screeninquiry.service.MedPatientInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,4 +28,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class MedPatientInfoServiceImpl extends ServiceImpl<MedPatientInfoMapper,MedPatientInfo> implements MedPatientInfoService {
 
+    @Autowired
+    MedPatientInfoMapper medPatientInfoMapper;
+
+    @Override
+    public void updateByPortalid(String portalid) {
+        medPatientInfoMapper.updateByPortalid(portalid);
+    }
 }

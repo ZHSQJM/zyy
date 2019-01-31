@@ -22,4 +22,5 @@ import com.kinglian.screeninquiry.model.entity.MedPatientInfo;
  */
 public interface MedPatientInfoService extends IService<MedPatientInfo> {
 
+    void updateByPortalid(String portalid);
 }

@@ -52,7 +52,6 @@ public class WeChatController {
     @Value("${DNBX_TOKEN}")
     private String DNBX_TOKEN;
 
-
     @Resource
     WechatService wechatService;
 
