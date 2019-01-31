@@ -20,7 +20,9 @@ import com.kinglian.screeninquiry.service.MedOvPrescriptionService;
 import com.kinglian.screeninquiry.utils.CheckSignature;
 import com.kinglian.screeninquiry.service.WechatService;
 import com.kinglian.screeninquiry.utils.Constant;
+import com.kinglian.screeninquiry.utils.CreateParmsCode;
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -32,9 +34,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.util.WebUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -48,6 +52,7 @@ import java.util.*;
 
 /**
  * 〈微信消息推送前端控制器〉
+ *
  * @author weiyz
  * @create 2019/1/25
  * @since 1.0.0
@@ -65,6 +70,7 @@ public class WeChatController {
 
     /**
      * 微信接入
+     *
      * @param
      * @return
      * @throws IOException
@@ -72,7 +78,7 @@ public class WeChatController {
    /* @RequestMapping(value="/connect",method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public void connectWeixin(HttpServletRequest request, HttpServletResponse response) throws IOException {*/
-        // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
+    // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
 //        request.setCharacterEncoding("UTF-8");  //微信服务器POST消息时用的是UTF-8编码，在接收时也要用同样的编码，否则中文会乱码；
 //        response.setCharacterEncoding("UTF-8"); //在响应消息（回复消息给用户）时，也将编码方式设置为UTF-8，原理同上；
 //        boolean isGet = request.getMethod().toLowerCase().equals("get");
@@ -101,7 +107,6 @@ public class WeChatController {
 //            }
 //        }
 //    }
-
 
 
 //    //#模板ID: Template
@@ -178,7 +183,6 @@ public class WeChatController {
 //        boolean bool = Constant.SendTempletTest(accessToken, jsonString);
 //        return bool;
 //    }
-
     @GetMapping(value = "/wx")
     public void get(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -208,7 +212,7 @@ public class WeChatController {
 
     @PostMapping(value = "/wx")
     public void pos(HttpServletRequest request) throws IOException, DocumentException {
-        Map<String,String> map = new HashMap<String,String>();
+        Map<String, String> map = new HashMap<String, String>();
         SAXReader reader = new SAXReader();
 
         InputStream ins = request.getInputStream();
@@ -219,15 +223,15 @@ public class WeChatController {
 
         List<Element> list = root.elements();
 
-        for(Element e : list){
+        for (Element e : list) {
             map.put(e.getName(), e.getText());
         }
         ins.close();
 
         System.out.println(map);
+
+        HttpSession session = CreateParmsCode.getSession();
+        session.setAttribute("map", map);
     }
-
-
-
 
 }

@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,6 +77,23 @@ public class CreateParmsCode {
         Map<String, String> data = JSONObject.parseObject(body.getBody(), HashMap.class);
         String openid = data.get("openid");
         return openid;
+    }
+
+
+    /**
+     * 获取全局Session
+     *
+     * @return HttpSession
+     */
+    @SuppressWarnings("unchecked")
+    public static HttpSession getSession() {
+        try {
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            return request.getSession();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

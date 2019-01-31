@@ -1,5 +1,6 @@
 package com.kinglian.screeninquiry;
 
+import com.kinglian.screeninquiry.utils.Constant;
 import com.kinglian.screeninquiry.utils.CreateParmsCode;
 import org.jasypt.encryption.StringEncryptor;
 import org.junit.Test;
@@ -20,6 +21,9 @@ public class ScreenInquiryApplicationTests {
     @Autowired
     CreateParmsCode createParmsCode;
 
+    @Autowired
+    Constant constant;
+
     @Test
     public void contextLoads() {
         String result = stringEncryptor.encrypt("Jinglian12345");
@@ -33,6 +37,12 @@ public class ScreenInquiryApplicationTests {
     public void test1() {
         System.out.println("========");
         System.out.println(createParmsCode.getParmsCode("2222"));
+    }
+
+    @Test
+    public void test2() {
+        System.out.println("========");
+//        System.out.println(createParmsCode.getOpenId());
     }
 
 }

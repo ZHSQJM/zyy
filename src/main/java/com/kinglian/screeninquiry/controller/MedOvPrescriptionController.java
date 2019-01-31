@@ -28,6 +28,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.nio.channels.SeekableByteChannel;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -118,11 +120,11 @@ public class MedOvPrescriptionController {
      * @param
      */
     @GetMapping("getMedicalRecord")
-    public R<Page> getMedicalRecord(@RequestParam  String code,HttpServletRequest request){/*HttpServletRequest request*/
+    public R<Page> getMedicalRecord(@RequestParam  String code) {/*HttpServletRequest request*/
         String openid = createParmsCode.getOpenId(code);
         String visitid = null;
         String qrscene_visitid = null;
-        Map<String, String> message = MessageUtil.parseXml(request);
+       /* Map<String, String> message = MessageUtil.parseXml(request);
         String event = message.get("Event");//事件
         String msgType = message.get("MsgType");//消息类型
         if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)){
@@ -132,10 +134,13 @@ public class MedOvPrescriptionController {
             }else if (event.equals(MessageUtil.REQ_MESSAGE_TYPE_SCAN)){//已关注公众号
                 visitid = message.get("EventKey");
             }
-            MedOfficeVisit medOfficeVisit = medOfficeVisitService.getByVisitId(visitid);
-            medPatientInfoService.updateByPortalid(medOfficeVisit.getPortalid());
+            }*/
+        HttpSession session = CreateParmsCode.getSession();
+        Map map = (Map) session.getAttribute("map");
+        visitid = (String) map.get("EventKey");
+        MedOfficeVisit medOfficeVisit = medOfficeVisitService.getByVisitId(visitid);
+        medPatientInfoService.updateByPortalid(medOfficeVisit.getPortalid());
 //            visitid = message.get("visitid");
-        }
         Map<String, Object> params = new HashMap<>();
         params.put("openid",openid);
         return new R<>(medOfficeVisitService.getMedicalRecordByOpenId(new Query<Map>(params)));
