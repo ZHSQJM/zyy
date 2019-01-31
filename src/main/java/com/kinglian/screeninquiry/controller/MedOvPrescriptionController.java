@@ -108,13 +108,13 @@ public class MedOvPrescriptionController {
 
     /**
      * 获取病历
-     * @param request
+     * @param
      */
     @GetMapping("getMedicalRecord")
-    public R<Page> getMedicalRecord(HttpServletRequest request){
+    public R<Page> getMedicalRecord(@RequestParam  String visitid /*HttpServletRequest request*/){
 //        String openid = constant.gainOpenId(code);
-        String visitid = null;
-        String qrscene_visitid = null;
+//        String visitid = null;
+       /* String qrscene_visitid = null;
         Map<String, String> message = MessageUtil.parseXml(request);
         String event = message.get("Event");//事件
         String msgType = message.get("MsgType");//消息类型
@@ -126,9 +126,8 @@ public class MedOvPrescriptionController {
                 visitid = message.get("EventKey");
             }
 //            visitid = message.get("visitid");
-        }
+        }*/
         Map<String, Object> params = new HashMap<>();
-
         params.put("visitid",visitid);
         return new R<>(medOfficeVisitService.getMedicalRecordByOpenId(new Query<Map>(params)));
     }
