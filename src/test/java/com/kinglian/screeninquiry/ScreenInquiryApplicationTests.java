@@ -32,7 +32,7 @@ public class ScreenInquiryApplicationTests {
     @Test
     public void test1() {
         System.out.println("========");
-        System.out.println(createParmsCode.getParmsCode("1111"));
+        System.out.println(createParmsCode.getParmsCode("2222"));
     }
 
 }
