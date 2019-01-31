@@ -226,6 +226,7 @@ public class WeChatController {
         ins.close();
 
         System.out.println(map);
+        map.get("EventKey");
     }
 
 

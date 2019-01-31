@@ -67,6 +67,11 @@ public class MedVisitInfo {
      */
     private String qrCodeUrl;
 
+    /**
+     * 审核状态
+     */
+    private Integer presState;
+
 
 
 }
