@@ -12,6 +12,7 @@ package com.kinglian.screeninquiry.service;
 
 import com.kinglian.screeninquiry.model.dto.TextMessage;
 import com.kinglian.screeninquiry.utils.MessageUtil;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -24,6 +25,7 @@ import java.util.Map;
  * @create 2019/1/31
  * @since 1.0.0
  */
+@Service
 public class WechatService {
 
     /**
