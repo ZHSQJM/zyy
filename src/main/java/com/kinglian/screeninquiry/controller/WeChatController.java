@@ -22,7 +22,6 @@ import com.kinglian.screeninquiry.service.WechatService;
 import com.kinglian.screeninquiry.utils.Constant;
 import com.kinglian.screeninquiry.utils.CreateParmsCode;
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
-import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -52,7 +51,6 @@ import java.util.*;
 
 /**
  * 〈微信消息推送前端控制器〉
- *
  * @author weiyz
  * @create 2019/1/25
  * @since 1.0.0

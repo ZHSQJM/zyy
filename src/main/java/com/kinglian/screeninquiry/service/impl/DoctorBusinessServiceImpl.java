@@ -514,6 +514,7 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
                     if (medOvPresSheet!=null) {
                         map.put("doctorId", medOvPresSheet.getAuditDoctorAccount());
                         map.put("doctorName", medOvPresSheet.getAuditDoctorName());
+                        map.put("presState", medOvPresSheet.getAuditStatus());
                         map.put("visitTime", "1000");
                         map.put("rate", "100%");
 
