@@ -39,7 +39,7 @@ public class CreateParmsCode {
         map.put("expire_seconds", "3600");
         map.put("action_name", "QR_STR_SCENE");
         Map<String, Object> scene = new HashMap<>();
-        scene.put("visitid", visitId);
+        scene.put("scene_str", visitId);
         Map<String, Object> actionInfo = new HashMap<>();
         actionInfo.put("scene", scene);
         map.put("action_info", actionInfo);

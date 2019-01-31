@@ -17,26 +17,34 @@ import com.kinglian.screeninquiry.dao.MedOfficeVisitMapper;
 import com.kinglian.screeninquiry.model.entity.*;
 import com.kinglian.screeninquiry.service.MedOfficeVisitService;
 import com.kinglian.screeninquiry.service.MedOvPrescriptionService;
+import com.kinglian.screeninquiry.utils.CheckSignature;
 import com.kinglian.screeninquiry.service.WechatService;
 import com.kinglian.screeninquiry.utils.Constant;
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 〈微信消息推送前端控制器〉
@@ -44,8 +52,8 @@ import java.util.Map;
  * @create 2019/1/25
  * @since 1.0.0
  */
-@Controller
-@RequestMapping("/screenInquiry/prescription/wechat")
+@RestController
+@RequestMapping("/message/template")
 public class WeChatController {
     private static final Logger LOGGER = LoggerFactory.getLogger(WeChatController.class);
 
@@ -171,6 +179,56 @@ public class WeChatController {
         boolean bool = Constant.SendTempletTest(accessToken, jsonString);
         return bool;
     }
+
+    @GetMapping(value = "/wx")
+    public void get(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+
+        System.out.println("========WechatController========= ");
+
+        Enumeration pNames = request.getParameterNames();
+        while (pNames.hasMoreElements()) {
+            String name = (String) pNames.nextElement();
+            String value = request.getParameter(name);
+            // out.print(name + "=" + value);
+
+        }
+
+        String signature = request.getParameter("signature");/// 微信加密签名
+        String timestamp = request.getParameter("timestamp");/// 时间戳
+        String nonce = request.getParameter("nonce"); /// 随机数
+        String echostr = request.getParameter("echostr"); // 随机字符串
+        PrintWriter out = response.getWriter();
+
+        if (CheckSignature.checkSignature(signature, timestamp, nonce)) {
+            out.print(echostr);
+        }
+        out.close();
+        out = null;
+    }
+
+    @PostMapping(value = "/wx")
+    public void pos(HttpServletRequest request) throws IOException, DocumentException {
+        Map<String,String> map = new HashMap<String,String>();
+        SAXReader reader = new SAXReader();
+
+        InputStream ins = request.getInputStream();
+        Document doc = reader.read(ins);
+
+        //获取根节点
+        Element root = doc.getRootElement();
+
+        List<Element> list = root.elements();
+
+        for(Element e : list){
+            map.put(e.getName(), e.getText());
+        }
+        ins.close();
+
+        System.out.println(map);
+    }
+
+
 
 
 }
