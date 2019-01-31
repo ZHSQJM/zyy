@@ -25,10 +25,10 @@ public interface MedOfficeVisitMapper extends BaseMapper<MedOfficeVisit> {
             " FROM" +
             " hospital_doctor_extension hd" +
             " INNER JOIN med_office_visit mov ON hd.id = mov.cdid" +
-            " INNER JOIN `user` u ON u.user_id = mov.portalid " +
+            " INNER JOIN med_patient_info u ON u.portal_id = mov.portalid " +
             " INNER JOIN med_ov_pres_sheet mops ON mops.visitid = mov.visitid" +
             " WHERE" +
-            " mov.visitid = #{visitid}")
+            " u.open_id = = #{openid}")
     @Results({@Result(property = "pictureUrl", column = "picture_url"),@Result(property = "doctorName", column = "doctor_name"),
               @Result(property = "visitStatus", column = "visit_status"),@Result(property = "visitDate", column = "visit_date"),
               @Result(property = "InterrogationType", column = "Interrogation_type") ,
@@ -54,4 +54,6 @@ public interface MedOfficeVisitMapper extends BaseMapper<MedOfficeVisit> {
     Map<String,String> SetWeChatTemplateInformation(@Param("visitid") String visitid);
 
 
+    @Select("SELECT * from med_office_visit WHERE visitid =#{visitid}")
+    MedOfficeVisit getByVisitId(String visitid);
 }

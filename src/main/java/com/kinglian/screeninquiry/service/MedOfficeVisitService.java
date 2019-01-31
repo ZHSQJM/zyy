@@ -23,4 +23,6 @@ public interface MedOfficeVisitService extends IService<MedOfficeVisit> {
     Page getMedicalRecordByOpenId(Query<Map> mapQuery);
 
     Map<String,String> SetWeChatTemplateInformation(String visitid);
+
+    MedOfficeVisit getByVisitId(String visitid);
 }

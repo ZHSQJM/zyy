@@ -59,4 +59,9 @@ public class MedOfficeVisitServiceImpl extends ServiceImpl<MedOfficeVisitMapper,
     public Map<String, String> SetWeChatTemplateInformation(String visitid) {
         return medOfficeVisitMapper.SetWeChatTemplateInformation(visitid);
     }
+
+    @Override
+    public MedOfficeVisit getByVisitId(String visitid) {
+        return medOfficeVisitMapper.getByVisitId(visitid);
+    }
 }

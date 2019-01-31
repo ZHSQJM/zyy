@@ -21,6 +21,8 @@ public class CreateParmsCode {
     private static final String CODE_URL = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=";
     private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=";
 
+    private static final String OPEN_ID_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?grant_type=authorization_code&appid=";
+
     private static final String APP_ID = "wx08e2ea07eefdc16e";
     private static final String APP_SECRET = "e0706dd6b229eb1d78b2af285adb3ec3" ;
 
@@ -58,6 +60,19 @@ public class CreateParmsCode {
         ResponseEntity<String> body = restTemplate.getForEntity(sb.toString(), String.class);
         Map<String, String> data = JSONObject.parseObject(body.getBody(), HashMap.class);
         return data.get("access_token");
+    }
+
+    public  String getOpenId(String code) {
+        StringBuffer sb = new StringBuffer(OPEN_ID_URL);
+        sb.append(APP_ID);
+        sb.append("&secret=");
+        sb.append(APP_SECRET);
+        sb.append("&code=");
+        sb.append(code);
+        ResponseEntity<String> body = restTemplate.getForEntity(sb.toString(), String.class);
+        Map<String, String> data = JSONObject.parseObject(body.getBody(), HashMap.class);
+        String openid = data.get("openid");
+        return openid;
     }
 
 }

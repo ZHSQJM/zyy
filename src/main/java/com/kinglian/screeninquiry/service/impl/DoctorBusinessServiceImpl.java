@@ -67,7 +67,8 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
     private MedOvPresSheetMapper medOvPresSheetMapper;
 
 
-
+   /* @Autowired
+    CreateParmsCode createParmsCode;*/
 
     @Override
     public Page getDoctorListByDeptId(RequestBaseParam<DoctorDepartmentParam> param, Query<Map> mapQuery)
@@ -254,8 +255,8 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
              medPatientInfo.setDeleted(false);
              medPatientInfo.setNewUser(0);
              medPatientInfo.setOpId(param.getBody().getPortalId());
-
-
+//             medPatientInfo.setOpenId(createParmsCode.getOpenId(code));
+//             userMapper.insert()
              /**
               * by HXC
               */
