@@ -144,7 +144,7 @@ public class MedOvPrescriptionController {
         Map map = (Map) application.getAttribute("map");
         visitid = (String) map.get("EventKey");
         MedOfficeVisit medOfficeVisit = medOfficeVisitService.getByVisitId(visitid);
-        medPatientInfoService.updateByPortalid(medOfficeVisit.getPortalid());
+        medPatientInfoService.updateById(medOfficeVisit.getPatientid());
 //            visitid = message.get("visitid");
         Map<String, Object> params = new HashMap<>();
         params.put("openid",openid);
