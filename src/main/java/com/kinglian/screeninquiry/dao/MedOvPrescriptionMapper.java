@@ -60,10 +60,12 @@ public interface MedOvPrescriptionMapper extends BaseMapper<MedOvPrescription> {
             " med_patient_info mpi" +
             " INNER JOIN med_ov_prescription mop ON mpi.id = mop.patientid" +
             " INNER JOIN med_ov_pres_sheet mops ON mops.sheetid = mop.pre_sheet_id" +
+            " INNER JOIN med_office_visit mov ON mov.visitid = mops.visitid" +
             " WHERE" +
-            " mops.audit_status = #{auditStatus} and mpi.portal_id= #{portalId}")
+            " mops.audit_status = #{auditStatus}" +
+            " AND mov.cdid = '1000910'")
     @Results({@Result(property = "sheetid", column = "sheetid"),
-            @Result(property = "userName", column = "user_name"),
+            @Result(property = "userName", column = "member_name"),
             @Result(property = "auditNote", column = "audit_note"),
             @Result(property = "auditStatus", column = "audit_status"),
             @Result(property = "auditDate", column = "audit_date")})

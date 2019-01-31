@@ -73,7 +73,11 @@ public class MedOvPrescriptionController {
         return new R<>(page);
     }
 
-
+    /**
+     * 获取是否审核列表
+     * @param params
+     * @return
+     */
     @GetMapping("getPresOrder")
     public R<Page> getPresOrder(@RequestParam Map<String, Object> params){
         return new R<>(medOvPrescriptionService.getPresOrder(new Query<Map>(params)));
