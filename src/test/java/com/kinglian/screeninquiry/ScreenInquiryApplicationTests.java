@@ -1,5 +1,6 @@
 package com.kinglian.screeninquiry;
 
+import com.kinglian.screeninquiry.controller.WeChatController;
 import com.kinglian.screeninquiry.utils.Constant;
 import com.kinglian.screeninquiry.utils.CreateParmsCode;
 import org.jasypt.encryption.StringEncryptor;
@@ -24,6 +25,9 @@ public class ScreenInquiryApplicationTests {
     @Autowired
     Constant constant;
 
+    @Autowired
+    WeChatController weChatController;
+
     @Test
     public void contextLoads() {
         String result = stringEncryptor.encrypt("Jinglian12345");
@@ -36,7 +40,7 @@ public class ScreenInquiryApplicationTests {
     @Test
     public void test1() {
         System.out.println("========");
-        System.out.println(createParmsCode.getParmsCode("2222"));
+        System.out.println(createParmsCode.getParmsCode("154892505913f509b4afa4394c2dadf9"));
     }
 
     @Test
@@ -44,6 +48,11 @@ public class ScreenInquiryApplicationTests {
         System.out.println("========");
 //        System.out.println(createParmsCode.getOpenId());
     }
+
+/*    @Test
+    public void test3() {
+        weChatController.getAuthUrl("yun.kinglian.cn/officialWeChat/myCase");
+    }*/
 
 }
 

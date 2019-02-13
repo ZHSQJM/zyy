@@ -29,7 +29,7 @@ import java.util.*;
  * @date 2019-1-16
  */
 @RestController
-@RequestMapping("/screenInquiry/doctor")
+@RequestMapping("/doctor")
 public class DoctorOperationController {
 
     @Autowired
@@ -187,8 +187,12 @@ public class DoctorOperationController {
         if (saveDrugInfoReq.getIsSave() == 1) {
             medOvPrescriptionService.delete(new EntityWrapper<MedOvPrescription>().eq("visitid", saveDrugInfoReq.getOrderId()));
         }
+        //提交直接默认审核通过
+        MedOfficeVisit medOfficeVisit = new MedOfficeVisit();
+        medOfficeVisit.setVisitStatus("3");
         if (doctorOperationService.saveDrugInfo(saveDrugInfoReq, totalCost) &&
-                medOvPrescriptionService.insertBatch(medOvPrescriptionList,medOvPrescriptionList.size())) {
+                medOvPrescriptionService.insertBatch(medOvPrescriptionList,medOvPrescriptionList.size()) &&
+                medOfficeVisitService.update(medOfficeVisit,new EntityWrapper<MedOfficeVisit>().eq("visitid",saveDrugInfoReq.getOrderId()))) {
             return new R<>(true);
         }
         return new R<>(false);

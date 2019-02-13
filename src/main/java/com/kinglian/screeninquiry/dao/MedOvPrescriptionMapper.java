@@ -14,7 +14,6 @@ import java.util.Map;
 /**
  * MedOvPrescriptionMapper继承基类
  */
-@Repository
 public interface MedOvPrescriptionMapper extends BaseMapper<MedOvPrescription> {
 
     @Select("SELECT" +

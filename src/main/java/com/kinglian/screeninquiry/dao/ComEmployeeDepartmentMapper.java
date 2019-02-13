@@ -7,6 +7,5 @@ import org.springframework.stereotype.Repository;
 /**
  * ComEmployeeDepartmentDAO继承基类
  */
-@Repository
 public interface ComEmployeeDepartmentMapper extends BaseMapper<ComEmployeeDepartment> {
 }

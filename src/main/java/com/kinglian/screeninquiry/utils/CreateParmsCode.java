@@ -48,7 +48,6 @@ public class CreateParmsCode {
             KeyManager.putValue("getToken",newToken);
             accessToken = newToken;
         }
-        System.out.println(accessToken);
 //        String accessToken = getAccessToken();
         String url = CODE_URL+accessToken;
         Map<String, Object> map = new HashMap<>();
@@ -60,6 +59,7 @@ public class CreateParmsCode {
         actionInfo.put("scene", scene);
         map.put("action_info", actionInfo);
         String parms = JSON.toJSONString(map);
+        System.out.println(parms);
         String body = restTemplate.postForObject(url, parms, String.class);
         Map<String, String> data = JSONObject.parseObject(body, HashMap.class);
         String codeUrl = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + data.get("ticket");
