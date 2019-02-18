@@ -26,7 +26,7 @@ import java.util.HashMap;
 
 
 @Controller
-@RequestMapping("/screenInquiry/screenUser")
+@RequestMapping("/screenUser")
 public class QRCodeController {
 
 

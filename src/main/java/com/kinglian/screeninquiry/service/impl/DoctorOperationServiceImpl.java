@@ -181,7 +181,7 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
             MedOvPresSheet medOvPresSheet = new MedOvPresSheet();
             medOvPresSheet.setVisitid(saveDrugInfoReq.getOrderId());
             medOvPresSheet.setDeleted(false);
-            medOvPresSheet.setAuditStatus(0);
+            medOvPresSheet.setAuditStatus(1);
             medOvPresSheet.setAttention(saveDrugInfoReq.getAttention());
             medOvPresSheet.setAdvice(saveDrugInfoReq.getAdvice());
             medOvPresSheet.setCreatedBy(saveDrugInfoReq.getDoctorId());

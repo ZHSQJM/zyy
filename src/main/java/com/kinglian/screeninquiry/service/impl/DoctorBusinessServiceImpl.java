@@ -525,7 +525,8 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
                             map.put("doctorImgUrl", "");
                             map.put("hospitalName", "互联网医院");
                       //  }
-                        map.put("presUrl","http://yun-test.kinglian.net/officialWeChat/prescriptionDetail?visitId="+param.getBody().visitId);
+//                        map.put("presUrl","http://yun-test.kinglian.net/officialWeChat/prescriptionDetail?visitId="+param.getBody().visitId);
+                        map.put("presUrl","http://yun.kinglian.cn/officialWeChat/prescriptionDetail?visitId="+param.getBody().visitId);
                         //微信公众号二维码
                         map.put("qrCodeUrl",createParmsCode.getParmsCode(param.getBody().visitId));
                     }

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 /**
  * MedPatientInfoMapper继承基类
  */
-@Repository
 public interface MedPatientInfoMapper extends BaseMapper<MedPatientInfo> {
 
     @Update("UPDATE med_patient_info set open_id = #{openid} where id = #{portalid}")

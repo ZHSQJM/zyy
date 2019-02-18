@@ -30,23 +30,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.util.WebUtils;
 
+import javax.print.DocFlavor.STRING;
 import javax.servlet.ServletContext;
 import javax.servlet.http.*;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -60,6 +62,14 @@ import java.util.*;
 @RequestMapping("/message/template")
 public class WeChatController {
     private static final Logger LOGGER = LoggerFactory.getLogger(WeChatController.class);
+
+    //静默获取用户openid
+    private static final String AUTH_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx08e2ea07eefdc16e&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_base#wechat_redirect";
+
+    private static final String APP_ID = "wx08e2ea07eefdc16e";
+
+    @Autowired
+    RestTemplate restTemplate;
 
    /* @Value("${DNBX_TOKEN}")
     private String DNBX_TOKEN;
@@ -228,9 +238,41 @@ public class WeChatController {
         ins.close();
 
         System.out.println(map);
+        //扫描二维码带参数的事件
+        if (map.get("Event").equals("SCAN")){
+            ServletContext application = CreateParmsCode.getApplication();
+            application.setAttribute("map", map);
+        }
 
-        ServletContext application = CreateParmsCode.getApplication();
-        application.setAttribute("map", map);
     }
 
+    @CrossOrigin
+    @GetMapping("/getAuthUrl")
+    public Map<String, String> getAuthUrl(String redirectUrl) throws UnsupportedEncodingException {
+//        String parms = URLEncoder.encode(redirectUrl, "utf-8");
+
+        /*String url = AUTH_URL.replace("REDIRECT_URI", redirectUrl);
+        //ResponseEntity<String> forEntity = restTemplate.getForEntity(url, String.class);
+        System.out.println("-----------");
+//        System.out.println(forEntity);
+        Map<String, String> result = new HashMap<>();
+        result.put("code", "200");
+        result.put("url", url);
+        System.out.println(result);*/
+
+        Map<String ,String> response =new HashMap();
+        String redirect_uri = URLEncoder.encode(redirectUrl, "GBK");
+        Map<String, String> data1 = new HashMap<>();
+        data1.put("appid", "wx08e2ea07eefdc16e");
+        data1.put("redirect_uri", redirect_uri);
+        data1.put("response_type", "code");
+        data1.put("scope", "snsapi_base");
+        data1.put("state", "STATE" + "#wechat_redirect");
+        String url = "https://open.weixin.qq.com/connect/oauth2/authorize?" + CheckSignature.createLinkString(data1);
+        response.put("code","200");
+        response.put("url",url);
+        System.out.println(url);
+        return  response;
+
+    }
 }

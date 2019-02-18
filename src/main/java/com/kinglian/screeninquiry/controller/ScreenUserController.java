@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/screenInquiry/screenUser")
+@RequestMapping("/screenUser")
 public class ScreenUserController {
 
     @Autowired

@@ -43,7 +43,7 @@ import java.util.Map;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/screenInquiry/prescription")
+@RequestMapping("/prescription")
 public class MedOvPrescriptionController {
 
     @Autowired
@@ -143,6 +143,8 @@ public class MedOvPrescriptionController {
         ServletContext application = CreateParmsCode.getApplication();
         Map map = (Map) application.getAttribute("map");
         visitid = (String) map.get("EventKey");
+        System.out.println("==============");
+        System.out.println(visitid);
         MedOfficeVisit medOfficeVisit = medOfficeVisitService.getByVisitId(visitid);
         medPatientInfoService.updateByPatientId(openid,medOfficeVisit.getPatientid());
 //            visitid = message.get("visitid");
