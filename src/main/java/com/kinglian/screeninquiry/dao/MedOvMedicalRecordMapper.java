@@ -43,10 +43,10 @@ public interface MedOvMedicalRecordMapper extends BaseMapper<MedOvMedicalRecord>
             " momr.diagnosis" +
             " FROM" +
             " med_ov_medical_record momr" +
-            " INNER JOIN med_office_visit mov ON momr.visitid = mov.visitid" +
-            " INNER JOIN med_ov_pres_sheet mops ON mops.visitid = mov.visitid" +
-            " INNER JOIN med_ov_prescription mop ON mop.visitid = mops.visitid" +
-            " INNER JOIN med_patient_info mpi ON mpi.id = mov.patientid " +
+            " LEFT JOIN med_office_visit mov ON momr.visitid = mov.visitid" +
+            " LEFT JOIN med_ov_pres_sheet mops ON mops.visitid = mov.visitid" +
+            " LEFT JOIN med_ov_prescription mop ON mop.visitid = mops.visitid" +
+            " LEFT JOIN med_patient_info mpi ON mpi.id = mov.patientid " +
             " WHERE" +
             " momr.visitid = #{visitid}")
     @Results({@Result(property = "visitid", column = "visitid",id=true),
