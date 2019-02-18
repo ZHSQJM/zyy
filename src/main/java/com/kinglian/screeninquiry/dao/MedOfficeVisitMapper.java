@@ -25,10 +25,10 @@ public interface MedOfficeVisitMapper extends BaseMapper<MedOfficeVisit> {
             " FROM" +
             " hospital_doctor_extension hd" +
             " INNER JOIN med_office_visit mov ON hd.id = mov.cdid" +
-            " INNER JOIN med_patient_info u ON u.portal_id = mov.portalid " +
+            " INNER JOIN med_patient_info u ON u.id = mov.patientid " +
             " INNER JOIN med_ov_pres_sheet mops ON mops.visitid = mov.visitid" +
             " WHERE" +
-            " u.open_id = = #{openid}")
+            " u.open_id = #{openid}")
     @Results({@Result(property = "pictureUrl", column = "picture_url"),@Result(property = "doctorName", column = "doctor_name"),
               @Result(property = "visitStatus", column = "visit_status"),@Result(property = "visitDate", column = "visit_date"),
               @Result(property = "InterrogationType", column = "Interrogation_type") ,

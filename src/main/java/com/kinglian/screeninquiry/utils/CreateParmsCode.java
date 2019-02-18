@@ -31,7 +31,7 @@ public class CreateParmsCode {
     private static final String OPEN_ID_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?grant_type=authorization_code&appid=";
 
     private static final String APP_ID = "wx08e2ea07eefdc16e";
-    private static final String APP_SECRET = "e0706dd6b229eb1d78b2af285adb3ec3" ;
+    private static final String APP_SECRET = "e0706dd6b229eb1d78b2af285adb3ec3";
 
     @Autowired
     private RestTemplate restTemplate;
