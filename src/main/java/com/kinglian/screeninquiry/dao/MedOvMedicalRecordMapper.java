@@ -41,6 +41,7 @@ public interface MedOvMedicalRecordMapper extends BaseMapper<MedOvMedicalRecord>
             " momr.untoward_effect," +
             " momr.uncomfortable_symptom," +
             " momr.diagnosis" +
+            " momr.definite_case" +
             " FROM" +
             " med_ov_medical_record momr" +
             " LEFT JOIN med_office_visit mov ON momr.visitid = mov.visitid" +

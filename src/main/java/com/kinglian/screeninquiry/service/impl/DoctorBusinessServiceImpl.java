@@ -551,4 +551,19 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
 
         return  medVisitInfo;
     }
+
+    @Override
+    public UserInfoDto queryUserInfo(RequestBaseParam<OpIdParam> param) {
+        UserInfoDto userInfoDto = medPatientInfoMapper.selectInfoById(param.getBody().getOpId());
+        if (userInfoDto != null) {
+            if (userInfoDto.getBirthDay() != null) {
+                try {
+                    userInfoDto.setAge(GetAge.getAge(userInfoDto.getBirthDay()));
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException("日期转换出错");
+                }
+            }
+        }
+        return userInfoDto;
+    }
 }

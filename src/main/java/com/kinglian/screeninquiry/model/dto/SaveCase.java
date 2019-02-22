@@ -46,4 +46,6 @@ public class SaveCase {
     private String uncomfortableSymptom;
 
     private  String diagnosis;
+
+    private Integer definiteCase;
 }
