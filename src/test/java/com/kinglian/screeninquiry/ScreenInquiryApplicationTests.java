@@ -45,6 +45,8 @@ public class ScreenInquiryApplicationTests {
 
     @Test
     public void test2() {
+        String accessToken = createParmsCode.getAccessToken();
+        System.out.println(accessToken);
         System.out.println("========");
 //        System.out.println(createParmsCode.getOpenId());
     }

@@ -23,4 +23,6 @@ public interface DoctorBusinessService  {
     MedVisitInfo queryVisitInfo(RequestBaseParam<SubmitVisitBodyParam> param);
 
     MedVisitInfo queryVisitInfoByAudit(RequestBaseParam<SubmitVisitBodyParam> param);
+
+    UserInfoDto queryUserInfo(RequestBaseParam<OpIdParam> param) throws IllegalAccessException;
 }

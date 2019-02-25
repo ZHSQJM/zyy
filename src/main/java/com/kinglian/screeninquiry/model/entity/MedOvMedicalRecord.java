@@ -107,5 +107,10 @@ public class MedOvMedicalRecord implements Serializable {
      */
     private String diagnosis;
 
+    /**
+     * 是否确认该疾病
+     */
+    private Integer definiteCase;
+
     private static final long serialVersionUID = 1L;
 }

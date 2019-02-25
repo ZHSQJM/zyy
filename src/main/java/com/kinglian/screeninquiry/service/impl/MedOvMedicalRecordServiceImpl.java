@@ -88,6 +88,7 @@ public class MedOvMedicalRecordServiceImpl extends ServiceImpl<MedOvMedicalRecor
         medOvMedicalRecord.setUntowardEffect(saveCase.getUntowardEffect());
         medOvMedicalRecord.setUncomfortableSymptom(saveCase.getUncomfortableSymptom());
         medOvMedicalRecord.setDiagnosis(saveCase.getDiagnosis());
+        medOvMedicalRecord.setDefiniteCase(saveCase.getDefiniteCase());
         return medOvMedicalRecordMapper.insert(medOvMedicalRecord) > 0;
     }
 

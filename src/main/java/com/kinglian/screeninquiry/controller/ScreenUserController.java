@@ -4,6 +4,7 @@ import cn.kinglian.spring.util.Query;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.kinglian.screeninquiry.service.DoctorBusinessService;
 import com.kinglian.screeninquiry.utils.R;
+import com.kinglian.screeninquiry.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.kinglian.screeninquiry.model.dto.*;
@@ -133,6 +134,25 @@ public class ScreenUserController {
     @PostMapping(value = "/queryVisitInfoByAudit")
     public R queryPresOrder(@RequestBody RequestBaseParam<SubmitVisitBodyParam> param) {
         return new R<>(doctorBusinessService.queryVisitInfoByAudit(param));
+    }
+
+    /**
+     * 根据识别码查询用户信息
+     * @param param
+     * @return
+     */
+    @PostMapping(value = "/queryUserInfo")
+    public R queryUserInfo(@RequestBody RequestBaseParam<OpIdParam> param) throws IllegalAccessException {
+        R<UserInfoDto> ret = new R();
+        UserInfoDto userInfoDto = doctorBusinessService.queryUserInfo(param);
+        ret.setData(userInfoDto);
+        if (userInfoDto != null ) {
+            ret.setResult("1");
+        } else {
+            ret.setResult("-1");
+            ret.setMsg("查询不到该用户");
+        }
+        return ret;
     }
 
 }

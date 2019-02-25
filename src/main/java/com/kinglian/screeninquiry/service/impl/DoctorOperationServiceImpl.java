@@ -162,7 +162,9 @@ public class DoctorOperationServiceImpl implements DoctorOperationService {
         List<HistoryOrderRep> result = doctorOperationMapper.selectHistoryOrder(doctorId, beginTime, endTime, patientName, patientType, type, drugstoreName);
         result.stream().forEach(x-> {
             try {
-                x.setAge(GetAge.getAge(x.getBirthDay()));
+                if (x.getBirthDay() != null) {
+                    x.setAge(GetAge.getAge(x.getBirthDay()));
+                }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
