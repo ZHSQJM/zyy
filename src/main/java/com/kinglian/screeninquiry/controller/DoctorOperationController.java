@@ -145,12 +145,17 @@ public class DoctorOperationController {
      * 病历详情
      * @return
      */
-    @RequestMapping("/getMedicalRecordDetails")
-    public R<Page> getMedicalRecordDetails(@RequestBody JsonEntity jsonEntity){
+    @PostMapping("/getMedicalRecordDetails")
+    public R<Object> getMedicalRecordDetails(@RequestBody JsonEntity jsonEntity){
         Map params = new HashMap();
         params.put("visitid",jsonEntity.getBody().get("visitid"));
-        List<MedOvPrescription> medList = medOvPrescriptionService.findByVisitId((String) params.get("visitid"));
-        return new R<>(medOvMedicalRecordService.getMedicalRecordDetails(new Query<Map>(params)));
+//        List<MedOvPrescription> medList = medOvPrescriptionService.findByVisitId((String) params.get("visitid"));
+        Page medicalRecordDetails = medOvMedicalRecordService.getMedicalRecordDetails(new Query<Map>(params));
+        if (medicalRecordDetails.getRecords().size() > 0) {
+            return new R<>(medicalRecordDetails.getRecords().get(0));
+        } else {
+            throw new RuntimeException("无数据");
+        }
     }
 
     /**

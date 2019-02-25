@@ -101,11 +101,14 @@ public class MedOvMedicalRecordServiceImpl extends ServiceImpl<MedOvMedicalRecor
             if (medicalRecordDetails != null && medicalRecordDetails.size() != 0) {
                 Map map = medicalRecordDetails.get(0);
                 java.util.Date birthday = (java.util.Date) map.get("birthday");
-                map.put("birthday", GetAge.getAge(birthday));
+                map.put("age", GetAge.getAge(birthday));
 
                 java.util.Date visitDate = (java.util.Date) map.get("visitDate");
                 String date = DateConvertUtils.dateToStrLong(visitDate);
                 map.put("visitDate", date);
+
+                String birth = DateConvertUtils.dateToStrLong(birthday);
+                map.put("birthday", birth);
                 result.add(map);
             }
         } catch (IllegalAccessException e) {

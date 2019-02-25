@@ -40,7 +40,7 @@ public interface MedOvMedicalRecordMapper extends BaseMapper<MedOvMedicalRecord>
             " momr.pharmacy_info," +
             " momr.untoward_effect," +
             " momr.uncomfortable_symptom," +
-            " momr.diagnosis" +
+            " momr.diagnosis," +
             " momr.definite_case" +
             " FROM" +
             " med_ov_medical_record momr" +

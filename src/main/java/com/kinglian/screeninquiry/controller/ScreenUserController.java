@@ -147,7 +147,7 @@ public class ScreenUserController {
         UserInfoDto userInfoDto = doctorBusinessService.queryUserInfo(param);
         ret.setData(userInfoDto);
         if (userInfoDto != null ) {
-            ret.setResult("1");
+            ret.setResult("0");
         } else {
             ret.setResult("-1");
             ret.setMsg("查询不到该用户");

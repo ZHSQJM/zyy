@@ -66,6 +66,9 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
     @Autowired
     private MedOvPresSheetMapper medOvPresSheetMapper;
 
+    @Autowired
+    private MedOvPrescriptionMapper medOvPrescriptionMapper;
+
 
    /* @Autowired
     CreateParmsCode createParmsCode;*/
@@ -415,6 +418,7 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
                         map.put("doctorName", medOfficeVisit1.getCdName());
                         map.put("visitTime", "1000");
                         map.put("rate", "100%");
+                        map.put("medList",medOvPrescriptionMapper.findByVisitId( param.getBody().visitId ) );
 
                         HospitalDoctorExtension item= hospitalDoctorExtensionMapper.selectById(medOfficeVisit1.getCdid());
 
@@ -526,7 +530,8 @@ public class DoctorBusinessServiceImpl implements DoctorBusinessService {
                             map.put("hospitalName", "互联网医院");
                       //  }
 //                        map.put("presUrl","http://yun-test.kinglian.net/officialWeChat/prescriptionDetail?visitId="+param.getBody().visitId);
-                        map.put("presUrl","http://yun.kinglian.cn/officialWeChat/prescriptionDetail?visitId="+param.getBody().visitId);
+                        //map.put("presUrl","http://yun.kinglian.cn/officialWeChat/prescriptionDetail?visitId="+param.getBody().visitId);
+                        map.put("presUrl","http://yun.kinglian.cn/officialWeChat/prescriptionDetailPC?visitId="+param.getBody().visitId);
                         //微信公众号二维码
                         map.put("qrCodeUrl",createParmsCode.getParmsCode(param.getBody().visitId));
                     }
