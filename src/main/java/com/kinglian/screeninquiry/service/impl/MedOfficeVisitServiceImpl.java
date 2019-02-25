@@ -46,11 +46,12 @@ public class MedOfficeVisitServiceImpl extends ServiceImpl<MedOfficeVisitMapper,
         List<Map> result = new ArrayList<>();
         List<Map> records = medOfficeVisitMapper.getMedicalRecordByOpenId(query, query.getCondition());
             if (records != null && records.size() != 0){
-                Map map = records.get(0);
-                java.util.Date visitDate = (java.util.Date)map.get("visitDate");
-                String date = DateConvertUtils.dateToStrLong(visitDate);
-                map.put("visitDate", date);
-                result.add(map);
+                for (Map map : records){
+                    java.util.Date visitDate = (java.util.Date)map.get("visitDate");
+                    String date = DateConvertUtils.dateToStrLong(visitDate);
+                    map.put("visitDate", date);
+                    result.add(map);
+                }
             }
         return query.setRecords(result);
     }
