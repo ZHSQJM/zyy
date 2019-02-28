@@ -83,7 +83,9 @@ public class CreateParmsCode {
         sb.append(APP_SECRET);
         sb.append("&code=");
         sb.append(code);
+        System.out.println(sb.toString());
         ResponseEntity<String> body = restTemplate.getForEntity(sb.toString(), String.class);
+        System.out.println(body);
         Map<String, String> data = JSONObject.parseObject(body.getBody(), HashMap.class);
         String openid = data.get("openid");
         return openid;

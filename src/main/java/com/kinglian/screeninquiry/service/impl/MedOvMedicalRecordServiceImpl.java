@@ -104,11 +104,14 @@ public class MedOvMedicalRecordServiceImpl extends ServiceImpl<MedOvMedicalRecor
                 map.put("age", GetAge.getAge(birthday));
 
                 java.util.Date visitDate = (java.util.Date) map.get("visitDate");
-                String date = DateConvertUtils.dateToStrLong(visitDate);
-                map.put("visitDate", date);
-
-                String birth = DateConvertUtils.dateToStrLong(birthday);
-                map.put("birthday", birth);
+                if (visitDate != null && !"".equals(visitDate)) {
+                    String date = DateConvertUtils.dateToStrLong(visitDate);
+                    map.put("visitDate", date);
+                }
+                if (birthday != null && !"".equals(birthday)) {
+                    String birth = DateConvertUtils.dateToStrLong(birthday);
+                    map.put("birthday", birth);
+                }
                 result.add(map);
             }
         } catch (IllegalAccessException e) {

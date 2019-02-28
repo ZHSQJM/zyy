@@ -48,8 +48,10 @@ public class MedOfficeVisitServiceImpl extends ServiceImpl<MedOfficeVisitMapper,
             if (records != null && records.size() != 0){
                 for (Map map : records){
                     java.util.Date visitDate = (java.util.Date)map.get("visitDate");
-                    String date = DateConvertUtils.dateToStrLong(visitDate);
-                    map.put("visitDate", date);
+                    if (visitDate != null && !"".equals(visitDate)) {
+                        String date = DateConvertUtils.dateToStrLong(visitDate);
+                        map.put("visitDate", date);
+                    }
                     result.add(map);
                 }
             }

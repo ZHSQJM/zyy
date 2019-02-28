@@ -126,7 +126,10 @@ public class MedOvPrescriptionController {
      */
     @GetMapping("getMedicalRecord")
     public R<Page> getMedicalRecord(@RequestParam  String code) {/*HttpServletRequest request*/
+        System.out.println("code======" + code);
+
         String openid = createParmsCode.getOpenId(code);
+        System.out.println("openid" + openid);
         String visitid = null;
 //        String qrscene_visitid = null;
        /* Map<String, String> message = MessageUtil.parseXml(request);
@@ -142,11 +145,15 @@ public class MedOvPrescriptionController {
             }*/
         ServletContext application = CreateParmsCode.getApplication();
         Map map = (Map) application.getAttribute("map");
-        visitid = (String) map.get("EventKey");
-        System.out.println("==============");
-        System.out.println(visitid);
-        MedOfficeVisit medOfficeVisit = medOfficeVisitService.getByVisitId(visitid);
-        medPatientInfoService.updateByPatientId(openid,medOfficeVisit.getPatientid());
+        if (map != null) {
+            if (map.containsKey("EventKey")) {
+                visitid = (String) map.get("EventKey");
+                System.out.println("==============");
+                System.out.println(visitid);
+                MedOfficeVisit medOfficeVisit = medOfficeVisitService.getByVisitId(visitid);
+                medPatientInfoService.updateByPatientId(openid,medOfficeVisit.getPatientid());
+            }
+        }
 //            visitid = message.get("visitid");
         Map<String, Object> params = new HashMap<>();
         params.put("openid",openid);
