@@ -14,7 +14,6 @@ import com.kinglian.screeninquiry.model.entity.MedPatientInfo;
 import com.kinglian.screeninquiry.service.MedOvMedicalRecordService;
 import com.kinglian.screeninquiry.utils.DateConvertUtils;
 import com.kinglian.screeninquiry.utils.GetAge;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -104,7 +103,7 @@ public class MedOvMedicalRecordServiceImpl extends ServiceImpl<MedOvMedicalRecor
                 map.put("age", GetAge.getAge(birthday));
 
                 java.util.Date visitDate = (java.util.Date) map.get("visitDate");
-                String date = DateConvertUtils.dateToStrLong(visitDate);
+                String date = DateConvertUtils.dateToStr(visitDate);
                 map.put("visitDate", date);
 
                 String birth = DateConvertUtils.dateToStrLong(birthday);

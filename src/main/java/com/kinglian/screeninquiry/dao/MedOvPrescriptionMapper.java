@@ -103,10 +103,10 @@ public interface MedOvPrescriptionMapper extends BaseMapper<MedOvPrescription> {
             "  mops.advice " +
             "  FROM " +
             "  med_office_visit mov " +
-            "  inner JOIN med_ov_pres_sheet mops ON mov.visitid = mops.visitid " +
-            "  inner JOIN med_ov_prescription mop ON mop.visitid = mops.visitid " +
-            "  inner JOIN med_ov_medical_record momr ON momr.visitid = mov.visitid " +
-            "  inner JOIN med_patient_info mpi ON mpi.id = mov.patientid " +
+            "  LEFT JOIN med_ov_pres_sheet mops ON mov.visitid = mops.visitid " +
+            "  LEFT JOIN med_ov_prescription mop ON mop.visitid = mops.visitid " +
+            "  LEFT JOIN med_ov_medical_record momr ON momr.visitid = mov.visitid " +
+            "  LEFT JOIN med_patient_info mpi ON mpi.id = mov.patientid " +
             "  WHERE  " +
             "  mov.visitid =  #{visitid}")
     @Results({@Result(property = "visitid", column = "visitid",id=true),
