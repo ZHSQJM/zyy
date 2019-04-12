@@ -45,6 +45,4 @@ public class UDPController {
         udpEntity.closePort();
         return 1;
     }
-
-
 }

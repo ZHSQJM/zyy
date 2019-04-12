@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kinglian.screeninquiry.dao.GroupMapper">
+  <resultMap id="BaseResultMap" type="com.kinglian.screeninquiry.model.entity.Group">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="group_name" jdbcType="VARCHAR" property="groupName" />
+    <result column="one_min" jdbcType="VARCHAR" property="oneMin" />
+    <result column="five_min" jdbcType="VARCHAR" property="fiveMin" />
+    <result column="ten_min" jdbcType="VARCHAR" property="tenMin" />
+    <result column="fifteen_min" jdbcType="VARCHAR" property="fifteenMin" />
+    <result column="twenty_min" jdbcType="VARCHAR" property="twentyMin" />
+    <result column="twenty_five_min" jdbcType="VARCHAR" property="twentyFiveMin" />
+    <result column="brief_introduction" jdbcType="VARCHAR" property="briefIntroduction" />
+    <result column="photo" jdbcType="VARCHAR" property="photo" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, group_name, one_min, five_min, ten_min, fifteen_min, twenty_min, twenty_five_min, 
+    brief_introduction,photo
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `group`
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from group
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.kinglian.screeninquiry.model.entity.Group" useGeneratedKeys="true">
+    insert into `group` (id,group_name, one_min, five_min, ten_min,fifteen_min,twenty_min,twenty_five_min,brief_introduction,photo)
+    values (#{id,jdbcType=VARCHAR},#{groupName,jdbcType=VARCHAR}, #{oneMin,jdbcType=VARCHAR}, #{fiveMin,jdbcType=VARCHAR},
+      #{tenMin,jdbcType=VARCHAR}, #{fifteenMin,jdbcType=VARCHAR}, #{twentyMin,jdbcType=VARCHAR}, 
+      #{twentyFiveMin,jdbcType=VARCHAR},#{briefIntroduction,jdbcType=VARCHAR},#{photo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.kinglian.screeninquiry.model.entity.Group" useGeneratedKeys="true">
+    insert into `group`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="groupName != null">
+        group_name,
+      </if>
+      <if test="oneMin != null">
+        one_min,
+      </if>
+      <if test="fiveMin != null">
+        five_min,
+      </if>
+      <if test="tenMin != null">
+        ten_min,
+      </if>
+      <if test="fifteenMin != null">
+        fifteen_min,
+      </if>
+      <if test="twentyMin != null">
+        twenty_min,
+      </if>
+      <if test="twentyFiveMin != null">
+        twenty_five_min,
+      </if>
+      <if test="briefIntroduction != null">
+        brief_introduction,
+      </if>
+      <if test="photo != null">
+        photo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="groupName != null">
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="oneMin != null">
+        #{oneMin,jdbcType=VARCHAR},
+      </if>
+      <if test="fiveMin != null">
+        #{fiveMin,jdbcType=VARCHAR},
+      </if>
+      <if test="tenMin != null">
+        #{tenMin,jdbcType=VARCHAR},
+      </if>
+      <if test="fifteenMin != null">
+        #{fifteenMin,jdbcType=VARCHAR},
+      </if>
+      <if test="twentyMin != null">
+        #{twentyMin,jdbcType=VARCHAR},
+      </if>
+      <if test="twentyFiveMin != null">
+        #{twentyFiveMin,jdbcType=VARCHAR},
+      </if>
+      <if test="briefIntroduction != null">
+        #{briefIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="photo != null">
+        #{photo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kinglian.screeninquiry.model.entity.Group">
+    update `group`
+    <set>
+      <if test="groupName != null">
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="oneMin != null">
+        one_min = #{oneMin,jdbcType=VARCHAR},
+      </if>
+      <if test="fiveMin != null">
+        five_min = #{fiveMin,jdbcType=VARCHAR},
+      </if>
+      <if test="tenMin != null">
+        ten_min = #{tenMin,jdbcType=VARCHAR},
+      </if>
+      <if test="fifteenMin != null">
+        fifteen_min = #{fifteenMin,jdbcType=VARCHAR},
+      </if>
+      <if test="twentyMin != null">
+        twenty_min = #{twentyMin,jdbcType=VARCHAR},
+      </if>
+      <if test="twentyFiveMin != null">
+        twenty_five_min = #{twentyFiveMin,jdbcType=VARCHAR},
+      </if>
+      <if test="briefIntroduction != null">
+        brief_introduction = #{briefIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="photo != null">
+        photo = #{photo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kinglian.screeninquiry.model.entity.Group">
+    update  `group`
+    set group_name = #{groupName,jdbcType=VARCHAR},
+      one_min = #{oneMin,jdbcType=VARCHAR},
+      five_min = #{fiveMin,jdbcType=VARCHAR},
+      ten_min = #{tenMin,jdbcType=VARCHAR},
+      fifteen_min = #{fifteenMin,jdbcType=VARCHAR},
+      twenty_min = #{twentyMin,jdbcType=VARCHAR},
+      twenty_five_min = #{twentyFiveMin,jdbcType=VARCHAR},
+      brief_introduction = #{briefIntroduction,jdbcType=VARCHAR},
+        photo = #{photo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kinglian.screeninquiry.dao.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.kinglian.screeninquiry.model.entity.Order">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="order_num" jdbcType="VARCHAR" property="orderNum" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="client_wechat_id" jdbcType="VARCHAR" property="clientWechatId" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="gather_state" jdbcType="VARCHAR" property="gatherState" />
+    <result column="show_time" jdbcType="VARCHAR" property="showTime" />
+    <result column="product_id" jdbcType="VARCHAR" property="productId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_num, title, picture, price, client_wechat_id, `state`, gather_state, show_time, 
+    product_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from order
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.kinglian.screeninquiry.model.entity.Order" useGeneratedKeys="true">
+    insert into order (order_num, title, picture, 
+      price, client_wechat_id, `state`, 
+      gather_state, show_time, product_id
+      )
+    values (#{orderNum,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{clientWechatId,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{gatherState,jdbcType=VARCHAR}, #{showTime,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.kinglian.screeninquiry.model.entity.Order" useGeneratedKeys="true">
+    insert into order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderNum != null">
+        order_num,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="clientWechatId != null">
+        client_wechat_id,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="gatherState != null">
+        gather_state,
+      </if>
+      <if test="showTime != null">
+        show_time,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="clientWechatId != null">
+        #{clientWechatId,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherState != null">
+        #{gatherState,jdbcType=VARCHAR},
+      </if>
+      <if test="showTime != null">
+        #{showTime,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kinglian.screeninquiry.model.entity.Order">
+    update order
+    <set>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="clientWechatId != null">
+        client_wechat_id = #{clientWechatId,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherState != null">
+        gather_state = #{gatherState,jdbcType=VARCHAR},
+      </if>
+      <if test="showTime != null">
+        show_time = #{showTime,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kinglian.screeninquiry.model.entity.Order">
+    update order
+    set order_num = #{orderNum,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      client_wechat_id = #{clientWechatId,jdbcType=VARCHAR},
+      `state` = #{state,jdbcType=VARCHAR},
+      gather_state = #{gatherState,jdbcType=VARCHAR},
+      show_time = #{showTime,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

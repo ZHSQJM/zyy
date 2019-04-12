@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kinglian.screeninquiry.dao.VendorMapper">
+  <resultMap id="BaseResultMap" type="com.kinglian.screeninquiry.model.entity.Vendor">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="vendor_name" jdbcType="VARCHAR" property="vendorName" />
+    <result column="vendor_intro" jdbcType="VARCHAR" property="vendorIntro" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, vendor_name, vendor_intro, picture
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from vendor
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from vendor
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.kinglian.screeninquiry.model.entity.Vendor" useGeneratedKeys="true">
+    insert into vendor (vendor_name, vendor_intro, picture
+      )
+    values (#{vendorName,jdbcType=VARCHAR}, #{vendorIntro,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.kinglian.screeninquiry.model.entity.Vendor" useGeneratedKeys="true">
+    insert into vendor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="vendorName != null">
+        vendor_name,
+      </if>
+      <if test="vendorIntro != null">
+        vendor_intro,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="vendorName != null">
+        #{vendorName,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorIntro != null">
+        #{vendorIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kinglian.screeninquiry.model.entity.Vendor">
+    update vendor
+    <set>
+      <if test="vendorName != null">
+        vendor_name = #{vendorName,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorIntro != null">
+        vendor_intro = #{vendorIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kinglian.screeninquiry.model.entity.Vendor">
+    update vendor
+    set vendor_name = #{vendorName,jdbcType=VARCHAR},
+      vendor_intro = #{vendorIntro,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

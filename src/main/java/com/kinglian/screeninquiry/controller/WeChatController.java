@@ -10,18 +10,8 @@
  */
 package com.kinglian.screeninquiry.controller;
 
-import cn.kinglian.spring.util.Query;
-import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.kinglian.screeninquiry.dao.MedOfficeVisitMapper;
-import com.kinglian.screeninquiry.model.entity.*;
-import com.kinglian.screeninquiry.service.MedOfficeVisitService;
-import com.kinglian.screeninquiry.service.MedOvPrescriptionService;
 import com.kinglian.screeninquiry.utils.CheckSignature;
-import com.kinglian.screeninquiry.service.WechatService;
-import com.kinglian.screeninquiry.utils.Constant;
 import com.kinglian.screeninquiry.utils.CreateParmsCode;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -29,28 +19,21 @@ import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.util.WebUtils;
 
-import javax.print.DocFlavor.STRING;
 import javax.servlet.ServletContext;
-import javax.servlet.http.*;
-import java.io.*;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 〈微信消息推送前端控制器〉
@@ -64,9 +47,9 @@ public class WeChatController {
     private static final Logger LOGGER = LoggerFactory.getLogger(WeChatController.class);
 
     //静默获取用户openid
-    private static final String AUTH_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx08e2ea07eefdc16e&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_base#wechat_redirect";
+    private static final String AUTH_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_base#wechat_redirect";
 
-    private static final String APP_ID = "wx08e2ea07eefdc16e";
+    private static final String APP_ID = "";
 
     @Autowired
     RestTemplate restTemplate;

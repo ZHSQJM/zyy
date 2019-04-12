@@ -1,25 +1,8 @@
-
-
-kkkkkkkk             iiii                                        lllllll   iiii
-k::::::k            i::::i                                       l:::::l  i::::i
-k::::::k             iiii                                        l:::::l   iiii
-k::::::k                                                         l:::::l
- k:::::k    kkkkkkkiiiiiii nnnn  nnnnnnnn       ggggggggg   ggggg l::::l iiiiiii   aaaaaaaaaaaaa   nnnn  nnnnnnnn
- k:::::k   k:::::k i:::::i n:::nn::::::::nn    g:::::::::ggg::::g l::::l i:::::i   a::::::::::::a  n:::nn::::::::nn
- k:::::k  k:::::k   i::::i n::::::::::::::nn  g:::::::::::::::::g l::::l  i::::i   aaaaaaaaa:::::a n::::::::::::::nn
- k:::::k k:::::k    i::::i nn:::::::::::::::ng::::::ggggg::::::gg l::::l  i::::i            a::::a nn:::::::::::::::n
- k::::::k:::::k     i::::i   n:::::nnnn:::::ng:::::g     g:::::g  l::::l  i::::i     aaaaaaa:::::a   n:::::nnnn:::::n
- k:::::::::::k      i::::i   n::::n    n::::ng:::::g     g:::::g  l::::l  i::::i   aa::::::::::::a   n::::n    n::::n
- k:::::::::::k      i::::i   n::::n    n::::ng:::::g     g:::::g  l::::l  i::::i  a::::aaaa::::::a   n::::n    n::::n
- k::::::k:::::k     i::::i   n::::n    n::::ng::::::g    g:::::g  l::::l  i::::i a::::a    a:::::a   n::::n    n::::n
-k::::::k k:::::k   i::::::i  n::::n    n::::ng:::::::ggggg:::::g l::::::li::::::ia::::a    a:::::a   n::::n    n::::n
-k::::::k  k:::::k  i::::::i  n::::n    n::::n g::::::::::::::::g l::::::li::::::ia:::::aaaa::::::a   n::::n    n::::n
-k::::::k   k:::::k i::::::i  n::::n    n::::n  gg::::::::::::::g l::::::li::::::i a::::::::::aa:::a  n::::n    n::::n
-kkkkkkkk    kkkkkkkiiiiiiii  nnnnnn    nnnnnn    gggggggg::::::g lllllllliiiiiiii  aaaaaaaaaa  aaaa  nnnnnn    nnnnnn
-                                                         g:::::g
-                                             gggggg      g:::::g
-                                             g:::::gg   gg:::::g
-                                              g::::::ggg:::::::g
-                                               gg:::::::::::::g
-                                                 ggg::::::ggg
-                                                    gggggg
+   _  _             _  _
+  (_)(_)           | |(_)
+   _  _  _   _   __| | _  _ __    __ _
+  | || || | | | / _` || || '_ \  / _` |
+  | || || |_| || (_| || || | | || (_| |
+  | ||_| \__,_| \__,_||_||_| |_| \__, |
+ _/ |                             __/ |
+|__/                             |___/

@@ -4,7 +4,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @author lky
+ * @author
  */
 @Data
 public class RequestBaseParam <T> implements Serializable {

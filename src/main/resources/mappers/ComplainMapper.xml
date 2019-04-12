@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kinglian.screeninquiry.dao.ComplainMapper">
+  <resultMap id="BaseResultMap" type="com.kinglian.screeninquiry.model.entity.Complain">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="printscreen" jdbcType="VARCHAR" property="printscreen" />
+    <result column="client_wechat_id" jdbcType="VARCHAR" property="clientWechatId" />
+    <result column="complainant" jdbcType="VARCHAR" property="complainant" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, content, printscreen, client_wechat_id, complainant
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from complain
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from complain
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.kinglian.screeninquiry.model.entity.Complain" useGeneratedKeys="true">
+    insert into complain (content, printscreen, client_wechat_id, 
+      complainant)
+    values (#{content,jdbcType=VARCHAR}, #{printscreen,jdbcType=VARCHAR}, #{clientWechatId,jdbcType=VARCHAR}, 
+      #{complainant,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.kinglian.screeninquiry.model.entity.Complain" useGeneratedKeys="true">
+    insert into complain
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="content != null">
+        content,
+      </if>
+      <if test="printscreen != null">
+        printscreen,
+      </if>
+      <if test="clientWechatId != null">
+        client_wechat_id,
+      </if>
+      <if test="complainant != null">
+        complainant,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="printscreen != null">
+        #{printscreen,jdbcType=VARCHAR},
+      </if>
+      <if test="clientWechatId != null">
+        #{clientWechatId,jdbcType=VARCHAR},
+      </if>
+      <if test="complainant != null">
+        #{complainant,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kinglian.screeninquiry.model.entity.Complain">
+    update complain
+    <set>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="printscreen != null">
+        printscreen = #{printscreen,jdbcType=VARCHAR},
+      </if>
+      <if test="clientWechatId != null">
+        client_wechat_id = #{clientWechatId,jdbcType=VARCHAR},
+      </if>
+      <if test="complainant != null">
+        complainant = #{complainant,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kinglian.screeninquiry.model.entity.Complain">
+    update complain
+    set content = #{content,jdbcType=VARCHAR},
+      printscreen = #{printscreen,jdbcType=VARCHAR},
+      client_wechat_id = #{clientWechatId,jdbcType=VARCHAR},
+      complainant = #{complainant,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

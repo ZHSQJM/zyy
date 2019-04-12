@@ -3,8 +3,7 @@ package com.kinglian.screeninquiry.model.dto;
 import lombok.Data;
 
 /**
- * @author HXC
- * @date 2019-1-21
+ * @author
  */
 @Data
 public class User {

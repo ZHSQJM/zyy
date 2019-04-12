@@ -14,9 +14,9 @@ public class WXPayConfigInfo {
 
     private byte[] certData;
     //    private static WXPayConfigInfo INSTANCE;
-    private String appID = "wx08e2ea07eefdc16e";
-    private String mchId = "1491684712";
-    private String key = "Hxinjingling0951797833333333333h";
+    private String appID = "";
+    private String mchId = "";
+    private String key = "";
     private String notifyUrl = "http://yun.kinglian.cn/ehr.payment/payment/wxpay/appPayNotifyPage.aspx";
 
 

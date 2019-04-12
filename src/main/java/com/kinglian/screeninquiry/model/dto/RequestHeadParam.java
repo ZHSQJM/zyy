@@ -4,7 +4,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @author dell
+ * @author
  */
 @Data
 public class RequestHeadParam implements Serializable {

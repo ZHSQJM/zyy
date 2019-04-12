@@ -5,8 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * @author HXC
- * @date 2019-2-22
+ * @author
  */
 @Data
 public class UserInfoDto {

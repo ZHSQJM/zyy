@@ -1,8 +1,11 @@
 package com.kinglian.screeninquiry.model.entity;
 
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -11,50 +14,37 @@ import java.util.Date;
  */
 @Data
 public class User implements Serializable {
-    /**
-     * 主键
-     */
-    private String userId;
 
     /**
-     * 用户类型（1、病人  2、系统超级管理员  3、普通管理员  4、医生  5、主任医生  6、护士  7、护士长 8、院长与副院长9、平台管理员10、医院管理员  11专科医生，12全科医生，13，健康管理师）
+     * ID
      */
-    private String userType;
+    @TableId(value = "id",type = IdType.UUID)
+    private String id;
 
     /**
-     * 客户的名称
+     * 组别ID
      */
-    private String userName;
+    private Integer groupId;
 
     /**
-     * 用户昵称
+     * 用户名
      */
-    private String nickName;
+    private String username;
 
     /**
-     * 客户的帐号
+     * 昵称
      */
-    private String userAccount;
+    private String nickname;
 
     /**
-     * 身份证号
-     */
-    private String sfzh;
-
-    /**
-     * 客户的密码
+     * 密码
      */
     private String password;
 
     /**
-     * 手机
+     * 密码盐
      */
-    private String mobile;
-
-    /**
-     * 联系电话
-     */
-    private String phone;
+    private String salt;
 
     /**
      * 电子邮箱
@@ -62,197 +52,111 @@ public class User implements Serializable {
     private String email;
 
     /**
-     * 图像地址
+     * 手机号
      */
-    private String imagePath;
+    private String mobile;
 
     /**
-     * 地址
+     * 头像
      */
-    private String address;
+    private String avatar;
 
     /**
-     * 帐号的状态
- 0 表示帐号失效
- 1 表示帐号可用
-            
+     * 等级
      */
-    private String accountStatus;
+    private Boolean level;
 
     /**
-     * 记录创建时间
+     * 性别
      */
-    private Date createTime;
+    private String gender;
 
     /**
-     * 社区服务站ID
-     */
-    private String communityServiceStationId;
-
-    /**
-     * 上级的ID
-     */
-    private String parentId;
-
-    /**
-     * 角色ID
-     */
-    private String roleId;
-
-    /**
-     * 级别编号(系统维护 超级管理员默认为000，每多一级加三位)
-     */
-    private String levelNo;
-
-    /**
-     * 健康档案ID
-     */
-    private String grjkdaId;
-
-    /**
-     * 医护人员ID
-     */
-    private String hcwId;
-
-    /**
-     * 所属医院ID（可为空）
-     */
-    private String hospitalId;
-
-    /**
-     * 所属平台ID（可为空）
-     */
-    private String platformId;
-
-    /**
-     * 性别：M男 F女
-     */
-    private String sex;
-
-    /**
-     * 出生日期
+     * 生日
      */
     private Date birthday;
 
     /**
-     * 推荐码
+     * 格言
      */
-    private String recommendCode;
+    private String bio;
 
     /**
-     * 来源客户端客户端编码
+     * 余额
      */
-    private String sourceClientCode;
+    private BigDecimal money;
 
     /**
-     * 来源客户端客户端名称
+     * 积分
      */
-    private String sourceClientName;
+    private Integer score;
 
     /**
-     * 用户会员卡号
+     * 连续登录天数
      */
-    private String memberCard;
+    private Integer successions;
 
     /**
-     * 暗文密码（可逆）
+     * 最大连续登录天数
      */
-    private String cipherPassword;
+    private Integer maxsuccessions;
 
     /**
-     * 密码是否已经改过（1，已改过，2未改过）
+     * 上次登录时间
      */
-    private String editPassword;
+    private Integer prevtime;
 
     /**
-     * 最后一次登录的app的所属系统：1:ios 2:android 3:wp
+     * 登录时间
      */
-    private String lastLoginOs;
+    private Integer logintime;
 
     /**
-     * 最后一次登录的app客户端的资源号，如lxj_u
+     * 登录IP
      */
-    private String lastLoginClient;
+    private String loginip;
 
     /**
-     * 最后一次登录的app客户端标志手机app的token，如IOS的deviceToken
+     * 失败次数
      */
-    private String lastLoginDeviceToken;
+    private Boolean loginfailure;
 
     /**
-     * 用于安全校验的手机号
+     * 加入IP
      */
-    private String safePhone;
+    private String joinip;
 
     /**
-     * 是否要求强制安全校验，0否 1是
+     * 加入时间
      */
-    private Short safeVerify;
+    private Integer jointime;
 
     /**
-     * 个性签名
+     * 创建时间
      */
-    private String signture;
+    private Integer createtime;
 
     /**
-     * 地址坐标-经度,标准谷哥坐标 180-0-180
+     * 更新时间
      */
-    private Double mapLng;
+    private Integer updatetime;
 
     /**
-     * 地址坐标-纬度,标准谷哥坐标 90-0-90
+     * Token
      */
-    private Double mapLat;
+    private String token;
 
     /**
-     * 用户禁言状态：0否 1是
+     * 状态
      */
-    private Short talkForbidStatus;
+    private String status;
 
     /**
-     * 禁言时间
+     * 验证
      */
-    private Date talkForbidTime;
+    private String verification;
 
-    /**
-     * 记录用户最后一次登录的设备唯一id
-     */
-    private String deviceUniqueId;
-
-    /**
-     * 微信授权登录的UnionID(兼容其他第三方登录的唯一id)
-     */
-    private String wxUnionId;
-
-    /**
-     * 微信app授权openId
-     */
-    private String wxOpenIdApp;
-
-    /**
-     * 微信公众号授权openId
-     */
-    private String wxOpenIdGzh;
-
-    /**
-     * 微信绑定时间
-     */
-    private Date wxBindTime;
-
-    /**
-     * 微信绑定后的微信昵称
-     */
-    private String wxNickName;
-
-    /**
-     * 是否是测试用户（1是，0否）
-     */
-    private String isTestUser;
-
-    private Integer seeMyArea;
-
-    private Integer source;
+    private String openId;
 
     private static final long serialVersionUID = 1L;
-
 }
