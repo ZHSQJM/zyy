@@ -5,17 +5,19 @@ import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
-import luluteam.wxpay.entity.PayInfo;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
+import java.io.Writer;
 import java.math.BigInteger;
 import java.security.MessageDigest;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by Hyman on 2017/2/28.
@@ -33,6 +35,7 @@ public class CommonUtil {
     }
 
     private static XStream xstream = new XStream(new XppDriver() {
+        @Override
         public HierarchicalStreamWriter createWriter(Writer out) {
             return new PrettyPrintWriter(out) {
                 //增加CDATA标记
@@ -65,8 +68,9 @@ public class CommonUtil {
         Document document = DocumentHelper.parseText(xml);
         Element root = document.getRootElement();
         List<Element> elementList = root.elements();
-        for (Element e : elementList)
+        for (Element e : elementList) {
             map.put(e.getName(), e.getText());
+        }
         return map;
     }
 
